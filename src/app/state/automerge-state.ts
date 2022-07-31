@@ -1,12 +1,19 @@
 import * as Automerge from "automerge";
 import { toBase64, toBinaryDocument } from "../helper/binary-document";
-import { AppState } from "./model";
+import { AppState, Stage } from "./model";
+
+const LOCAL_STATE_KEY = "free-retro:state";
 
 const observable = new Automerge.Observable();
-const localState = localStorage.getItem("todoapp:state");
+const localState = localStorage.getItem(LOCAL_STATE_KEY);
 let doc = localState
   ? Automerge.load<AppState>(toBinaryDocument(localState), { observable })
-  : Automerge.init<AppState>({ observable });
+  : Automerge.change(Automerge.init<AppState>({ observable }), (state) => {
+      // set initial values
+      state.columns = [];
+      state.retroName = "Let's retrospect";
+      state.stage = Stage.AddTickets;
+    });
 
 export const getAppState = () => doc;
 
@@ -19,7 +26,7 @@ export async function changeState(msg: string, f: (state: AppState) => void) {
   doc = Automerge.change(doc, msg, (s) => f(s));
   // todo: broadcast to all clients
   // await broadcast(doc);
-  localStorage.setItem("todoapp:state", toBase64(Automerge.save(doc)));
+  localStorage.setItem(LOCAL_STATE_KEY, toBase64(Automerge.save(doc)));
 }
 
 export function loadNewState(remoteRawState: string) {
@@ -28,5 +35,5 @@ export function loadNewState(remoteRawState: string) {
   );
   console.log("Server state ", remoteState);
   doc = Automerge.merge(doc, remoteState);
-  localStorage.setItem("todoapp:state", remoteRawState);
+  localStorage.setItem(LOCAL_STATE_KEY, remoteRawState);
 }

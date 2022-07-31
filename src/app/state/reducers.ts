@@ -14,6 +14,9 @@ export const nextStage = () =>
 
 export const addColumn = () =>
   changeState(`add column`, (state) => {
+    if (!state.columns) {
+      state.columns = [];
+    }
     state.columns.push({
       title: EMPTY_COLUMN_TITLE,
       cards: [],

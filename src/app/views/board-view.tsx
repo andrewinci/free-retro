@@ -29,10 +29,6 @@ const StageText = styled.div`
 
 export function stageToString(stage: Stage) {
   switch (stage) {
-    case Stage.Create:
-      return "Create";
-    case Stage.Join:
-      return "Join";
     case Stage.AddTickets:
       return "Add Tickets";
     case Stage.Vote:

@@ -47,7 +47,9 @@ export const VotesLine: FunctionComponent<VotesLineProps> = (
   return (
     <VotesContainer>
       {!readonly && (
-        <AddVote onClick={(_) => (onAddVoteClicked ? onAddVoteClicked : {})} />
+        <AddVote
+          onClick={(_) => (onAddVoteClicked ? onAddVoteClicked() : {})}
+        />
       )}
       {[...Array(votes)].map((e, i) => (
         <Vote
