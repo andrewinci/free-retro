@@ -23,7 +23,7 @@ export async function sendToClient(
     console.log(response);
     return true;
   } catch {
-    console.log("Client disconnected");
+    console.log("Client disconnected!");
     return false;
   }
 }

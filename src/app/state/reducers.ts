@@ -12,19 +12,6 @@ export const createRetro = (username: string, retroName: string) =>
     const currentUser = setUserName(username);
     state.retroName = retroName;
     state.stage = Stage.AddTickets;
-    if (!state.users.find((u) => u.id == currentUser.id)) {
-      state.users.push(currentUser);
-    }
-  });
-
-export const joinRetro = (sessionId: string, username: string) =>
-  changeState(`join retro`, (state) => {
-    const currentUser = setUserName(username);
-    state.sessionId = sessionId;
-    state.stage = Stage.AddTickets;
-    if (!state.users.find((u) => u.id == currentUser.id)) {
-      state.users.push(currentUser);
-    }
   });
 
 export const nextStage = () =>
@@ -47,11 +34,13 @@ export const addColumn = () =>
 
 export const deleteColumn = (columnIndex: number) =>
   changeState(`delete column ${columnIndex}`, (state) => {
+    if (!state.columns) state.columns = [];
     state.columns.splice(columnIndex, 1);
   });
 
 export const setColumnTitle = (columnIndex: number, title: string) =>
   changeState(`set column ${columnIndex} title`, (state) => {
+    if (!state.columns) state.columns = [];
     state.columns[columnIndex].title = title;
   });
 
@@ -59,6 +48,7 @@ export const setColumnTitle = (columnIndex: number, title: string) =>
 
 export const addEmptyCard = (columnIndex: number) =>
   changeState(`add empty card to ${columnIndex}`, (state) => {
+    if (!state.columns) return;
     const column = state.columns[columnIndex];
     column.cards.push({
       ownerId: getUser()?.id ?? "", //todo
@@ -70,6 +60,7 @@ export const addEmptyCard = (columnIndex: number) =>
 
 export const deleteCard = (columnIndex: number, cardIndex: number) =>
   changeState(`delete card`, (state) => {
+    if (!state.columns) return;
     state.columns[columnIndex].cards.splice(cardIndex, 1);
   });
 
@@ -79,6 +70,7 @@ export const updateCardText = (
   newText: string
 ) =>
   changeState(`update card text`, (state) => {
+    if (!state.columns) return;
     state.columns[columnIndex].cards[cardIndex].text = newText;
   });
 
@@ -88,6 +80,7 @@ export const updateCardVotes = (
   changeType: "increment" | "decrement"
 ) =>
   changeState(`${changeType} card ${cardIndex} votes`, (state) => {
+    if (!state.columns) return;
     const card = state.columns[columnIndex].cards[cardIndex];
     switch (changeType) {
       case "decrement":

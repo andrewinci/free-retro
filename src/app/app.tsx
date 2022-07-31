@@ -35,22 +35,23 @@ export const App = () => {
   useMemo(() => onStateChange((newState) => setState(newState)), []);
   // view selector depending on the app stage
   const currentView = () => {
+    console.log(appState);
     switch (appState.stage) {
       case Stage.Join:
-        <JoinRetroView />;
+        return <JoinRetroView />;
       case Stage.Create:
         return <CreateRetroView />;
       case Stage.AddTickets:
         return (
           <BoardView
-            columnsData={appState.columns}
+            columnsData={appState.columns ?? []}
             stage={appState.stage}
             readOnly={false}></BoardView>
         );
       case Stage.Vote:
         return (
           <BoardView
-            columnsData={appState.columns}
+            columnsData={appState.columns ?? []}
             stage={appState.stage}
             readOnly={true}></BoardView>
         );

@@ -1,6 +1,7 @@
 import * as Automerge from "automerge";
 import { toBase64, toBinaryDocument } from "../helper/binary-document";
 import { randomId } from "../helper/random";
+import { broadcast } from "../ws";
 import { AppState, Stage } from "./model";
 
 const LOCAL_STATE_KEY = "free-retro:state";
@@ -10,30 +11,15 @@ let doc: AppState;
 
 export const getAppState: () => AppState = () => {
   if (doc) return doc;
-  // first attempt to get the appState
-  const localState = localStorage.getItem(LOCAL_STATE_KEY);
-  if (location.hash && localState) {
-    // trying to join an already existing retro
-    // load the data from cache
-    doc = Automerge.load<AppState>(toBinaryDocument(localState), {
-      observable,
-    });
-    return doc;
-  } else {
-    doc = Automerge.change(
-      Automerge.init<AppState>({ observable }),
-      (state) => {
-        // set initial values
-        state.sessionId = randomId();
-        state.users = [];
-        state.columns = [];
-        state.retroName = "Let's retrospect";
-        state.stage = Stage.Create;
-      }
-    );
-    location.hash = doc.sessionId;
-    return doc;
-  }
+  const sessionId =
+    location.hash.length > 1 ? location.hash.substring(1) : null;
+  doc = Automerge.change(Automerge.init<AppState>({ observable }), (state) => {
+    // set initial values
+    state.sessionId = sessionId ?? randomId();
+    state.stage = sessionId ? Stage.Join : Stage.Create;
+  });
+  location.hash = doc.sessionId;
+  return doc;
 };
 
 export function onStateChange(f: (newState: AppState) => void) {
@@ -43,8 +29,8 @@ export function onStateChange(f: (newState: AppState) => void) {
 
 export async function changeState(msg: string, f: (state: AppState) => void) {
   doc = Automerge.change(doc, msg, (s) => f(s));
-  // todo: broadcast to all clients
-  // await broadcast(doc);
+  // broadcast to all clients
+  await broadcast(doc.sessionId, doc);
   localStorage.setItem(LOCAL_STATE_KEY, toBase64(Automerge.save(doc)));
 }
 

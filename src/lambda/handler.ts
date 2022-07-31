@@ -85,15 +85,11 @@ async function handleJoin(request: WSRequest) {
     state: state.lastState,
   };
 
-  const sendToClientPromise = sendToClient(
-    updateMessage,
-    request.endpoint,
-    request.connectionId
-  );
-  const storeToDynamoPromise = storeToDynamo({
+  await storeToDynamo({
     appState: state.lastState,
     connectionId: request.connectionId,
     sessionId: request.body.sessionId,
   });
-  await Promise.all([sendToClientPromise, storeToDynamoPromise]);
+
+  await sendToClient(updateMessage, request.endpoint, request.connectionId);
 }

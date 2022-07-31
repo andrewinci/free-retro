@@ -31,8 +31,7 @@ export enum Stage {
 
 export type AppState = {
   sessionId: string;
-  retroName: string;
-  users: User[];
+  retroName?: string;
   stage: Stage;
-  columns: ColumnState[];
+  columns?: ColumnState[];
 };

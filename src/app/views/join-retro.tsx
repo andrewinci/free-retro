@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { EmptyButton } from "../components/buttons";
 import * as State from "../state";
+import { setUserName } from "../state";
+import { joinSession } from "../ws";
 
 const Container = styled.div`
   position: absolute;
@@ -45,8 +47,9 @@ const JoinRetroView = () => {
       <JoinRetro
         onClick={async () => {
           const { username } = state;
+          State.setUserName(username);
           const sessionId = location.hash.substring(1);
-          await State.joinRetro(sessionId, username);
+          await joinSession(sessionId);
         }}>
         🚀 Join retro
       </JoinRetro>
