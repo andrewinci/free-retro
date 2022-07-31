@@ -9,7 +9,7 @@ export type CardState = {
   ownerId: string;
   text: string;
   color?: string;
-  votes: Automerge.Counter;
+  votes: Record<string, Automerge.Counter>;
 };
 
 export type ColumnState = {

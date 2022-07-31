@@ -54,7 +54,7 @@ export const addEmptyCard = (columnIndex: number) =>
       ownerId: getUser()?.id ?? "", //todo
       text: "",
       color: randomColor(),
-      votes: new Automerge.Counter(0),
+      votes: {},
     });
   });
 
@@ -81,13 +81,17 @@ export const updateCardVotes = (
 ) =>
   changeState(`${changeType} card ${cardIndex} votes`, (state) => {
     if (!state.columns) return;
+    const userId = getUser()?.id!!;
     const card = state.columns[columnIndex].cards[cardIndex];
+    if (!card.votes[userId!!]) {
+      card.votes[userId] = new Automerge.Counter(0);
+    }
     switch (changeType) {
       case "decrement":
-        card.votes.decrement();
+        card.votes[userId].decrement();
         break;
       case "increment":
-        card.votes.increment();
+        card.votes[userId].increment();
         break;
     }
   });

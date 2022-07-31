@@ -65,12 +65,12 @@ function buildColumn(
           onTextChange={async (text) =>
             await State.updateCardText(columnIndex, cardIndex, text)
           }
-          blur={card.ownerId != getUser()?.id}
+          blur={!(showVotes || card.ownerId == getUser()?.id)}
           readOnly={readOnly}>
           {showVotes && (
             <VotesLine
               readonly={false}
-              votes={card.votes.value}
+              votes={card.votes[getUser()?.id!!]?.value ?? 0}
               onAddVoteClicked={async () =>
                 await State.updateCardVotes(columnIndex, cardIndex, "increment")
               }
