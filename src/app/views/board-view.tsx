@@ -4,7 +4,7 @@ import { AddButton, RightArrowButton } from "../components/buttons";
 import Card from "../components/card";
 import { Column, ColumnContainer } from "../components/column";
 import { VotesLine } from "../components/vote-line";
-import { Stage, ColumnState } from "../state";
+import { Stage, ColumnState, getUser } from "../state";
 import * as State from "../state";
 
 const NextButton = styled(RightArrowButton)`
@@ -65,6 +65,7 @@ function buildColumn(
           onTextChange={async (text) =>
             await State.updateCardText(columnIndex, cardIndex, text)
           }
+          blur={card.ownerId != getUser()?.id}
           readOnly={readOnly}>
           {showVotes && (
             <VotesLine
