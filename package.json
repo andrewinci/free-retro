@@ -1,0 +1,39 @@
+{
+  "name": "free-retro",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "copy_index": "mkdir -p dist/app/ && cp src/app/index.html dist/app/index.html",
+    "build:app": "yarn copy_index  && esbuild --bundle src/app/app.tsx --outdir=dist/app --sourcemap --minify",
+    "build:lambda": "esbuild --bundle src/lambda/handler.ts --tsconfig=tsconfig.lambda.json --platform=node --outdir=dist/lambda --sourcemap  --minify",
+    "build": "rm -rf dist && yarn build:app && yarn build:lambda",
+    "lint": "prettier --write . '!dist'",
+    "serve": "yarn copy_index && yarn esbuild --bundle src/app/app.tsx --servedir=dist/app --outdir=dist/app",
+    "deploy": "yarn build && yarn serverless deploy"
+  },
+  "dependencies": {
+    "automerge": "^1.0.1-preview.7",
+    "buffer": "^6.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.131.0",
+    "@aws-sdk/client-dynamodb": "^3.137.0",
+    "@aws-sdk/util-dynamodb": "^3.137.0",
+    "@types/aws-lambda": "^8.10.101",
+    "@types/jest": "^28.1.6",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "esbuild": "^0.14.51",
+    "esbuild-serve": "^1.0.1",
+    "husky": "^8.0.1",
+    "jest": "^28.1.3",
+    "prettier": "2.7.1",
+    "serverless": "^3.21.0",
+    "ts-jest": "^28.0.7"
+  }
+}
