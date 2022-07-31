@@ -1,10 +1,32 @@
-import { randomColor } from "../helper/random";
+import { randomColor, randomId } from "../helper/random";
 import { changeState } from "./automerge-state";
-import { getUser } from "./user";
+import { getUser, setUserName } from "./user";
 import * as Automerge from "automerge";
+import { Stage } from "./model";
 export const EMPTY_COLUMN_TITLE = "Empty column";
 
 // app state reducers
+
+export const createRetro = (username: string, retroName: string) =>
+  changeState(`create retro`, (state) => {
+    const currentUser = setUserName(username);
+    state.retroName = retroName;
+    state.stage = Stage.AddTickets;
+    if (!state.users.find((u) => u.id == currentUser.id)) {
+      state.users.push(currentUser);
+    }
+  });
+
+export const joinRetro = (sessionId: string, username: string) =>
+  changeState(`join retro`, (state) => {
+    const currentUser = setUserName(username);
+    state.sessionId = sessionId;
+    state.stage = Stage.AddTickets;
+    if (!state.users.find((u) => u.id == currentUser.id)) {
+      state.users.push(currentUser);
+    }
+  });
+
 export const nextStage = () =>
   changeState(`next stage`, (state) => {
     state.stage += 1;

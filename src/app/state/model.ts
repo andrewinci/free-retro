@@ -18,6 +18,8 @@ export type ColumnState = {
 };
 
 export enum Stage {
+  Create,
+  Join,
   AddTickets,
   // TODO: group will need drag and drop
   // see: https://codesandbox.io/s/github/react-dnd/react-dnd/tree/gh-pages/examples_ts/04-sortable/simple?from-embed=&file=/package.json:566-585

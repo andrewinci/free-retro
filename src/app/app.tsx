@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from "react";
-import ReactDOM from "react-dom";
 import styled from "styled-components";
 import { Stage } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
 import BoardView from "./views/board-view";
+import CreateRetroView from "./views/create-retro";
+import JoinRetroView from "./views/join-retro";
 
 const Container = styled.div`
   padding-left: 1rem;
@@ -35,6 +36,10 @@ export const App = () => {
   // view selector depending on the app stage
   const currentView = () => {
     switch (appState.stage) {
+      case Stage.Join:
+        <JoinRetroView />;
+      case Stage.Create:
+        return <CreateRetroView />;
       case Stage.AddTickets:
         return (
           <BoardView
