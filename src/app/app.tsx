@@ -54,7 +54,7 @@ export const App = () => {
   return (
     <Container>
       <Title>
-        <h1>⚡ Flash retro 🗣️</h1>
+        <h1>⚡ Free retro 🗣️</h1>
         {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
       </Title>
       <Space />
