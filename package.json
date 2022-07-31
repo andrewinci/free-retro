@@ -40,6 +40,10 @@
     "serverless": "^3.21.0",
     "ts-jest": "^28.0.7"
   },
+  "prettier": {
+    "bracketSameLine": true,
+    "semi": true
+  },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
