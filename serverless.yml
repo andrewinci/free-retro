@@ -1,0 +1,61 @@
+service: free-retro
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: eu-west-1
+  websocketsApiName: free-retro-api
+  websocketsApiRouteSelectionExpression: $request.body.action # custom routes are selected by the value of the action property in the body
+  websocketsDescription: Free retro sync backend
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - "Fn::GetAtt": [freeRetroTable, Arn]
+
+package:
+  exclude:
+    - ./**
+  individually: true
+
+functions:
+  connectionHandler:
+    handler: dist/lambda/handler.lambdaHandler
+    package:
+      patterns:
+        - "dist/lambda/handler.js"
+        - "dist/lambda/handler.js.map"
+    events:
+      - websocket:
+          route: $connect
+      - websocket:
+          route: $disconnect
+      - websocket:
+          route: $default
+
+resources:
+  Resources:
+    freeRetroTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: free-retro-sessions-table
+        AttributeDefinitions:
+          - AttributeName: sessionId
+            AttributeType: S
+          - AttributeName: connectionId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: sessionId
+            KeyType: HASH
+          - AttributeName: connectionId
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
