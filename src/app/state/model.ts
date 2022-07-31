@@ -33,5 +33,6 @@ export type AppState = {
   sessionId: string;
   retroName?: string;
   stage: Stage;
+  discussCardIndex?: Automerge.Counter;
   columns?: ColumnState[];
 };

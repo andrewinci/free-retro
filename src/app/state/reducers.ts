@@ -7,9 +7,23 @@ export const EMPTY_COLUMN_TITLE = "Empty column";
 
 // app state reducers
 
+export const changeDiscussesCard = (changeType: "increment" | "decrement") =>
+  changeState(`change discussed card`, (state) => {
+    if (!state.discussCardIndex) {
+      state.discussCardIndex = new Automerge.Counter();
+    }
+    switch (changeType) {
+      case "decrement":
+        state.discussCardIndex.decrement();
+        break;
+      case "increment":
+        state.discussCardIndex.increment();
+        break;
+    }
+  });
+
 export const createRetro = (username: string, retroName: string) =>
   changeState(`create retro`, (state) => {
-    const currentUser = setUserName(username);
     state.retroName = retroName;
     state.stage = Stage.AddTickets;
   });
