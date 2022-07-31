@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import { Column, ColumnContainer } from "./column";
 
-describe("Test button components", () => {
+describe("Test column components", () => {
   test("Column should render", () => {
     const component = renderer.create(<Column title="column title"></Column>);
     expect(component).toBeDefined();
