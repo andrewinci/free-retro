@@ -5,12 +5,12 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage",
-    "copy_index": "mkdir -p dist/app/ && cp src/app/index.html dist/app/index.html",
-    "build:app": "yarn copy_index  && esbuild --bundle src/app/index.tsx --outdir=dist/app --sourcemap --minify",
+    "copy_artifacts": "mkdir -p dist/app/ && cp src/app/index.html dist/app/index.html && cp artifacts/* dist/app/",
+    "build:app": "yarn copy_artifacts  && esbuild --bundle src/app/index.tsx --outdir=dist/app --sourcemap --minify",
     "build:lambda": "esbuild --bundle src/lambda/handler.ts --tsconfig=tsconfig.lambda.json --platform=node --outdir=dist/lambda --sourcemap  --minify",
     "build": "rm -rf dist && yarn build:app && yarn build:lambda",
     "lint": "prettier --write . '!dist' '!coverage'",
-    "serve": "yarn copy_index && yarn esbuild --bundle src/app/index.tsx --servedir=dist/app --outdir=dist/app",
+    "serve": "yarn copy_artifacts && yarn esbuild --bundle src/app/index.tsx --outdir=dist/app --servedir=dist/app",
     "deploy": "yarn build && yarn serverless deploy"
   },
   "dependencies": {
