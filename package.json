@@ -11,7 +11,7 @@
     "build": "rm -rf dist && yarn build:app && yarn build:lambda",
     "lint": "prettier --write . '!dist' '!coverage'",
     "serve": "yarn copy_artifacts && yarn esbuild --sourcemap --bundle src/app/index.tsx --outdir=dist/app --servedir=dist/app",
-    "deploy": "yarn build && yarn serverless client deploy && yarn serverless deploy"
+    "deploy": "yarn build && yarn serverless client deploy --no-confirm && yarn serverless deploy"
   },
   "dependencies": {
     "@types/styled-components": "^5.1.25",

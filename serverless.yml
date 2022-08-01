@@ -56,6 +56,7 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: free-retro-sessions-table
+        BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: sessionId
             AttributeType: S
@@ -66,6 +67,3 @@ resources:
             KeyType: HASH
           - AttributeName: connectionId
             KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
