@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { LeftArrowButton, RightArrowButton } from "../components/buttons";
+import {
+  CloseButton,
+  LeftArrowButton,
+  RightArrowButton,
+} from "../components/buttons";
 import Card from "../components/card";
 import { VotesLine } from "../components/vote-line";
 import { CardState } from "../state";
 import * as State from "../state";
+
+const CloseRetro = styled(CloseButton)`
+  position: fixed;
+  right: 1em;
+  top: 1em;
+  height: 5em;
+  width: 5em;
+`;
 
 const ButtonsContainer = styled.div`
   position: absolute;
@@ -19,6 +31,7 @@ const Prev = styled(LeftArrowButton)`
   height: 3em;
   width: 3em;
 `;
+
 const Next = styled(RightArrowButton)`
   position: absolute;
   right: 1em;
@@ -45,13 +58,14 @@ export const DiscussView = (props: { cards: CardState[]; index: number }) => {
 
   return (
     <>
+      <CloseRetro onClick={() => State.nextStage()} />
       <ButtonsContainer>
         <Prev
-          onClick={() => State.changeDiscussesCard("decrement")}
+          onClick={() => State.changeDiscussCard("decrement")}
           disabled={index <= 0}></Prev>
         <Next
-          onClick={() => State.changeDiscussesCard("increment")}
-          disabled={index >= sortedCards.length}></Next>
+          onClick={() => State.changeDiscussCard("increment")}
+          disabled={index > sortedCards.length}></Next>
         <Card
           text={card.text}
           color={card.color}

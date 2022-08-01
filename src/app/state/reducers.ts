@@ -1,5 +1,5 @@
 import { randomColor, randomId } from "../helper/random";
-import { changeState } from "./automerge-state";
+import { changeState, getAppState } from "./automerge-state";
 import { getUser, setUserName } from "./user";
 import * as Automerge from "automerge";
 import { Stage } from "./model";
@@ -7,10 +7,18 @@ export const EMPTY_COLUMN_TITLE = "Empty column";
 
 // app state reducers
 
-export const changeDiscussesCard = (changeType: "increment" | "decrement") =>
+export const changeDiscussCard = (changeType: "increment" | "decrement") => {
+  // avoid to trigger changes if the index is out of bound
+  const { columns, discussCardIndex } = getAppState();
+  const currentIndex = discussCardIndex?.value ?? 0;
+  const totalCards =
+    columns?.flatMap((c) => c.cards.length).reduce((a, b) => a + b) ?? 0;
+  if (currentIndex >= totalCards - 1 && changeType == "increment") return;
+  if (currentIndex <= 0 && changeType == "decrement") return;
+
   changeState(`change discussed card`, (state) => {
     if (!state.discussCardIndex) {
-      state.discussCardIndex = new Automerge.Counter();
+      state.discussCardIndex = new Automerge.Counter(0);
     }
     switch (changeType) {
       case "decrement":
@@ -21,6 +29,7 @@ export const changeDiscussesCard = (changeType: "increment" | "decrement") =>
         break;
     }
   });
+};
 
 export const createRetro = (username: string, retroName: string) =>
   changeState(`create retro`, (state) => {
@@ -31,6 +40,7 @@ export const createRetro = (username: string, retroName: string) =>
 export const nextStage = () =>
   changeState(`next stage`, (state) => {
     state.stage += 1;
+    if (state.stage == Stage.End) location.hash = "";
   });
 
 // column reducers

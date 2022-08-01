@@ -23,7 +23,6 @@ export const getAppState: () => AppState = () => {
 };
 
 export function onStateChange(f: (newState: AppState) => void) {
-  console.log("State changed");
   observable.observe(doc, (a, b, newState) => f(newState));
 }
 

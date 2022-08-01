@@ -36,7 +36,6 @@ export const App = () => {
   useMemo(() => onStateChange((newState) => setState(newState)), []);
   // view selector depending on the app stage
   const currentView = () => {
-    console.log(appState);
     switch (appState.stage) {
       case Stage.Join:
         return <JoinRetroView />;
