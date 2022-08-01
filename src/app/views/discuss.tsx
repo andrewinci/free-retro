@@ -42,10 +42,21 @@ const Next = styled(RightArrowButton)`
 
 export const DiscussView = (props: { cards: CardState[]; index: number }) => {
   const { cards, index } = props;
+
+  if (cards.length == 0) {
+    console.log("No cards -> nothing to discuss");
+    return (
+      <>
+        <CloseRetro onClick={async () => await State.nextStage()} />
+      </>
+    );
+  }
+
   const totalVotes = (c: CardState) =>
     Object.values(c.votes)
       .map((v) => v.value)
-      .reduce((a, b) => a + b);
+      .reduce((a, b) => a + b, 0);
+
   const sortedCards = cards
     .map((c) => ({ votes: totalVotes(c), card: c }))
     .sort((a, b) => b.votes - a.votes);
@@ -58,7 +69,7 @@ export const DiscussView = (props: { cards: CardState[]; index: number }) => {
 
   return (
     <>
-      <CloseRetro onClick={() => State.nextStage()} />
+      <CloseRetro onClick={async () => await State.nextStage()} />
       <ButtonsContainer>
         <Prev
           onClick={() => State.changeDiscussCard("decrement")}

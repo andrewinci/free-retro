@@ -12,7 +12,7 @@ export const changeDiscussCard = (changeType: "increment" | "decrement") => {
   const { columns, discussCardIndex } = getAppState();
   const currentIndex = discussCardIndex?.value ?? 0;
   const totalCards =
-    columns?.flatMap((c) => c.cards.length).reduce((a, b) => a + b) ?? 0;
+    columns?.flatMap((c) => c.cards.length).reduce((a, b) => a + b, 0) ?? 0;
   if (currentIndex >= totalCards - 1 && changeType == "increment") return;
   if (currentIndex <= 0 && changeType == "decrement") return;
 
