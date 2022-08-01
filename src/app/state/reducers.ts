@@ -109,6 +109,20 @@ export const updateCardText = (
     state.columns[columnIndex].cards[cardIndex].text = newText;
   });
 
+const canUserAddVotes = () => {
+  const { id } = getUser()!!;
+  const { columns } = getAppState();
+  const total =
+    columns
+      ?.flatMap((c) => c.cards)
+      .map((c) => c.votes[id]?.value ?? 0)
+      .reduce((a, b) => a + b, 0) ?? 0;
+  // each user has 5 votes max
+  //todo: adapt depending on the number of users
+  // and cards
+  return total < 5;
+};
+
 export const updateCardVotes = (
   columnIndex: number,
   cardIndex: number,
@@ -126,7 +140,7 @@ export const updateCardVotes = (
         card.votes[userId].decrement();
         break;
       case "increment":
-        card.votes[userId].increment();
+        if (canUserAddVotes()) card.votes[userId].increment();
         break;
     }
   });
