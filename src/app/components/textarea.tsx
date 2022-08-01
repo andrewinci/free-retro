@@ -1,10 +1,5 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useRef } from "react";
 import styled from "styled-components";
-
-function autosize(e: any) {
-  e.target.style.cssText = "height:auto; padding:0";
-  e.target.style.cssText = `height:${e.target.scrollHeight}px`;
-}
 
 const StyledTextArea = styled.textarea`
   overflow: hidden;
@@ -43,18 +38,29 @@ type TextAreaProps = {
 
 export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   const { text, onTextChange, className, readOnly } = props;
+  const textInput = useRef<any>(null);
+
+  const autosize = (textarea: HTMLTextAreaElement) => {
+    textarea.style.cssText = "height:auto; padding:0";
+    textarea.style.cssText = `height:${textarea.scrollHeight}px`;
+  };
+
+  useEffect(() => autosize(textInput.current));
+
   return (
     <StyledTextArea
+      ref={textInput}
       readOnly={readOnly}
       className={className}
       value={text}
+      onInput={(e) => autosize(e.currentTarget)}
       onChange={(e) => {
         if (onTextChange) {
           onTextChange(e.target.value);
         }
       }}
-      onKeyDown={(e) => autosize(e)}
-      onFocus={(e) => autosize(e)}
+      onKeyDown={(e) => autosize(e.target)}
+      onFocus={(e) => autosize(e.target)}
     />
   );
 };
