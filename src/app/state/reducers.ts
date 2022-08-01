@@ -66,6 +66,9 @@ export const setColumnTitle = (columnIndex: number, title: string) =>
   changeState(`set column ${columnIndex} title`, (state) => {
     if (!state.columns) state.columns = [];
     state.columns[columnIndex].title = title;
+    for (let c of state.columns[columnIndex].cards) {
+      c.originColumn = title;
+    }
   });
 
 // card reducers
@@ -75,6 +78,7 @@ export const addEmptyCard = (columnIndex: number) =>
     if (!state.columns) return;
     const column = state.columns[columnIndex];
     column.cards.push({
+      originColumn: column.title,
       ownerId: getUser()?.id ?? "", //todo
       text: "",
       color: randomColor(),

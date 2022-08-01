@@ -11,8 +11,9 @@ const Container = styled.div`
   font-size: 1.2em;
 `;
 
-const CardContainer = styled.div<{ blur: boolean }>`
+const CardContainer = styled.div<{ blur: boolean; showCardType: boolean }>`
   padding: 0.6em;
+  ${(props) => props.showCardType && `padding-top: 1.2em;`}
   background-color: ${(props) => props.color};
   ${(props) => {
     if (props.blur) {
@@ -36,8 +37,23 @@ const TopCloseButton = styled(CloseButton)`
   width: 15px;
 `;
 
+const CardType = styled.p`
+  text-align: right;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  width: 200px;
+  font-size: 0.8em;
+  margin: 0;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
 type CardProps = {
   text: string;
+  showCardType?: boolean;
+  cardType?: string;
   onTextChange: (_: string) => void;
   color?: string;
   readOnly?: boolean;
@@ -49,13 +65,18 @@ type CardProps = {
 
 const Card: FunctionComponent<CardProps> = (props: CardProps) => {
   const { text, readOnly, blur, color, onCloseClicked, onTextChange } = props;
+  const { showCardType, cardType } = props;
   return (
     <Container className={props.className}>
-      <CardContainer color={color} blur={blur ?? false}>
+      <CardContainer
+        color={color}
+        blur={blur ?? false}
+        showCardType={showCardType ?? false}>
         <TopCloseButton
           hidden={text.length > 0 || readOnly || blur}
           onClick={(_) => onCloseClicked()}
         />
+        <CardType hidden={!showCardType}>{cardType}</CardType>
         <TextArea
           // must be readonly if blurred
           readOnly={readOnly || blur}

@@ -17,6 +17,7 @@ const StyledTextArea = styled.textarea`
   outline: none;
   resize: none;
   overflow: hidden;
+  font-size: 1em;
   ${(props) => (props.readOnly ? `cursor: pointer !important;` : ``)}
 
   appearance: none;

@@ -6,6 +6,7 @@ export type User = {
 };
 
 export type CardState = {
+  originColumn: string;
   ownerId: string;
   text: string;
   color?: string;

@@ -78,6 +78,8 @@ export const DiscussView = (props: { cards: CardState[]; index: number }) => {
           onClick={() => State.changeDiscussCard("increment")}
           disabled={index > sortedCards.length}></Next>
         <Card
+          showCardType={true}
+          cardType={card.originColumn}
           text={card.text}
           color={card.color}
           readOnly={true}
