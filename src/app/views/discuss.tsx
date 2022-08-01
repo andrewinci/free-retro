@@ -43,11 +43,19 @@ const Next = styled(RightArrowButton)`
 export const DiscussView = (props: { cards: CardState[]; index: number }) => {
   const { cards, index } = props;
 
+  const closeRetro = async () => {
+    const res = confirm(`This action will close the retro session.
+Click ok to go ahead.`);
+    if (res) {
+      await State.changeStage("next");
+    }
+  };
+
   if (cards.length == 0) {
     console.log("No cards -> nothing to discuss");
     return (
       <>
-        <CloseRetro onClick={async () => await State.nextStage()} />
+        <CloseRetro onClick={async () => await closeRetro()} />
       </>
     );
   }
@@ -66,14 +74,6 @@ export const DiscussView = (props: { cards: CardState[]; index: number }) => {
       ? sortedCards[sortedCards.length - 1]
       : sortedCards.at(index)
   )!!;
-
-  const closeRetro = async () => {
-    const res = confirm(`This action will close the retro session.
-Click ok to go ahead.`);
-    if (res) {
-      await State.nextStage();
-    }
-  };
 
   return (
     <>

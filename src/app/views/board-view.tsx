@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { AddButton, RightArrowButton } from "../components/buttons";
+import {
+  AddButton,
+  LeftArrowButton,
+  RightArrowButton,
+} from "../components/buttons";
 import Card from "../components/card";
 import { Column, ColumnContainer } from "../components/column";
 import { VotesLine } from "../components/vote-line";
@@ -15,9 +19,17 @@ const NextButton = styled(RightArrowButton)`
   width: 5em;
 `;
 
+const PrevButton = styled(LeftArrowButton)`
+  position: fixed;
+  left: 1em;
+  top: 1em;
+  height: 5em;
+  width: 5em;
+`;
+
 const StageText = styled.div`
   position: fixed;
-  left: 2em;
+  left: 10em;
   top: 2em;
   h2 {
     margin: 0;
@@ -84,15 +96,6 @@ function buildColumn(
   );
 }
 
-const nextStage = async () => {
-  const res =
-    confirm(`Before moving to the next stage, make sure that everyone is ready to go ahead.
-Click ok to go to the next stage`);
-  if (res) {
-    await State.nextStage();
-  }
-};
-
 const BoardView = (props: {
   columnsData: ColumnState[];
   stage: Stage;
@@ -100,13 +103,30 @@ const BoardView = (props: {
 }) => {
   const { columnsData, stage, readOnly } = props;
   const vote = Stage.Vote === stage;
+
+  const changeStage = async (change: "next" | "back") => {
+    const res =
+      confirm(`Before moving to the next stage, make sure that everyone is ready to go ahead.
+  Click ok to go to the next stage`);
+    if (res) {
+      await State.changeStage(change);
+    }
+  };
+
   return (
     <>
+      {stage != Stage.AddTickets && (
+        <PrevButton onClick={async () => await changeStage("back")}>
+          Back
+        </PrevButton>
+      )}
       <StageText>
         <p>step:</p>
         <h2>{stageToString(stage)}</h2>
       </StageText>
-      <NextButton onClick={async () => await nextStage()}>Next</NextButton>
+      <NextButton onClick={async () => await changeStage("next")}>
+        Next
+      </NextButton>
       <ColumnContainer>
         {columnsData.map((column, i) =>
           buildColumn(i, column, readOnly ?? false, vote)

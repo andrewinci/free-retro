@@ -37,11 +37,18 @@ export const createRetro = (username: string, retroName: string) =>
     state.stage = Stage.AddTickets;
   });
 
-export const nextStage = () =>
+export const changeStage = (change: "next" | "back") => {
+  const currentStage = getAppState().stage ?? 0;
+  if (currentStage <= 0 && change == "back") return;
+  if (currentStage >= Stage.End && change == "next") return;
   changeState(`next stage`, (state) => {
-    state.stage += 1;
-    if (state.stage == Stage.End) location.hash = "";
+    if (change == "back") {
+      state.stage -= 1;
+    } else if (change == "next") {
+      state.stage += 1;
+    }
   });
+};
 
 // column reducers
 
