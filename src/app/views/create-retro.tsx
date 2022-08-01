@@ -22,6 +22,7 @@ const Input = styled.input`
 `;
 
 const CreateButton = styled(EmptyButton)`
+  background: #d9d9d9;
   width: 100%;
   height: 1.8em;
   font-size: 1.2em;

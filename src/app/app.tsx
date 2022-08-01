@@ -5,6 +5,7 @@ import { getAppState, onStateChange } from "./state/automerge-state";
 import BoardView from "./views/board-view";
 import CreateRetroView from "./views/create-retro";
 import { DiscussView } from "./views/discuss";
+import EndRetroView from "./views/end-view";
 import JoinRetroView from "./views/join-retro";
 
 const Container = styled.div`
@@ -61,6 +62,8 @@ export const App = () => {
             cards={appState.columns?.flatMap((c) => c.cards) ?? []}
             index={appState.discussCardIndex?.value ?? 0}></DiscussView>
         );
+      case Stage.End:
+        return <EndRetroView></EndRetroView>;
     }
   };
   return (

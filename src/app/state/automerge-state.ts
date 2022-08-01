@@ -37,7 +37,6 @@ export function loadNewState(remoteRawState: string) {
   const remoteState = Automerge.load<AppState>(
     toBinaryDocument(remoteRawState)
   );
-  console.log("Server state ", remoteState);
   doc = Automerge.merge(doc, remoteState);
   localStorage.setItem(LOCAL_STATE_KEY, remoteRawState);
 }
