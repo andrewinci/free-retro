@@ -1366,7 +1366,7 @@
     traverse "^0.6.6"
     ws "^7.5.3"
 
-"@serverless/utils@^6.0.3", "@serverless/utils@^6.7.0":
+"@serverless/utils@^6.0.2", "@serverless/utils@^6.0.3", "@serverless/utils@^6.7.0":
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/@serverless/utils/-/utils-6.7.0.tgz#7d09585749ff279f348109400c0a10a7738b547a"
   integrity sha512-aUjkkOTJ5wH7f3raSIDeTCR4JsAbd9p5Pjs7yW3sVOmu0qiTPHZOr1x1TIkb3WDHiAoQQY8zGhfzW7zLTcAA3Q==
@@ -3668,6 +3668,11 @@ is-wsl@^2.1.1:
   dependencies:
     is-docker "^2.0.0"
 
+is_js@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/is_js/-/is_js-0.9.0.tgz#0ab94540502ba7afa24c856aa985561669e9c52d"
+  integrity sha512-8Y5EHSH+TonfUHX2g3pMJljdbGavg55q4jmHzghJCdqYDbdNROC8uw/YFQwIRCRqRJT1EY3pJefz+kglw+o7sg==
+
 isarray@^1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
@@ -4406,6 +4411,11 @@ mime@2.6.0:
   resolved "https://registry.yarnpkg.com/mime/-/mime-2.6.0.tgz#a2a682a95cd4d0cb1d6257e28f83da7e35800367"
   integrity sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==
 
+mime@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-3.0.0.tgz#b374550dca3a0c18443b0c950a6a58f1931cf7a7"
+  integrity sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==
+
 mimic-fn@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
@@ -4428,7 +4438,7 @@ minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.1:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimatch@^5.1.0:
+minimatch@^5.0.1, minimatch@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-5.1.0.tgz#1717b464f4971b144f6aabe8f2d0b8e4511e09c7"
   integrity sha512-9TPBGGak4nHfGZsPBohm9AWg6NoT7QTCehS3BIJABslyZbzxfV78QM2Y6+i741OPZIafFAaiiEMh5OyIrJPgtg==
@@ -5145,6 +5155,16 @@ semver@^6.0.0, semver@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.0.tgz#ee0a64c8af5e8ceea67687b133761e1becbd1d3d"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
+
+serverless-finch@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/serverless-finch/-/serverless-finch-4.0.0.tgz#f5f3be76e819ebb8dc6e3ddbef31ef85205f1467"
+  integrity sha512-/1w8uwX0693XFie1d7shoIlPI5eupH3W12OxFqT4Mf221561q0qvTdkGO201IqOQeEcbOi6bq237jwMFa+rYTA==
+  dependencies:
+    "@serverless/utils" "^6.0.2"
+    is_js "^0.9.0"
+    mime "^3.0.0"
+    minimatch "^5.0.1"
 
 serverless@^3.21.0:
   version "3.21.0"

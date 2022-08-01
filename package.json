@@ -11,7 +11,7 @@
     "build": "rm -rf dist && yarn build:app && yarn build:lambda",
     "lint": "prettier --write . '!dist' '!coverage'",
     "serve": "yarn copy_artifacts && yarn esbuild --sourcemap --bundle src/app/index.tsx --outdir=dist/app --servedir=dist/app",
-    "deploy": "yarn build && yarn serverless deploy"
+    "deploy": "yarn build && yarn serverless client deploy && yarn serverless deploy"
   },
   "dependencies": {
     "@types/styled-components": "^5.1.25",
@@ -41,6 +41,7 @@
     "prettier": "2.7.1",
     "react-test-renderer": "^18.2.0",
     "serverless": "^3.21.0",
+    "serverless-finch": "^4.0.0",
     "ts-jest": "^28.0.7"
   },
   "prettier": {

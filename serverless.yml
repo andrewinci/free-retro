@@ -1,5 +1,15 @@
 service: free-retro
 
+plugins:
+  - serverless-finch
+
+custom:
+  client:
+    bucketName: free-retro
+    distributionFolder: dist/app
+    indexDocument: index.html
+    errorDocument: index.html
+
 provider:
   name: aws
   runtime: nodejs14.x
