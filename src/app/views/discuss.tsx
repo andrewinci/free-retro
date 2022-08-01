@@ -67,9 +67,17 @@ export const DiscussView = (props: { cards: CardState[]; index: number }) => {
       : sortedCards.at(index)
   )!!;
 
+  const closeRetro = async () => {
+    const res = confirm(`This action will close the retro session.
+Click ok to go ahead.`);
+    if (res) {
+      await State.nextStage();
+    }
+  };
+
   return (
     <>
-      <CloseRetro onClick={async () => await State.nextStage()} />
+      <CloseRetro onClick={async () => await closeRetro()} />
       <ButtonsContainer>
         <Prev
           onClick={() => State.changeDiscussCard("decrement")}

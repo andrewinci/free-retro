@@ -84,6 +84,15 @@ function buildColumn(
   );
 }
 
+const nextStage = async () => {
+  const res =
+    confirm(`Before moving to the next stage, make sure that everyone is ready to go ahead.
+Click ok to go to the next stage`);
+  if (res) {
+    await State.nextStage();
+  }
+};
+
 const BoardView = (props: {
   columnsData: ColumnState[];
   stage: Stage;
@@ -97,9 +106,7 @@ const BoardView = (props: {
         <p>step:</p>
         <h2>{stageToString(stage)}</h2>
       </StageText>
-      <NextButton onClick={async () => await State.nextStage()}>
-        Next
-      </NextButton>
+      <NextButton onClick={async () => await nextStage()}>Next</NextButton>
       <ColumnContainer>
         {columnsData.map((column, i) =>
           buildColumn(i, column, readOnly ?? false, vote)
