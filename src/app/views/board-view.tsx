@@ -19,17 +19,9 @@ const NextButton = styled(RightArrowButton)`
   width: 5em;
 `;
 
-const PrevButton = styled(LeftArrowButton)`
-  position: fixed;
-  left: 1em;
-  top: 1em;
-  height: 5em;
-  width: 5em;
-`;
-
 const StageText = styled.div`
   position: fixed;
-  left: 10em;
+  left: 2em;
   top: 2em;
   h2 {
     margin: 0;
@@ -139,12 +131,8 @@ const BoardView = (props: {
     }
   };
   const next = async () => await changeStage("next");
-  const back = async () => await changeStage("back");
   return (
     <>
-      {stage != Stage.AddTickets && (
-        <PrevButton onClick={back}>Back</PrevButton>
-      )}
       <StageText>
         <p>step:</p>
         <h2>{stageToString(stage)}</h2>
