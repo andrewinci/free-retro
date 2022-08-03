@@ -58,7 +58,7 @@ const CardContent = (props: CardProps & CardContainerProps) => {
       <TextArea
         // must be readonly if blurred
         readOnly={readOnly || blur}
-        text={text}
+        text={blur ? text.replace(/[^\s]/g, "*") : text}
         onTextChange={(newText) => (onTextChange ? onTextChange(newText) : {})}
       />
     </CardContentDiv>
