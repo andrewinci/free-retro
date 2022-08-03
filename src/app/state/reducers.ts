@@ -83,10 +83,12 @@ export const setColumnTitle = (columnIndex: number, title: string) =>
 export const moveCardToColumn = (src: CardPosition, column: number) => {
   changeState(`move card`, (state) => {
     if (!state.columns) return;
-    console.log(src, column);
     const srcGroup = state.columns[src.column].groups[src.group];
     const srcCard = srcGroup.cards[src.card];
-    const dstColumn = state.columns[column];
+    let dstColumn = state.columns[column];
+    if (srcCard.originColumn != dstColumn.title) {
+      dstColumn = state.columns.find((c) => c.title == srcCard.originColumn)!!;
+    }
     dstColumn.groups.push({
       votes: {},
       cards: [
@@ -113,7 +115,6 @@ export const moveCardToColumn = (src: CardPosition, column: number) => {
 export const moveCard = (src: CardPosition, dst: GroupPosition) => {
   changeState(`move card`, (state) => {
     if (!state.columns) return;
-    console.log(src, dst);
     const srcGroup = state.columns[src.column].groups[src.group];
     const srcCard = srcGroup.cards[src.card];
     const dstGroup = state.columns[dst.column].groups[dst.group];
