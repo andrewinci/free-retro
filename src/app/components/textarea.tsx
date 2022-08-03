@@ -34,10 +34,13 @@ type TextAreaProps = {
   onTextChange?: onTextChangeHandler;
   readOnly?: boolean;
   className?: string;
+  placeholder?: string;
+  hidden?: boolean;
 };
 
 export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
-  const { text, onTextChange, className, readOnly } = props;
+  const { text, className, readOnly, placeholder, hidden } = props;
+  const { onTextChange } = props;
   const textInput = useRef<any>(null);
 
   const autosize = (textarea: HTMLTextAreaElement) => {
@@ -50,7 +53,9 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   return (
     <StyledTextArea
       ref={textInput}
+      hidden={hidden}
       readOnly={readOnly}
+      placeholder={placeholder}
       className={className}
       value={text}
       onInput={(e) => autosize(e.currentTarget)}
@@ -76,4 +81,8 @@ export const Title = styled(TextArea)`
   font-size: 2em;
   height: 60px;
   text-align: center;
+`;
+
+export const GroupTitle = styled(Title)`
+  font-size: 1.3em;
 `;

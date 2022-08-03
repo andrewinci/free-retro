@@ -7,7 +7,7 @@ import {
 } from "../components/buttons";
 import { CardGroup } from "../components/card";
 import { VotesLine } from "../components/vote-line";
-import { CardGroupState, CardState } from "../state";
+import { CardGroupState } from "../state";
 import * as State from "../state";
 
 const CloseRetro = styled(CloseButton)`
@@ -27,7 +27,6 @@ const ButtonsContainer = styled.div`
 `;
 
 const Prev = styled(LeftArrowButton)`
-  margin-bottom: 2em;
   height: 3em;
   width: 3em;
 `;
@@ -35,13 +34,12 @@ const Prev = styled(LeftArrowButton)`
 const Next = styled(RightArrowButton)`
   position: absolute;
   right: 1em;
-  margin-bottom: 2em;
   height: 3em;
   width: 3em;
 `;
 
 export const DiscussView = (props: {
-  cards: (CardState | CardGroupState)[];
+  cards: CardGroupState[];
   index: number;
 }) => {
   const { cards, index } = props;
@@ -63,7 +61,7 @@ Click ok to go ahead.`);
     );
   }
 
-  const totalVotes = (c: CardState | CardGroupState) =>
+  const totalVotes = (c: CardGroupState) =>
     Object.values(c.votes)
       .map((v) => v.value)
       .reduce((a, b) => a + b, 0);
@@ -89,11 +87,13 @@ Click ok to go ahead.`);
           onClick={() => State.changeDiscussCard("increment")}
           disabled={index > sortedCards.length}></Next>
         <CardGroup
-          cards={("cards" in card ? card.cards : [card]).map((c) => ({
+          title={card.title}
+          cards={card.cards.map((c) => ({
             text: c.text,
             cardType: c.originColumn,
             color: c.color,
           }))}
+          readOnlyTitle={true}
           readOnly={true}>
           <VotesLine readonly={true} votes={votes}></VotesLine>
         </CardGroup>

@@ -58,7 +58,7 @@ export const addColumn = () =>
       state.columns = [];
     }
     state.columns.push({
-      title: EMPTY_COLUMN_TITLE,
+      title: "",
       groups: [],
     });
   });
@@ -119,6 +119,14 @@ export const moveCardToColumn = (src: CardPosition, column: number) =>
   );
 
 // card reducers
+export const setGroupTitle = (position: GroupPosition, title: string) =>
+  changeState(`set group title`, (state) => {
+    if (!state.columns) return;
+    console.log(title);
+    const { column, group } = position;
+    state.columns[column].groups[group].title = title;
+  });
+
 export const moveCard = (src: CardPosition, dst: GroupPosition) => {
   changeState(`move card`, (state) => {
     if (!state.columns) return;

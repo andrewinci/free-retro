@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import styled from "styled-components";
 import { CloseButton } from "./buttons";
-import { TextArea } from "./textarea";
+import { GroupTitle, TextArea } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
 
 type CardContainerProps = {
@@ -24,7 +24,9 @@ type CardProps = {
 
 type CardGroupProps = {
   title?: string;
+  readOnlyTitle?: boolean;
   cards: CardProps[];
+  onTitleChange?: (_: string) => void;
 };
 
 const CardContent = (props: CardProps & CardContainerProps) => {
@@ -76,7 +78,15 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
   }));
   return (
     <Container ref={drop} className={props.className}>
-      {/* //todo: add an editable title here */}
+      <GroupTitle
+        hidden={cardProps.length == 1}
+        text={props.title}
+        placeholder="Group title"
+        readOnly={props.readOnlyTitle}
+        onTextChange={(text) =>
+          props.onTitleChange ? props.onTitleChange(text) : {}
+        }
+      />
       {cardProps.map((p, i) => (
         <CardContent {...p} key={i}></CardContent>
       ))}

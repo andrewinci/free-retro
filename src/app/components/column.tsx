@@ -68,6 +68,7 @@ export const Column = (props: ColumnProps) => {
       />
       <div>
         <Title
+          placeholder="Title"
           readOnly={readOnly}
           text={title}
           onTextChange={(t) => (onTitleChange ? onTitleChange(t) : {})}

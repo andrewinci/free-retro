@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  AddButton,
-  LeftArrowButton,
-  RightArrowButton,
-} from "../components/buttons";
+import { AddButton, RightArrowButton } from "../components/buttons";
 import { CardGroup } from "../components/card";
 import { Column, ColumnContainer } from "../components/column";
 import { VotesLine } from "../components/vote-line";
@@ -74,6 +70,10 @@ function BoardCard(props: {
       canDrag={stage == Stage.Group}
       onCloseClicked={deleteCard}
       onTextChange={changeCardText}
+      title={card.title}
+      onTitleChange={(title) =>
+        State.setGroupTitle({ ...card.cards[0].position }, title)
+      }
       blur={stage == Stage.AddTickets && cards[0].ownerId != getUser()?.id}
       readOnly={readOnly}>
       {stage != Stage.AddTickets && stage != Stage.Group && (
