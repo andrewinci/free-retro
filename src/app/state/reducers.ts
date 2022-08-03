@@ -80,36 +80,43 @@ export const setColumnTitle = (columnIndex: number, title: string) =>
     }
   });
 
-export const moveCardToColumn = (src: CardPosition, column: number) => {
-  changeState(`move card`, (state) => {
-    if (!state.columns) return;
-    const srcGroup = state.columns[src.column].groups[src.group];
-    const srcCard = srcGroup.cards[src.card];
-    let dstColumn = state.columns[column];
-    if (srcCard.originColumn != dstColumn.title) {
-      dstColumn = state.columns.find((c) => c.title == srcCard.originColumn)!!;
-    }
-    dstColumn.groups.push({
-      votes: {},
-      cards: [
-        {
-          position: { column, group: dstColumn.groups.length, card: 0 },
-          originColumn: srcCard.originColumn,
-          ownerId: srcCard.ownerId,
-          text: srcCard.text,
-          color: srcCard.color,
-        },
-      ],
-    });
-    srcGroup.cards.splice(src.card, 1);
-    // delete the group if there are no more cards
-    if (srcGroup.cards.length == 0) {
-      state.columns[src.column].groups.splice(src.group, 1);
-    }
-    // re-calculate all the positions
-    recalculatePositions(state);
+const moveCardToColumnStateful = (
+  state: AppState,
+  src: CardPosition,
+  column: number
+) => {
+  if (!state.columns) return;
+  const srcGroup = state.columns[src.column].groups[src.group];
+  const srcCard = srcGroup.cards[src.card];
+  let dstColumn = state.columns[column];
+  if (srcCard.originColumn != dstColumn.title) {
+    dstColumn = state.columns.find((c) => c.title == srcCard.originColumn)!!;
+  }
+  dstColumn.groups.push({
+    votes: {},
+    cards: [
+      {
+        position: { column, group: dstColumn.groups.length, card: 0 },
+        originColumn: srcCard.originColumn,
+        ownerId: srcCard.ownerId,
+        text: srcCard.text,
+        color: srcCard.color,
+      },
+    ],
   });
+  srcGroup.cards.splice(src.card, 1);
+  // delete the group if there are no more cards
+  if (srcGroup.cards.length == 0) {
+    state.columns[src.column].groups.splice(src.group, 1);
+  }
+  // re-calculate all the positions
+  recalculatePositions(state);
 };
+
+export const moveCardToColumn = (src: CardPosition, column: number) =>
+  changeState(`move card`, (state) =>
+    moveCardToColumnStateful(state, src, column)
+  );
 
 // card reducers
 export const moveCard = (src: CardPosition, dst: GroupPosition) => {
@@ -214,11 +221,24 @@ export const updateCardVotes = (
 function recalculatePositions(state: AppState) {
   if (!state.columns) return;
   for (let column = 0; column < state.columns.length; column++) {
-    const groups = state.columns[column].groups;
+    const columnState = state.columns[column];
+    const groups = columnState.groups;
     for (let group = 0; group < groups.length; group++) {
       const cards = state.columns[column].groups[group].cards;
-      for (let card = 0; card < cards.length; card++) {
-        cards[card].position = { column, group, card };
+      // single cards should be in the right column
+      if (cards.length == 1 && cards[0].originColumn != columnState.title) {
+        const rightColumnIndex = state.columns.findIndex(
+          (c) => c.title == cards[0].originColumn
+        );
+        moveCardToColumnStateful(
+          state,
+          { column, group, card: 0 },
+          rightColumnIndex
+        );
+      } else {
+        for (let card = 0; card < cards.length; card++) {
+          cards[card].position = { column, group, card };
+        }
       }
     }
   }
