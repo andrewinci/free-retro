@@ -5,9 +5,9 @@ import {
   LeftArrowButton,
   RightArrowButton,
 } from "../components/buttons";
-import Card from "../components/card";
+import { CardGroup } from "../components/card";
 import { VotesLine } from "../components/vote-line";
-import { CardState } from "../state";
+import { CardGroupState, CardState } from "../state";
 import * as State from "../state";
 
 const CloseRetro = styled(CloseButton)`
@@ -40,7 +40,10 @@ const Next = styled(RightArrowButton)`
   width: 3em;
 `;
 
-export const DiscussView = (props: { cards: CardState[]; index: number }) => {
+export const DiscussView = (props: {
+  cards: (CardState | CardGroupState)[];
+  index: number;
+}) => {
   const { cards, index } = props;
 
   const closeRetro = async () => {
@@ -60,7 +63,7 @@ Click ok to go ahead.`);
     );
   }
 
-  const totalVotes = (c: CardState) =>
+  const totalVotes = (c: CardState | CardGroupState) =>
     Object.values(c.votes)
       .map((v) => v.value)
       .reduce((a, b) => a + b, 0);
@@ -85,16 +88,15 @@ Click ok to go ahead.`);
         <Next
           onClick={() => State.changeDiscussCard("increment")}
           disabled={index > sortedCards.length}></Next>
-        <Card
-          showCardType={true}
-          cardType={card.originColumn}
-          text={card.text}
-          color={card.color}
-          readOnly={true}
-          onTextChange={() => {}}
-          onCloseClicked={() => {}}>
+        <CardGroup
+          cards={("cards" in card ? card.cards : [card]).map((c) => ({
+            text: c.text,
+            cardType: c.originColumn,
+            color: c.color,
+          }))}
+          readOnly={true}>
           <VotesLine readonly={true} votes={votes}></VotesLine>
-        </Card>
+        </CardGroup>
       </ButtonsContainer>
     </>
   );

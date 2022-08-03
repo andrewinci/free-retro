@@ -1,14 +1,16 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Card from "./card";
+import { CardGroup } from "./card";
 
 describe("Test card component", () => {
-  test("Card should render", () => {
+  test("CardGroup should render with no cards", () => {
+    const component = renderer.create(<CardGroup cards={[]}></CardGroup>);
+    expect(component).toBeDefined();
+  });
+
+  test("CardGroup should render", () => {
     const component = renderer.create(
-      <Card
-        text="some text"
-        onCloseClicked={() => {}}
-        onTextChange={() => {}}></Card>
+      <CardGroup cards={[{ text: "test1" }, { text: "test2" }]}></CardGroup>
     );
     expect(component).toBeDefined();
   });

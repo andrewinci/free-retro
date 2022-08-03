@@ -7,6 +7,8 @@ import CreateRetroView from "./views/create-retro";
 import { DiscussView } from "./views/discuss";
 import EndRetroView from "./views/end-view";
 import JoinRetroView from "./views/join-retro";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 const Container = styled.div`
   padding-left: 1rem;
@@ -49,6 +51,13 @@ export const App = () => {
             stage={appState.stage}
             readOnly={false}></BoardView>
         );
+      case Stage.Group:
+        return (
+          <BoardView
+            columnsData={appState.columns ?? []}
+            stage={appState.stage}
+            readOnly={true}></BoardView>
+        );
       case Stage.Vote:
         return (
           <BoardView
@@ -59,7 +68,7 @@ export const App = () => {
       case Stage.Discuss:
         return (
           <DiscussView
-            cards={appState.columns?.flatMap((c) => c.cards) ?? []}
+            cards={appState.columns?.flatMap((c) => c.groups) ?? []}
             index={appState.discussCardIndex?.value ?? 0}></DiscussView>
         );
       case Stage.End:
@@ -67,13 +76,15 @@ export const App = () => {
     }
   };
   return (
-    <Container>
-      <Title>
-        <h1>⚡ Free retro 🗣️</h1>
-        {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
-      </Title>
-      <Space />
-      {currentView()}
-    </Container>
+    <DndProvider backend={HTML5Backend}>
+      <Container>
+        <Title>
+          <h1>⚡ Free retro 🗣️</h1>
+          {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
+        </Title>
+        <Space />
+        {currentView()}
+      </Container>
+    </DndProvider>
   );
 };

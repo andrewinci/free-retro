@@ -1,7 +1,89 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import styled from "styled-components";
 import { CloseButton } from "./buttons";
 import { TextArea } from "./textarea";
+import { useDrag, useDrop } from "react-dnd";
+
+type CardContainerProps = {
+  className?: string;
+  readOnly?: boolean;
+  blur?: boolean;
+  children?: React.ReactNode;
+  canDrag?: boolean;
+  onCloseClicked?: () => void;
+  onTextChange?: (_: string) => void;
+  onDrop?: (id: any) => void;
+};
+
+type CardProps = {
+  id?: any;
+  text: string;
+  cardType?: string;
+  color?: string;
+};
+
+type CardGroupProps = {
+  title?: string;
+  cards: CardProps[];
+};
+
+const CardContent = (props: CardProps & CardContainerProps) => {
+  const { text, readOnly, blur, color, onCloseClicked, onTextChange } = props;
+  const { cardType, canDrag } = props;
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      canDrag: () => canDrag ?? false,
+      type: "card",
+      item: props.id,
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }),
+    [canDrag ?? false, text]
+  );
+  return (
+    <CardContentDiv
+      ref={drag}
+      style={{ opacity: isDragging ? 0.5 : 1 }}
+      color={color}
+      blur={blur ?? false}
+      showCardType={cardType != null}>
+      <TopCloseButton
+        hidden={text.length > 0 || readOnly || blur}
+        onClick={() => (onCloseClicked ? onCloseClicked() : {})}
+      />
+      <CardType hidden={!cardType}>{cardType}</CardType>
+      <TextArea
+        // must be readonly if blurred
+        readOnly={readOnly || blur}
+        text={text}
+        onTextChange={(newText) => (onTextChange ? onTextChange(newText) : {})}
+      />
+    </CardContentDiv>
+  );
+};
+
+export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
+  const cardProps = props.cards.map((c) => ({ ...props, ...c }));
+  const [_, drop] = useDrop(() => ({
+    accept: "card",
+    drop: (id, _) => {
+      props?.onDrop ? props.onDrop(id) : {};
+    },
+    collect: (monitor) => ({
+      item: monitor.getItem(),
+    }),
+  }));
+  return (
+    <Container ref={drop} className={props.className}>
+      {/* //todo: add an editable title here */}
+      {cardProps.map((p, i) => (
+        <CardContent {...p} key={i}></CardContent>
+      ))}
+      {props.children}
+    </Container>
+  );
+};
 
 const Container = styled.div`
   margin: 0.5em;
@@ -11,8 +93,9 @@ const Container = styled.div`
   font-size: 1.2em;
 `;
 
-const CardContainer = styled.div<{ blur: boolean; showCardType: boolean }>`
+const CardContentDiv = styled.div<{ blur: boolean; showCardType: boolean }>`
   padding: 0.6em;
+  position: relative;
   ${(props) => props.showCardType && `padding-top: 1.2em;`}
   background-color: ${(props) => props.color};
   ${(props) => {
@@ -49,50 +132,3 @@ const CardType = styled.p`
   white-space: nowrap;
   overflow: hidden;
 `;
-
-type CardProps = {
-  text: string;
-  showCardType?: boolean;
-  cardType?: string;
-  onTextChange: (_: string) => void;
-  color?: string;
-  readOnly?: boolean;
-  blur?: boolean;
-  onCloseClicked: () => void;
-  className?: string | undefined;
-  children?: React.ReactNode;
-};
-
-const Card: FunctionComponent<CardProps> = (props: CardProps) => {
-  const { text, readOnly, blur, color, onCloseClicked, onTextChange } = props;
-  const { showCardType, cardType } = props;
-  return (
-    <Container className={props.className}>
-      <CardContainer
-        color={color}
-        blur={blur ?? false}
-        showCardType={showCardType ?? false}>
-        <TopCloseButton
-          hidden={text.length > 0 || readOnly || blur}
-          onClick={(_) => onCloseClicked()}
-        />
-        <CardType hidden={!showCardType}>{cardType}</CardType>
-        <TextArea
-          // must be readonly if blurred
-          readOnly={readOnly || blur}
-          text={text}
-          onTextChange={(newText) => onTextChange(newText)}
-        />
-      </CardContainer>
-      {props.children}
-    </Container>
-  );
-};
-
-Card.defaultProps = {
-  readOnly: false,
-  blur: false,
-  color: "orange",
-};
-
-export default Card;

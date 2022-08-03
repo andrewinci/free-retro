@@ -5,26 +5,39 @@ export type User = {
   username: string;
 };
 
-export type CardState = {
+export type GroupPosition = {
+  column: number;
+  group: number;
+};
+
+export type CardPosition = {
+  card: number;
+} & GroupPosition;
+
+type Card = {
+  position: CardPosition;
   originColumn: string;
   ownerId: string;
   text: string;
   color?: string;
+};
+
+export type CardGroupState = {
+  title?: string;
+  cards: Card[];
   votes: Record<string, Automerge.Counter>;
 };
 
 export type ColumnState = {
   title: string;
-  cards: CardState[];
+  groups: CardGroupState[];
 };
 
 export enum Stage {
   Create,
   Join,
   AddTickets,
-  // TODO: group will need drag and drop
-  // see: https://codesandbox.io/s/github/react-dnd/react-dnd/tree/gh-pages/examples_ts/04-sortable/simple?from-embed=&file=/package.json:566-585
-  // Group,
+  Group,
   Vote,
   Discuss,
   End,

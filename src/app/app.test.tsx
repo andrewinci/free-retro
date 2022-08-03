@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { App } from "./app";
-import { AppState, Stage } from "./state";
+import { AppState } from "./state";
 import * as AutomergeState from "./state/automerge-state";
 
 describe("Test button components", () => {

@@ -38,6 +38,7 @@ export async function joinSession(sessionId: string) {
 
 export async function broadcast<T>(sessionId: string, state: T) {
   console.log("Broadcast state");
+  console.log(state);
   const rawState = Automerge.save(state);
   const broadcastMessage: BroadcastMessage = {
     action: "broadcast",
