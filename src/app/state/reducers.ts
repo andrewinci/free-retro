@@ -1,6 +1,6 @@
 import { randomColor, randomId } from "../helper/random";
 import { changeState, getAppState } from "./automerge-state";
-import { getUser, setUserName } from "./user";
+import { getUser } from "./user";
 import * as Automerge from "automerge";
 import { AppState, CardPosition, GroupPosition, Stage } from "./model";
 export const EMPTY_COLUMN_TITLE = "Empty column";
@@ -16,7 +16,7 @@ export const changeDiscussCard = (changeType: "increment" | "decrement") => {
   if (currentIndex >= totalCards - 1 && changeType == "increment") return;
   if (currentIndex <= 0 && changeType == "decrement") return;
 
-  changeState(`change discussed card`, (state) => {
+  changeState((state) => {
     if (!state.discussCardIndex) {
       state.discussCardIndex = new Automerge.Counter(0);
     }
@@ -32,7 +32,7 @@ export const changeDiscussCard = (changeType: "increment" | "decrement") => {
 };
 
 export const createRetro = (username: string, retroName: string) =>
-  changeState(`create retro`, (state) => {
+  changeState((state) => {
     state.retroName = retroName;
     state.stage = Stage.AddTickets;
   });
@@ -41,7 +41,7 @@ export const changeStage = (change: "next" | "back") => {
   const currentStage = getAppState().stage ?? 0;
   if (currentStage <= 0 && change == "back") return;
   if (currentStage >= Stage.End && change == "next") return;
-  changeState(`next stage`, (state) => {
+  changeState((state) => {
     if (change == "back") {
       state.stage -= 1;
     } else if (change == "next") {
@@ -53,7 +53,7 @@ export const changeStage = (change: "next" | "back") => {
 // column reducers
 
 export const addColumn = () =>
-  changeState(`add column`, (state) => {
+  changeState((state) => {
     if (!state.columns) {
       state.columns = [];
     }
@@ -64,13 +64,13 @@ export const addColumn = () =>
   });
 
 export const deleteColumn = (columnIndex: number) =>
-  changeState(`delete column ${columnIndex}`, (state) => {
+  changeState((state) => {
     if (!state.columns) state.columns = [];
     state.columns.splice(columnIndex, 1);
   });
 
 export const setColumnTitle = (columnIndex: number, title: string) =>
-  changeState(`set column ${columnIndex} title`, (state) => {
+  changeState((state) => {
     if (!state.columns) state.columns = [];
     state.columns[columnIndex].title = title;
     for (let c of state.columns[columnIndex].groups) {
@@ -114,13 +114,11 @@ const moveCardToColumnStateful = (
 };
 
 export const moveCardToColumn = (src: CardPosition, column: number) =>
-  changeState(`move card`, (state) =>
-    moveCardToColumnStateful(state, src, column)
-  );
+  changeState((state) => moveCardToColumnStateful(state, src, column));
 
 // card reducers
 export const setGroupTitle = (position: GroupPosition, title: string) =>
-  changeState(`set group title`, (state) => {
+  changeState((state) => {
     if (!state.columns) return;
     console.log(title);
     const { column, group } = position;
@@ -128,7 +126,7 @@ export const setGroupTitle = (position: GroupPosition, title: string) =>
   });
 
 export const moveCard = (src: CardPosition, dst: GroupPosition) => {
-  changeState(`move card`, (state) => {
+  changeState((state) => {
     if (!state.columns) return;
     const srcGroup = state.columns[src.column].groups[src.group];
     const srcCard = srcGroup.cards[src.card];
@@ -151,7 +149,7 @@ export const moveCard = (src: CardPosition, dst: GroupPosition) => {
 };
 
 export const addEmptyCard = (columnIndex: number) =>
-  changeState(`add empty card to ${columnIndex}`, (state) => {
+  changeState((state) => {
     if (!state.columns) return;
     const column = state.columns[columnIndex];
     column.groups.push({
@@ -173,7 +171,7 @@ export const addEmptyCard = (columnIndex: number) =>
   });
 
 export const deleteCard = (columnIndex: number, cardIndex: number) =>
-  changeState(`delete card`, (state) => {
+  changeState((state) => {
     if (!state.columns) return;
     state.columns[columnIndex].groups.splice(cardIndex, 1);
   });
@@ -183,7 +181,7 @@ export const updateCardText = (
   cardIndex: number,
   newText: string
 ) =>
-  changeState(`update card text`, (state) => {
+  changeState((state) => {
     if (!state.columns) return;
     let card = state.columns[columnIndex].groups[cardIndex];
     // strong assumption: only one card in the group
@@ -209,7 +207,7 @@ export const updateCardVotes = (
   cardIndex: number,
   changeType: "increment" | "decrement"
 ) =>
-  changeState(`${changeType} card ${cardIndex} votes`, (state) => {
+  changeState((state) => {
     if (!state.columns) return;
     const userId = getUser()?.id!!;
     const card = state.columns[columnIndex].groups[cardIndex];

@@ -26,8 +26,8 @@ export function onStateChange(f: (newState: AppState) => void) {
   observable.observe(doc, (a, b, newState) => f(newState));
 }
 
-export async function changeState(msg: string, f: (state: AppState) => void) {
-  doc = Automerge.change(doc, msg, (s) => f(s));
+export async function changeState(f: (state: AppState) => void) {
+  doc = Automerge.change(doc, (s) => f(s));
   // broadcast to all clients
   await broadcast(doc.sessionId, doc);
   localStorage.setItem(LOCAL_STATE_KEY, toBase64(Automerge.save(doc)));
