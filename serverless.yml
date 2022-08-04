@@ -2,8 +2,10 @@ service: free-retro
 
 plugins:
   - serverless-finch
+  - serverless-plugin-log-retention
 
 custom:
+  logRetentionInDays: 30
   client:
     bucketName: free-retro
     distributionFolder: dist/app

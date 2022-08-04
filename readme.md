@@ -13,6 +13,7 @@ Deploy to AWS: `yarn deploy`
 ## Todo
 
 - [x] Grouping
+- [ ] Use cloudfront and switch to https
 - [ ] CI/CD
 - [ ] Readme
 - [ ] Improve code coverage

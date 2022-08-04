@@ -44,6 +44,7 @@
     "react-test-renderer": "^18.2.0",
     "serverless": "^3.21.0",
     "serverless-finch": "^4.0.0",
+    "serverless-plugin-log-retention": "^2.0.0",
     "ts-jest": "^28.0.7"
   },
   "prettier": {

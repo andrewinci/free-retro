@@ -4537,6 +4537,11 @@ ncjsm@^4.3.0:
     fs2 "^0.3.9"
     type "^2.6.0"
 
+nco@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/nco/-/nco-1.0.1.tgz#868de423b4f45f8c05555f1ccb28aa788be06c52"
+  integrity sha512-tjlHSkSvVzRGeBXIOimMTA2J3ZUP9LLUvqv+JeBLGAseZP1syF/LgetKNJ8zMiXosuKJHx7/KSIv8UDyKXoeKQ==
+
 next-tick@1, next-tick@^1.0.0, next-tick@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
@@ -5200,6 +5205,11 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "^2.8.1"
 
+semver@5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
+  integrity sha512-WfG/X9+oATh81XtllIo/I8gOiY9EXRdv1cQdyykeXK17YcUW3EXUAi2To4pcH6nZtJPr7ZOpM5OMyWJZm+8Rsg==
+
 semver@7.x, semver@^7.3.5, semver@^7.3.7:
   version "7.3.7"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.7.tgz#12c5b649afdbf9049707796e22a4028814ce523f"
@@ -5226,6 +5236,14 @@ serverless-finch@^4.0.0:
     is_js "^0.9.0"
     mime "^3.0.0"
     minimatch "^5.0.1"
+
+serverless-plugin-log-retention@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/serverless-plugin-log-retention/-/serverless-plugin-log-retention-2.0.0.tgz#da0b5b6d01a5b19c6fd6d3e0e36642f1fc5739ad"
+  integrity sha512-TXKMfLdVxhamyaDbqr+gwjIeiqSnDw3z+bZQy0W2ctRpcedUY8hg58wwMZqAFyMS3QekHT9srCe4Qv7lfPwkGw==
+  dependencies:
+    nco "1.0.1"
+    semver "5.4.1"
 
 serverless@^3.21.0:
   version "3.21.0"
