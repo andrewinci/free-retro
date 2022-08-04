@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useEffect, useRef } from "react";
+import React, {
+  FunctionComponent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 
 const StyledTextArea = styled.textarea`
@@ -31,6 +37,7 @@ type onTextChangeHandler = (_: string) => void;
 
 type TextAreaProps = {
   text?: string;
+  reduceTextChangeUpdates?: boolean;
   onTextChange?: onTextChangeHandler;
   readOnly?: boolean;
   className?: string;
@@ -39,16 +46,22 @@ type TextAreaProps = {
 };
 
 export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
-  const { text, className, readOnly, placeholder, hidden } = props;
-  const { onTextChange } = props;
+  const { className, readOnly, placeholder, hidden } = props;
+  const { text, onTextChange, reduceTextChangeUpdates } = props;
   const textInput = useRef<any>(null);
-
+  const [state, setState] = useState(text);
   const autosize = (textarea: HTMLTextAreaElement) => {
     textarea.style.cssText = "height:auto; padding:0";
     textarea.style.cssText = `height:${textarea.scrollHeight}px`;
   };
 
-  useEffect(() => autosize(textInput.current));
+  useMemo(() => setState(text), [text]);
+  useEffect(() => {
+    autosize(textInput.current);
+    if (readOnly) {
+      textInput.current.blur();
+    }
+  });
 
   return (
     <StyledTextArea
@@ -57,15 +70,21 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
       readOnly={readOnly}
       placeholder={placeholder}
       className={className}
-      value={text}
+      value={state}
       onInput={(e) => autosize(e.currentTarget)}
       onChange={(e) => {
-        if (onTextChange) {
+        setState(e.target.value);
+      }}
+      onKeyUp={(e) => {
+        autosize(e.target);
+        // update upstream state word by word
+        // if reduceTextChangeUpdates
+        if ((!reduceTextChangeUpdates || e.key == " ") && onTextChange) {
           onTextChange(e.target.value);
         }
       }}
-      onKeyDown={(e) => autosize(e.target)}
       onFocus={(e) => autosize(e.target)}
+      onBlur={(e) => (onTextChange ? onTextChange(e.target.value) : {})}
     />
   );
 };

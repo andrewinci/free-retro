@@ -17,7 +17,6 @@ export function wsInit() {
   });
 
   socket.addEventListener("message", (event) => {
-    console.log("Server message received");
     const serverMessage = JSON.parse(event.data) as WSServerMessage;
     switch (serverMessage.action) {
       case "update":
@@ -37,8 +36,6 @@ export async function joinSession(sessionId: string) {
 }
 
 export async function broadcast<T>(sessionId: string, state: T) {
-  console.log("Broadcast state");
-  console.log(state);
   const rawState = Automerge.save(state);
   const broadcastMessage: BroadcastMessage = {
     action: "broadcast",

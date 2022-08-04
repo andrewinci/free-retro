@@ -19,8 +19,7 @@ export async function sendToClient(
     Data: enc.encode(JSON.stringify(message)),
   });
   try {
-    const response = await client.send(command);
-    console.log(response);
+    await client.send(command);
     return true;
   } catch {
     console.log("Client disconnected!");

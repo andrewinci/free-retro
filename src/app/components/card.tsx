@@ -59,6 +59,9 @@ const CardContent = (props: CardProps & CardContainerProps) => {
         // must be readonly if blurred
         readOnly={readOnly || blur}
         text={blur ? text.replace(/[^\s]/g, "*") : text}
+        // this setting will update the text word by word
+        // instead of char by char
+        reduceTextChangeUpdates={true}
         onTextChange={(newText) => (onTextChange ? onTextChange(newText) : {})}
       />
     </CardContentDiv>
