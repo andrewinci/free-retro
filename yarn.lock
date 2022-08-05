@@ -5245,6 +5245,11 @@ serverless-plugin-log-retention@^2.0.0:
     nco "1.0.1"
     semver "5.4.1"
 
+serverless-single-page-app-plugin@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/serverless-single-page-app-plugin/-/serverless-single-page-app-plugin-1.0.4.tgz#87dce95ba03b519b7327c042b162c895a339103a"
+  integrity sha512-CMCDKGLuExkVzpgEDfOBR0HJWNtMGR0wzZNVx/Pik5AHj7mvs8MLCubuy5Bp1PHWyxtyXjV9pC4QbzASoFl4pQ==
+
 serverless@^3.21.0:
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/serverless/-/serverless-3.21.0.tgz#1e2009f08ec95d96f61122846f680784280f4e63"
