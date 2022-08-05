@@ -1,4 +1,3 @@
-import React from "react";
 import renderer from "react-test-renderer";
 import { Stage } from "../state";
 import BoardView from "./board-view";

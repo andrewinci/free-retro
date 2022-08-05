@@ -2,14 +2,13 @@ import { User } from ".";
 import { randomId } from "../helper/random";
 
 const USER_KEY = "free-retro:user";
-const DEFAULT_USER = "Coolio";
 
-export function getUser(): User {
+export function getUser(): User | null {
   const user = localStorage.getItem(USER_KEY);
   if (user) {
     return JSON.parse(user) as User;
   } else {
-    return setUserName(DEFAULT_USER);
+    return null;
   }
 }
 

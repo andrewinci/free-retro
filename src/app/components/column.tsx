@@ -1,4 +1,3 @@
-import React from "react";
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
 import { AddButton, CloseButton } from "./buttons";
