@@ -3,7 +3,7 @@ import { AddButton, RightArrowButton } from "../components/buttons";
 import { CardGroup } from "../components/card";
 import { Column, ColumnContainer } from "../components/column";
 import { VotesLine } from "../components/vote-line";
-import { Stage, ColumnState, getUser, CardPosition } from "../state";
+import { Stage, ColumnState, getUser, setUserName } from "../state";
 import * as State from "../state";
 
 const NextButton = styled(RightArrowButton)`
@@ -62,6 +62,7 @@ function BoardCard(props: {
     await State.updateCardVotes(columnIndex, cardIndex, "increment");
   const removeVotes = async () =>
     await State.updateCardVotes(columnIndex, cardIndex, "decrement");
+  const { id: userId } = getUser() ?? setUserName();
   return (
     <CardGroup
       onDrop={(src) => State.moveCard(src, card.cards[0].position)}
@@ -78,7 +79,7 @@ function BoardCard(props: {
       {stage != Stage.AddTickets && stage != Stage.Group && (
         <VotesLine
           readonly={false}
-          votes={card.votes[getUser()?.id!!]?.value ?? 0}
+          votes={card.votes[userId]?.value ?? 0}
           onAddVoteClicked={addVotes}
           onRemoveVoteClicked={removeVotes}></VotesLine>
       )}

@@ -69,11 +69,10 @@ Click ok to go ahead.`);
     .map((c) => ({ votes: totalVotes(c), card: c }))
     .sort((a, b) => b.votes - a.votes);
 
-  const { card, votes } = (
+  const { card, votes } =
     index >= sortedCards.length
       ? sortedCards[sortedCards.length - 1]
-      : sortedCards.at(index)
-  )!!;
+      : sortedCards[index];
 
   return (
     <>

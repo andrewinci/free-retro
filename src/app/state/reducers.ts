@@ -1,8 +1,14 @@
-import { randomColor, randomId } from "../helper/random";
+import { randomColor } from "../helper/random";
 import { changeState, getAppState } from "./automerge-state";
-import { getUser } from "./user";
+import { getUser, setUserName } from "./user";
 import * as Automerge from "automerge";
-import { AppState, CardPosition, GroupPosition, Stage } from "./model";
+import {
+  AppState,
+  CardPosition,
+  ColumnState,
+  GroupPosition,
+  Stage,
+} from "./model";
 export const EMPTY_COLUMN_TITLE = "Empty column";
 
 // app state reducers
@@ -73,8 +79,8 @@ export const setColumnTitle = (columnIndex: number, title: string) =>
   changeState((state) => {
     if (!state.columns) state.columns = [];
     state.columns[columnIndex].title = title;
-    for (let c of state.columns[columnIndex].groups) {
-      for (let c1 of c.cards) {
+    for (const c of state.columns[columnIndex].groups) {
+      for (const c1 of c.cards) {
         c1.originColumn = title;
       }
     }
@@ -88,10 +94,11 @@ const moveCardToColumnStateful = (
   if (!state.columns) return;
   const srcGroup = state.columns[src.column].groups[src.group];
   const srcCard = srcGroup.cards[src.card];
-  let dstColumn = state.columns[column];
+  let dstColumn: ColumnState | undefined = state.columns[column];
   if (srcCard.originColumn != dstColumn.title) {
-    dstColumn = state.columns.find((c) => c.title == srcCard.originColumn)!!;
+    dstColumn = state.columns.find((c) => c.title == srcCard.originColumn);
   }
+  if (!dstColumn) return;
   dstColumn.groups.push({
     votes: {},
     cards: [
@@ -183,13 +190,13 @@ export const updateCardText = (
 ) =>
   changeState((state) => {
     if (!state.columns) return;
-    let card = state.columns[columnIndex].groups[cardIndex];
+    const card = state.columns[columnIndex].groups[cardIndex];
     // strong assumption: only one card in the group
     card.cards[0].text = newText;
   });
 
 const canUserAddVotes = () => {
-  const { id } = getUser()!!;
+  const { id } = getUser() ?? setUserName();
   const { columns } = getAppState();
   const total =
     columns
@@ -209,9 +216,9 @@ export const updateCardVotes = (
 ) =>
   changeState((state) => {
     if (!state.columns) return;
-    const userId = getUser()?.id!!;
+    const userId = (getUser() ?? setUserName()).id;
     const card = state.columns[columnIndex].groups[cardIndex];
-    if (!card.votes[userId!!]) {
+    if (!card.votes[userId]) {
       card.votes[userId] = new Automerge.Counter(0);
     }
     switch (changeType) {

@@ -12,7 +12,7 @@ export function getUser(): User | null {
   }
 }
 
-export function setUserName(username: string): User {
+export function setUserName(username = "username"): User {
   const user = getUser();
   const newUser = user ? { ...user, username } : { id: randomId(), username };
   localStorage.setItem(USER_KEY, JSON.stringify(newUser));

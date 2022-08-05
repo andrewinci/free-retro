@@ -9,7 +9,7 @@ export async function sendToClient(
   endpoint: string,
   connectionId: string
 ): Promise<boolean> {
-  var enc = new TextEncoder();
+  const enc = new TextEncoder();
   const client = new ApiGatewayManagementApiClient({
     apiVersion: "2018-11-29",
     endpoint: endpoint,
