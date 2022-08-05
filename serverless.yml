@@ -85,7 +85,7 @@ resources:
               ## In case you want to restrict the bucket access use S3OriginConfig and remove CustomOriginConfig
               # S3OriginConfig:
               #   OriginAccessIdentity: origin-access-identity/cloudfront/E127EXAMPLE51Z
-          Enabled: 'true'
+          Enabled: "true"
           # Aliases:
           #   - free-retro.andreavinci.xyz
           DefaultRootObject: index.html
@@ -106,14 +106,14 @@ resources:
             TargetOriginId: WebApp
             ## Defining if and how the QueryString and Cookies are forwarded to the origin which in this case is S3
             ForwardedValues:
-              QueryString: 'false'
+              QueryString: "false"
               Cookies:
                 Forward: none
             ## The protocol that users can use to access the files in the origin. To allow HTTP use `allow-all`
             ViewerProtocolPolicy: redirect-to-https
           ## The certificate to use when viewers use HTTPS to request objects.
           ViewerCertificate:
-            CloudFrontDefaultCertificate: 'true'
+            CloudFrontDefaultCertificate: "true"
           ## Uncomment the following section in case you want to enable logging for CloudFront requests
           # Logging:
           #   IncludeCookies: 'false'
@@ -124,4 +124,4 @@ resources:
   Outputs:
     WebAppCloudFrontDistributionOutput:
       Value:
-        'Fn::GetAtt': [ WebAppCloudFrontDistribution, DomainName ]
+        "Fn::GetAtt": [WebAppCloudFrontDistribution, DomainName]

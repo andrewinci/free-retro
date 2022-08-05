@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { EmptyButton } from "../components/buttons";
 
@@ -28,7 +28,7 @@ const EndRetroView = () => {
   return (
     <Container>
       <StyledP>
-        This retros is now concluded. Refresh the page to create a new one.
+        This retro is now concluded. Refresh the page to create a new one.
       </StyledP>
       <RefreshPage
         onClick={() => {
