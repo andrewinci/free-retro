@@ -41,9 +41,11 @@
     "jest": "^28.1.3",
     "jest-localstorage-mock": "^2.4.21",
     "lint-staged": "^13.0.3",
+    "mock-socket": "^9.1.5",
     "prettier": "2.7.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
+    "react-dnd-test-backend": "^16.0.1",
     "react-test-renderer": "^18.2.0",
     "serverless": "^3.21.0",
     "serverless-finch": "^4.0.0",
@@ -64,7 +66,8 @@
     "testEnvironment": "node",
     "resetMocks": false,
     "setupFiles": [
-      "jest-localstorage-mock"
+      "jest-localstorage-mock",
+      "<rootDir>/src/app/test-mocks.ts"
     ],
     "coveragePathIgnorePatterns": [
       "src/app/components/index.ts",
@@ -73,6 +76,22 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/"
-    ]
+    ],
+    "extensionsToTreatAsEsm": [
+      ".ts"
+    ],
+    "transform": {
+      "^.+\\.[tj]s$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!react-dnd|dnd-core|@react-dnd)"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsconfig": {
+          "allowJs": true
+        }
+      }
+    }
   }
 }

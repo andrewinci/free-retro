@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { AddButton, RightArrowButton } from "../components/buttons";
 import { CardGroup } from "../components/card";

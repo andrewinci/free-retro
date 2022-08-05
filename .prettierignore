@@ -1,0 +1,5 @@
+dist/*
+coverage/*
+.gitignore
+.prettierignore
+yarn.lock

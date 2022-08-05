@@ -1,3 +1,4 @@
+import { RestoreSummaryFilterSensitiveLog } from "@aws-sdk/client-dynamodb";
 import React, {
   FunctionComponent,
   useEffect,
@@ -50,7 +51,8 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   const { text, onTextChange, reduceTextChangeUpdates } = props;
   const textInput = useRef<any>(null);
   const [state, setState] = useState(text);
-  const autosize = (textarea: HTMLTextAreaElement) => {
+  const autosize = (textarea: HTMLTextAreaElement | null) => {
+    if (!textarea) return;
     textarea.style.cssText = "height:auto; padding:0";
     textarea.style.cssText = `height:${textarea.scrollHeight}px`;
   };
