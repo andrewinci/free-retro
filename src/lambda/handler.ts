@@ -24,12 +24,13 @@ export const lambdaHandler = async (
     `New connection established: ${event.requestContext.connectionId}`
   );
   const { routeKey, domainName, stage, connectionId } = event.requestContext;
-  const body = event.body ? JSON.parse(event.body!!) : null;
-  if (body) {
+  const body = event.body ? JSON.parse(event.body) : null;
+
+  if (routeKey && body && connectionId) {
     await handle({
-      routeKey: routeKey!!,
+      routeKey,
       endpoint: "https://" + domainName + "/" + stage,
-      connectionId: connectionId!!,
+      connectionId,
       body,
     });
   }

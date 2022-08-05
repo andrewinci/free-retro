@@ -8,7 +8,7 @@ describe("Test button components", () => {
     const getAppStateMock = jest.spyOn(AutomergeState, "getAppState");
     getAppStateMock.mockImplementation(() => ({} as AppState));
     const onStateChangeMock = jest.spyOn(AutomergeState, "onStateChange");
-    onStateChangeMock.mockImplementation(async () => {});
+    onStateChangeMock.mockImplementation();
     const component = renderer.create(<App />);
     expect(component).toBeDefined();
   });

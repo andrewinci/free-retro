@@ -1,11 +1,4 @@
-import { RestoreSummaryFilterSensitiveLog } from "@aws-sdk/client-dynamodb";
-import React, {
-  FunctionComponent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { FunctionComponent, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
 const StyledTextArea = styled.textarea`
@@ -49,7 +42,7 @@ type TextAreaProps = {
 export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   const { className, readOnly, placeholder, hidden } = props;
   const { text, onTextChange, reduceTextChangeUpdates } = props;
-  const textInput = useRef<any>(null);
+  const textInput = useRef<HTMLTextAreaElement>(null);
   const [state, setState] = useState(text);
   const autosize = (textarea: HTMLTextAreaElement | null) => {
     if (!textarea) return;
@@ -61,7 +54,7 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   useEffect(() => {
     autosize(textInput.current);
     if (readOnly) {
-      textInput.current.blur();
+      textInput.current?.blur();
     }
   });
 

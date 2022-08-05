@@ -33,7 +33,8 @@ describe("User store", () => {
     // act
     const user = setUserName(newUsername);
     // assert
-    const newUser = JSON.parse(localStorage.getItem(USER_KEY)!!) as User;
+    const item = localStorage.getItem(USER_KEY) ?? "{}";
+    const newUser = JSON.parse(item) as User;
     expect(newUser).toEqual(user);
   });
 });

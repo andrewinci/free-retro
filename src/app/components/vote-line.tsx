@@ -1,4 +1,3 @@
-import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { AddButton } from "./buttons";
 
@@ -40,9 +39,7 @@ type VotesLineProps = {
   onRemoveVoteClicked?: () => void;
 };
 
-export const VotesLine: FunctionComponent<VotesLineProps> = (
-  props: VotesLineProps
-) => {
+export const VotesLine = (props: VotesLineProps) => {
   const { votes, readonly, onAddVoteClicked, onRemoveVoteClicked } = props;
   return (
     <VotesContainer>

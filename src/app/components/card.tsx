@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useState } from "react";
 import styled from "styled-components";
 import { CloseButton } from "./buttons";
 import { GroupTitle, TextArea } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
+import { CardPosition } from "../state";
 
 type CardContainerProps = {
   className?: string;
@@ -12,11 +12,11 @@ type CardContainerProps = {
   canDrag?: boolean;
   onCloseClicked?: () => void;
   onTextChange?: (_: string) => void;
-  onDrop?: (id: any) => void;
+  onDrop?: (id: CardPosition) => void;
 };
 
 type CardProps = {
-  id?: any;
+  id?: CardPosition;
   text: string;
   cardType?: string;
   color?: string;
@@ -72,7 +72,7 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
   const cardProps = props.cards.map((c) => ({ ...props, ...c }));
   const [_, drop] = useDrop(() => ({
     accept: "card",
-    drop: (id, _) => {
+    drop: (id: CardPosition, _) => {
       props?.onDrop ? props.onDrop(id) : {};
     },
     collect: (monitor) => ({
