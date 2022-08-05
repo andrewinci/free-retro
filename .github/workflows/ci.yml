@@ -20,7 +20,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Test with coverage
-        run: yarn coverage
+        run: yarn coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       - name: Semantic release
         run: yarn release
         env:
