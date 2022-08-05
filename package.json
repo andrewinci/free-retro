@@ -6,6 +6,7 @@
   "scripts": {
     "release": "semantic-release --repositoryUrl=\"https://github.com/andrewinci/free-retro.git\"",
     "postinstall": "husky install",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "coverage": "jest --coverage",
     "test": "jest",
     "copy_artifacts": "mkdir -p dist/app/ && cp src/app/index.html dist/app/index.html && cp artifacts/* dist/app/",
@@ -43,6 +44,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-test-renderer": "^18.0.0",
     "@types/uuid": "^8.3.4",
+    "coveralls": "^3.1.1",
     "esbuild": "^0.14.53",
     "esbuild-serve": "^1.0.1",
     "husky": "^8.0.1",
