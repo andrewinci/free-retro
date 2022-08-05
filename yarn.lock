@@ -800,10 +800,10 @@
     "@aws-sdk/types" "3.127.0"
     tslib "^2.3.1"
 
-"@aws-sdk/util-dynamodb@^3.137.0":
-  version "3.137.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.137.0.tgz#457b89b549868978569d1409df3079d91a0b5946"
-  integrity sha512-HB8AgfI7ztvoNBUy6sLQ0LQIr9Xp89mTkcs8oS2wkUKndwinKkBaUcCZBXVjREs+oStRqcpO0mKHW2PEHc0ChA==
+"@aws-sdk/util-dynamodb@^3.142.0":
+  version "3.142.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.142.0.tgz#13348976b22868428a122aa4c329c2c7329447b3"
+  integrity sha512-imJxJxiZcB50X4/MIe2d4hrKcGPTJQwatbdqp8dpm2NgMzZYp4DMsSPw7J+Q2V2JdmMJ4pPJ2ZKntg/oAnqqJA==
   dependencies:
     tslib "^2.3.1"
 
