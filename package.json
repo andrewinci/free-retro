@@ -40,6 +40,7 @@
     "husky": "^8.0.1",
     "jest": "^28.1.3",
     "jest-localstorage-mock": "^2.4.21",
+    "lint-staged": "^13.0.3",
     "prettier": "2.7.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -48,6 +49,11 @@
     "serverless-finch": "^4.0.0",
     "serverless-plugin-log-retention": "^2.0.0",
     "ts-jest": "^28.0.7"
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --write"
+    ]
   },
   "prettier": {
     "bracketSameLine": true,
