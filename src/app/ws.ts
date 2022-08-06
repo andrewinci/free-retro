@@ -22,6 +22,9 @@ export function wsInit() {
       case "update":
         loadNewState(serverMessage.state);
         break;
+      case "error":
+        console.error("Error from the server", serverMessage);
+        break;
     }
   });
 }
