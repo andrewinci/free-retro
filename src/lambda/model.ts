@@ -13,9 +13,22 @@ export type JoinMessage = {
 
 export type WSClientMessage = BroadcastMessage | JoinMessage;
 
+export type ErrorMessage = {
+  action: "error";
+  errorType: "session-not-found";
+  message: string;
+};
+
 export type UpdateMessage = {
   action: "update";
   state: string;
 };
 
-export type WSServerMessage = UpdateMessage;
+export type WSServerMessage = UpdateMessage | ErrorMessage;
+
+export type WSRequest = {
+  routeKey: string;
+  endpoint: string;
+  connectionId: string;
+  body: WSClientMessage;
+};
