@@ -48,7 +48,7 @@ export async function getDynamoAppState(
     },
   });
   const response = await client.send(command);
-  if (!response.Items || response.Items.length == 0) return null;
+  if (!response || !response.Items || response.Items.length == 0) return null;
   const items = response.Items.map(
     (i) => unmarshall(i) as DynamoRecord & { lastUpdate: number }
   );
