@@ -9,6 +9,16 @@ export async function sendToClient(
   endpoint: string,
   connectionId: string
 ): Promise<boolean> {
+  if (!endpoint || endpoint.length == 0) {
+    console.error("Invalid WebSocket endpoint");
+    throw new Error("Invalid endpoint. Unable to send a message to the client");
+  }
+  if (!connectionId || connectionId.length == 0) {
+    console.error("Invalid WebSocket connectionId");
+    throw new Error(
+      "Invalid connectionId. Unable to send a message to the client"
+    );
+  }
   const enc = new TextEncoder();
   const client = new ApiGatewayManagementApiClient({
     apiVersion: "2018-11-29",

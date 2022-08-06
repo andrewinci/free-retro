@@ -4,15 +4,8 @@ import {
   Context,
 } from "aws-lambda";
 import { getDynamoAppState, storeToDynamo } from "./dynamo";
-import { BroadcastMessage, WSClientMessage, WSServerMessage } from "./model";
+import { BroadcastMessage, WSRequest, WSServerMessage } from "./model";
 import { sendToClient } from "./ws";
-
-type WSRequest = {
-  routeKey: string;
-  endpoint: string;
-  connectionId: string;
-  body: WSClientMessage;
-};
 
 export const lambdaHandler = async (
   event: APIGatewayProxyEvent,
@@ -24,9 +17,9 @@ export const lambdaHandler = async (
     `New connection established: ${event.requestContext.connectionId}`
   );
   const { routeKey, domainName, stage, connectionId } = event.requestContext;
-  const body = event.body ? JSON.parse(event.body) : null;
+  const body = parseBody(event.body);
 
-  if (routeKey && body && connectionId) {
+  if (routeKey == "$default" && body && connectionId) {
     await handle({
       routeKey,
       endpoint: "https://" + domainName + "/" + stage,
@@ -41,6 +34,15 @@ export const lambdaHandler = async (
   };
 };
 
+function parseBody(body: string | null) {
+  if (!body) return null;
+  try {
+    return JSON.parse(body);
+  } catch {
+    return null;
+  }
+}
+
 async function handle(request: WSRequest) {
   const { action } = request.body;
   switch (action) {
@@ -53,7 +55,7 @@ async function handle(request: WSRequest) {
   }
 }
 
-async function handleBroadcast(request: WSRequest) {
+export async function handleBroadcast(request: WSRequest) {
   const dynamoState = await getDynamoAppState(request.body.sessionId);
   const { sessionId, state } = request.body as BroadcastMessage;
   const storeToDynamoPromise = storeToDynamo({
@@ -75,10 +77,17 @@ async function handleBroadcast(request: WSRequest) {
   await storeToDynamoPromise;
 }
 
-async function handleJoin(request: WSRequest) {
+export async function handleJoin(request: WSRequest) {
   const state = await getDynamoAppState(request.body.sessionId);
   if (!state) {
-    console.log("Invalid session id. Session id not found in dynamo");
+    const message = `Session id ${request.body.sessionId} not found`;
+    console.error(message);
+    // send an error to the client
+    await sendToClient(
+      { action: "error", message, errorType: "session-not-found" },
+      request.endpoint,
+      request.connectionId
+    );
     return;
   }
   const updateMessage: WSServerMessage = {
