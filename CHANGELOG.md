@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/andrewinci/free-retro/compare/v1.1.1...v1.2.0) (2022-08-07)
+
+
+### Features
+
+* textarea only update upstream components if text changed ([f8b684f](https://github.com/andrewinci/free-retro/commit/f8b684f49f6c20858351ab18cf45ea9d5c5c4d9e))
+
 ## [1.1.1](https://github.com/andrewinci/free-retro/compare/v1.1.0...v1.1.1) (2022-08-07)
 
 ### Bug Fixes
