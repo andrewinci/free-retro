@@ -13,7 +13,16 @@ const StyledTextArea = styled.textarea`
   resize: none;
   overflow: hidden;
   font-size: 1em;
-  ${(props) => (props.readOnly ? `cursor: pointer !important;` : ``)}
+  ${(props) =>
+    props.readOnly
+      ? `
+    cursor: pointer !important;
+    user-select: none;
+    &::selection {
+      background-color: transparent;
+    }
+  `
+      : ``}
 
   appearance: none;
   -webkit-appearance: none;
@@ -68,18 +77,24 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
       value={state}
       onInput={(e) => autosize(e.currentTarget)}
       onChange={(e) => {
-        setState(e.target.value);
+        if (!readOnly) setState(e.target.value);
       }}
       onKeyUp={(e) => {
         autosize(e.target);
         // update upstream state word by word
         // if reduceTextChangeUpdates
-        if ((!reduceTextChangeUpdates || e.key == " ") && onTextChange) {
+        if (
+          !readOnly &&
+          (!reduceTextChangeUpdates || e.key == " ") &&
+          onTextChange
+        ) {
           onTextChange(e.target.value);
         }
       }}
       onFocus={(e) => autosize(e.target)}
-      onBlur={(e) => (onTextChange ? onTextChange(e.target.value) : {})}
+      onBlur={(e) => {
+        !readOnly && onTextChange ? onTextChange(e.target.value) : {};
+      }}
     />
   );
 };
