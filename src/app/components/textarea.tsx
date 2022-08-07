@@ -67,6 +67,14 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
     }
   });
 
+  const textChanged = (text: string, key: string | null = null) => {
+    // nothing to do if it is readonly
+    if (readOnly) return;
+    // if reduceTextChangeUpdates, only act when key is " "
+    if (key && key != " " && reduceTextChangeUpdates) return;
+    if (onTextChange) onTextChange(text);
+  };
+
   return (
     <StyledTextArea
       ref={textInput}
@@ -81,19 +89,11 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
       }}
       onKeyUp={(e) => {
         autosize(e.target);
-        // update upstream state word by word
-        // if reduceTextChangeUpdates
-        if (
-          !readOnly &&
-          (!reduceTextChangeUpdates || e.key == " ") &&
-          onTextChange
-        ) {
-          onTextChange(e.target.value);
-        }
+        textChanged(e.target.value, e.key);
       }}
       onFocus={(e) => autosize(e.target)}
       onBlur={(e) => {
-        !readOnly && onTextChange ? onTextChange(e.target.value) : {};
+        textChanged(e.target.value);
       }}
     />
   );
