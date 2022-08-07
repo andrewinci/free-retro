@@ -1,5 +1,7 @@
 dist/*
 coverage/*
 .gitignore
+.serverless
 .prettierignore
 yarn.lock
+CHANGELOG.md

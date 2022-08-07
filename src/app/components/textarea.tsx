@@ -52,14 +52,15 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   const { className, readOnly, placeholder, hidden } = props;
   const { text, onTextChange, reduceTextChangeUpdates } = props;
   const textInput = useRef<HTMLTextAreaElement>(null);
-  const [state, setState] = useState(text);
+  const [state, setState] = useState({ current: text, lastUpdate: "" });
   const autosize = (textarea: HTMLTextAreaElement | null) => {
     if (!textarea) return;
     textarea.style.cssText = "height:auto; padding:0";
     textarea.style.cssText = `height:${textarea.scrollHeight}px`;
   };
 
-  useMemo(() => setState(text), [text]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useMemo(() => setState({ ...state, current: text }), [text]);
   useEffect(() => {
     autosize(textInput.current);
     if (readOnly) {
@@ -72,7 +73,10 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
     if (readOnly) return;
     // if reduceTextChangeUpdates, only act when key is " "
     if (key && key != " " && reduceTextChangeUpdates) return;
-    if (onTextChange) onTextChange(text);
+    if (onTextChange && text != state.lastUpdate) {
+      onTextChange(text);
+      setState({ ...state, lastUpdate: text });
+    }
   };
 
   return (
@@ -82,10 +86,10 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
       readOnly={readOnly}
       placeholder={placeholder}
       className={className}
-      value={state}
+      value={state.current}
       onInput={(e) => autosize(e.currentTarget)}
       onChange={(e) => {
-        if (!readOnly) setState(e.target.value);
+        if (!readOnly) setState({ ...state, current: e.target.value });
       }}
       onKeyUp={(e) => {
         autosize(e.target);
