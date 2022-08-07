@@ -7,36 +7,41 @@ import { AppState, Stage } from "./model";
 const LOCAL_STATE_KEY = "free-retro:state";
 
 const observable = new Automerge.Observable();
-let doc: AppState;
+let appState: AppState;
 
-export const getAppState: () => AppState = () => {
-  if (doc) return doc;
-  const sessionId =
-    location.hash.length > 1 ? location.hash.substring(1) : null;
-  doc = Automerge.change(Automerge.init<AppState>({ observable }), (state) => {
-    // set initial values
-    state.sessionId = sessionId ?? randomId();
-    state.stage = sessionId ? Stage.Join : Stage.Create;
-  });
-  location.hash = doc.sessionId;
-  return doc;
+export const getAppState = () => {
+  if (appState) return appState;
+  throw new Error("AppState not initialized");
+};
+
+export const initAppState = (sessionId: string | null) => {
+  if (appState) return appState;
+  appState = Automerge.change(
+    Automerge.init<AppState>({ observable }),
+    (state) => {
+      // set initial values
+      state.sessionId = sessionId ?? randomId();
+      state.stage = sessionId ? Stage.Join : Stage.Create;
+    }
+  );
+  return appState;
 };
 
 export function onStateChange(f: (newState: AppState) => void) {
-  observable.observe(doc, (a, b, newState) => f(newState));
+  observable.observe(appState, (a, b, newState) => f(newState));
 }
 
 export async function changeState(f: (state: AppState) => void) {
-  doc = Automerge.change(doc, (s) => f(s));
+  appState = Automerge.change(appState, (s) => f(s));
   // broadcast to all clients
-  await broadcast(doc.sessionId, doc);
-  localStorage.setItem(LOCAL_STATE_KEY, toBase64(Automerge.save(doc)));
+  await broadcast(appState.sessionId, appState);
+  localStorage.setItem(LOCAL_STATE_KEY, toBase64(Automerge.save(appState)));
 }
 
 export function loadNewState(remoteRawState: string) {
   const remoteState = Automerge.load<AppState>(
     toBinaryDocument(remoteRawState)
   );
-  doc = Automerge.merge(doc, remoteState);
+  appState = Automerge.merge(appState, remoteState);
   localStorage.setItem(LOCAL_STATE_KEY, remoteRawState);
 }

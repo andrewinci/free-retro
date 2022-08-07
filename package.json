@@ -99,6 +99,8 @@
       "/node_modules/(?!react-dnd|dnd-core|@react-dnd)"
     ],
     "globals": {
+      "window": {},
+      "location": {},
       "ts-jest": {
         "tsconfig": {
           "allowJs": true
@@ -145,6 +147,7 @@
     "husky": "^8.0.1",
     "jest": "^28.1.3",
     "jest-localstorage-mock": "^2.4.21",
+    "jest-location-mock": "^1.0.9",
     "lint-staged": "^13.0.3",
     "mock-socket": "^9.1.5",
     "prettier": "2.7.1",
