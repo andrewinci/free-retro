@@ -16,16 +16,22 @@ describe("textArea", () => {
     const mockFunction = jest.fn();
     const div = document.createElement("div");
     ReactDOM.render(
-      <TextArea
-        text={"sample"}
-        onTextChange={(t) => mockFunction(t)}></TextArea>,
+      <TextArea text={""} onTextChange={(t) => mockFunction(t)}></TextArea>,
       div
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
     ["t", "e", "s", "t", " ", "1", "2", "3"]
-      .map((key) => new KeyboardEvent("keyup", { bubbles: true, key: key }))
-      .map((e) => input.dispatchEvent(e));
+      .map((key) => ({
+        e1: new KeyboardEvent("keyup", { bubbles: true, key: key }),
+        e2: new Event("change", { bubbles: true }),
+        key,
+      }))
+      .map(({ e1, e2, key }) => {
+        input.value += key;
+        input.dispatchEvent(e2);
+        input.dispatchEvent(e1);
+      });
 
     expect(mockFunction).toBeCalledTimes(8);
   });
@@ -42,9 +48,16 @@ describe("textArea", () => {
 
     const input = div.children[0] as HTMLTextAreaElement;
     ["t", "e", "s", "t", " ", "1", "2", "3"]
-      .map((key) => new KeyboardEvent("keyup", { bubbles: true, key: key }))
-      .map((e) => input.dispatchEvent(e));
-    input.blur();
+      .map((key) => ({
+        e1: new KeyboardEvent("keyup", { bubbles: true, key: key }),
+        e2: new Event("change", { bubbles: true }),
+        key,
+      }))
+      .map(({ e1, e2, key }) => {
+        input.value += key;
+        input.dispatchEvent(e2);
+        input.dispatchEvent(e1);
+      });
     input.dispatchEvent(new Event("focus", { bubbles: true }));
     input.dispatchEvent(new Event("focusout", { bubbles: true }));
     // 2: one time for the space and 1 time for the blur
@@ -66,7 +79,6 @@ describe("textArea", () => {
     ["t", "e", "s", "t", " ", "1", "2", "3"]
       .map((key) => new KeyboardEvent("keyup", { bubbles: true, key: key }))
       .map((e) => input.dispatchEvent(e));
-    input.blur();
     input.dispatchEvent(new Event("focus", { bubbles: true }));
     input.dispatchEvent(new Event("focusout", { bubbles: true }));
     expect(mockFunction).toBeCalledTimes(0);
@@ -86,9 +98,28 @@ describe("textArea", () => {
     ["t", "e", "s", "t", " ", "1", "2", "3"]
       .map((key) => new KeyboardEvent("keyup", { bubbles: true, key: key }))
       .map((e) => input.dispatchEvent(e));
-    input.blur();
     input.dispatchEvent(new Event("focus", { bubbles: true }));
     input.dispatchEvent(new Event("focusout", { bubbles: true }));
     expect(mockFunction).toBeCalledTimes(0);
+  });
+  it("should not trigger textChange if the text doesn't change", () => {
+    const mockFunction = jest.fn();
+    const div = document.createElement("div");
+    ReactDOM.render(
+      <TextArea
+        text={"sample"}
+        onTextChange={(t) => mockFunction(t)}></TextArea>,
+      div
+    );
+
+    const input = div.children[0] as HTMLTextAreaElement;
+    input.dispatchEvent(
+      new KeyboardEvent("keyup", { bubbles: true, key: "s" })
+    );
+    for (let i = 0; i < 10; i++) {
+      input.dispatchEvent(new Event("focus", { bubbles: true }));
+      input.dispatchEvent(new Event("focusout", { bubbles: true }));
+    }
+    expect(mockFunction).toBeCalledTimes(1);
   });
 });
