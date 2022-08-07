@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/andrewinci/free-retro/compare/v1.1.0...v1.1.1) (2022-08-07)
+
+### Bug Fixes
+
+- click on a blurred card updates the state ([9906e64](https://github.com/andrewinci/free-retro/commit/9906e6462875c9fac79d0be37ce1bd2a04dbdec0))
+
 # [1.1.0](https://github.com/andrewinci/free-retro/compare/v1.0.0...v1.1.0) (2022-08-05)
 
 ### Features
