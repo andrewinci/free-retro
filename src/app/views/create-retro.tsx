@@ -32,10 +32,8 @@ const CreateButton = styled(EmptyButton)`
 `;
 
 const CreateRetroView = () => {
-  const currentUser = State.getUser();
   const [state, setState] = useState({
     retroName: "Let's chat",
-    username: currentUser?.username ?? "coolio",
   });
   return (
     <Container>
@@ -44,15 +42,8 @@ const CreateRetroView = () => {
         value={state.retroName}
         onChange={(e) => setState({ ...state, retroName: e.target.value })}
       />
-      <Label>Username: </Label>
-      <Input
-        value={state.username}
-        onChange={(e) => setState({ ...state, username: e.target.value })}
-      />
       <CreateButton
-        onClick={async () =>
-          await State.createRetro(state.username, state.retroName)
-        }>
+        onClick={async () => await State.createRetro(state.retroName)}>
         🚀 Create retro
       </CreateButton>
     </Container>
