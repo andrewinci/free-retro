@@ -83,14 +83,12 @@
     ],
     "coveragePathIgnorePatterns": [
       "src/app/components/index.ts",
-      "src/app/index.tsx"
+      "src/app/index.tsx",
+      "src/infra/*"
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/"
-    ],
-    "extensionsToTreatAsEsm": [
-      ".ts"
     ],
     "transform": {
       "^.+\\.[tj]s$": "ts-jest"
