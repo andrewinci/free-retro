@@ -37,10 +37,6 @@ Deploy to AWS: `yarn deploy`
 
 ## Todo
 
-- [x] Grouping
-- [x] CI/CD
-- [x] Readme
-- [ ] Use cloudfront and switch to https
 - [ ] Improve code coverage
 - [ ] TTL in dynamodb
 - [ ] Users management

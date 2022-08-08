@@ -16,13 +16,13 @@ export const lambdaHandler = async (
   console.log(
     `New connection established: ${event.requestContext.connectionId}`
   );
-  const { routeKey, domainName, stage, connectionId } = event.requestContext;
+  const { routeKey, domainName, connectionId } = event.requestContext;
   const body = parseBody(event.body);
 
   if (routeKey == "$default" && body && connectionId) {
     await handle({
       routeKey,
-      endpoint: "https://" + domainName + "/" + stage,
+      endpoint: "https://" + domainName + "/",
       connectionId,
       body,
     });
@@ -56,6 +56,7 @@ async function handle(request: WSRequest) {
 }
 
 export async function handleBroadcast(request: WSRequest) {
+  console.log("Handle join", request);
   const dynamoState = await getDynamoAppState(request.body.sessionId);
   const { sessionId, state } = request.body as BroadcastMessage;
   const storeToDynamoPromise = storeToDynamo({
@@ -78,6 +79,7 @@ export async function handleBroadcast(request: WSRequest) {
 }
 
 export async function handleJoin(request: WSRequest) {
+  console.log("Handle join", request);
   const state = await getDynamoAppState(request.body.sessionId);
   if (!state) {
     const message = `Session id ${request.body.sessionId} not found`;

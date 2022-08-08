@@ -24,6 +24,10 @@ const Title = styled.div`
   text-align: center;
   h1 {
     margin: 0;
+    a {
+      color: inherit; /* blue colors for links too */
+      text-decoration: inherit; /* no underline */
+    }
   }
   h2 {
     margin: 0;
@@ -79,7 +83,9 @@ export const App = () => {
     <DndProvider backend={HTML5Backend}>
       <Container>
         <Title>
-          <h1>⚡ Free retro 🗣️</h1>
+          <h1>
+            <a href="/">⚡ Free retro 🗣️</a>
+          </h1>
           {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
         </Title>
         <Space />

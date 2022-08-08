@@ -9,6 +9,7 @@ export async function sendToClient(
   endpoint: string,
   connectionId: string
 ): Promise<boolean> {
+  console.log("Send message to client", message, endpoint, connectionId);
   if (!endpoint || endpoint.length == 0) {
     console.error("Invalid WebSocket endpoint");
     throw new Error("Invalid endpoint. Unable to send a message to the client");
@@ -31,8 +32,8 @@ export async function sendToClient(
   try {
     await client.send(command);
     return true;
-  } catch {
-    console.log("Client disconnected!");
+  } catch (e) {
+    console.log("Unable to send the command to the client", e);
     return false;
   }
 }

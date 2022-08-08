@@ -127,7 +127,6 @@ export const moveCardToColumn = (src: CardPosition, column: number) =>
 export const setGroupTitle = (position: GroupPosition, title: string) =>
   changeState((state) => {
     if (!state.columns) return;
-    console.log(title);
     const { column, group } = position;
     state.columns[column].groups[group].title = title;
   });

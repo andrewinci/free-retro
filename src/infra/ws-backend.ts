@@ -35,6 +35,7 @@ export class WSBackend extends Construct {
 
     // lambda to deal with the requests
     const lambdaHandler = new lambda.Function(this, `${name}-lambda`, {
+      functionName: `${name}-lambda`,
       runtime: lambda.Runtime.NODEJS_14_X,
       code: lambda.Code.fromAsset("dist/lambda"),
       handler: "dist/lambda/handler.lambdaHandler",
@@ -95,13 +96,14 @@ export class WSBackend extends Construct {
       stage,
     });
 
+    api.grantManageConnections(lambdaHandler);
     // Create policy to allow Lambda function to use @connections API of API Gateway
     const allowConnectionManagementOnApiGatewayPolicy = new PolicyStatement({
       effect: Effect.ALLOW,
       resources: [
-        `arn:aws:execute-api:${region}:${account}:${api.apiId}/${stage.stageName}/*`,
+        `arn:aws:execute-api:${region}:${account}:${api.apiId}/*/*/*/@connections/*`,
       ],
-      actions: ["execute-api:ManageConnections"],
+      actions: ["execute-api:Invoke"],
     });
 
     // Attach custom policy to Lambda function
