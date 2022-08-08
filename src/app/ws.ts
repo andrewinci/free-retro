@@ -24,6 +24,8 @@ export function wsInit() {
         break;
       case "error":
         console.error("Error from the server", serverMessage);
+        alert("Retro not found, try to create a new one.");
+        location.href = "/";
         break;
     }
   });
