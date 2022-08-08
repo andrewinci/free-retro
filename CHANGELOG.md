@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/andrewinci/free-retro/compare/v1.0.1...v1.1.0) (2022-08-08)
+
+
+### Features
+
+* show an alert if the retro is not found ([941cf6b](https://github.com/andrewinci/free-retro/commit/941cf6b6f8dc797c5210d2d54d218f0248f3eec9))
+
 ## [1.0.1](https://github.com/andrewinci/free-retro/compare/v1.0.0...v1.0.1) (2022-08-08)
 
 
