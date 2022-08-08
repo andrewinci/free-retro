@@ -39,7 +39,7 @@ export const changeDiscussCard = (changeType: "increment" | "decrement") => {
   });
 };
 
-export const createRetro = (username: string, retroName: string) =>
+export const createRetro = (retroName: string) =>
   changeState((state) => {
     state.retroName = retroName;
     state.stage = Stage.AddTickets;
