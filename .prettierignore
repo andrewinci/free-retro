@@ -5,3 +5,4 @@ coverage/*
 .prettierignore
 yarn.lock
 CHANGELOG.md
+cdk.out

@@ -55,6 +55,7 @@
       "@typescript-eslint"
     ],
     "rules": {
+      "require-await": "warn",
       "@typescript-eslint/no-useless-constructor": "error",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",

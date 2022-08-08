@@ -31,7 +31,7 @@ export function wsInit() {
   });
 }
 
-export async function joinSession(sessionId: string) {
+export function joinSession(sessionId: string) {
   console.log("WS Join session");
   const joinMessage: JoinMessage = {
     action: "join",
@@ -40,7 +40,7 @@ export async function joinSession(sessionId: string) {
   socket.send(JSON.stringify(joinMessage));
 }
 
-export async function broadcast<T>(sessionId: string, state: T) {
+export function broadcast<T>(sessionId: string, state: T) {
   const rawState = Automerge.save(state);
   const broadcastMessage: BroadcastMessage = {
     action: "broadcast",
