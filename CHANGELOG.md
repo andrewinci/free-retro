@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/andrewinci/free-retro/compare/v1.0.0...v1.0.1) (2022-08-08)
+
+
+### Bug Fixes
+
+* Missing policy to send messages to clients ([53db9e0](https://github.com/andrewinci/free-retro/commit/53db9e0a388d2690a7bfb51188817afca6b1ac89))
+
 # 1.0.0 (2022-08-08)
 
 
