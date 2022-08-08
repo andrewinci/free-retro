@@ -7,7 +7,7 @@ import {
 import { toBase64 } from "./helper/binary-document";
 import { loadNewState } from "./state/automerge-state";
 
-const ENDPOINT = "wss://ktozam02gd.execute-api.eu-west-1.amazonaws.com/dev";
+const ENDPOINT = "wss:///ws.retroapp.amaker.xyz";
 
 const socket = new WebSocket(ENDPOINT);
 

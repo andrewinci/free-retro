@@ -15,11 +15,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14.x
-          cache: "npm"
+          cache: "yarn"
       - run: npm install -g yarn
       - name: Install dependencies
         run: yarn install
-      - name: Install lint
+      - name: Lint
         run: yarn lint
       - name: Test with coverage
         run: yarn coveralls
@@ -31,3 +31,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}

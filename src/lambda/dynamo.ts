@@ -6,7 +6,7 @@ import {
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 //todo: load from env variables
-const TABLE_NAME = "free-retro-sessions-table";
+const TABLE_NAME = process.env.DYNAMO_TABLE_NAME;
 const AWS_REGION = "eu-west-1";
 
 export type DynamoRecord = {

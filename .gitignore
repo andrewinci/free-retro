@@ -3,3 +3,5 @@ dist
 node_modules
 coverage
 yarn-error.log
+cdk.out
+cdk.context.json
