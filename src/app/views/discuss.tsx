@@ -17,7 +17,7 @@ const CloseRetro = styled(CloseButton)`
   width: 5em;
 `;
 
-const ButtonsContainer = styled.div`
+const CardDiscussContainer = styled.div`
   position: absolute;
   width: 20rem;
   left: 50%;
@@ -77,12 +77,12 @@ Click ok to go ahead.`);
   return (
     <>
       <CloseRetro onClick={async () => await closeRetro()} />
-      <ButtonsContainer>
+      <CardDiscussContainer>
         <Prev
-          onClick={() => State.changeDiscussCard("decrement")}
+          onClick={async () => await State.changeDiscussCard("decrement")}
           disabled={index <= 0}></Prev>
         <Next
-          onClick={() => State.changeDiscussCard("increment")}
+          onClick={async () => await State.changeDiscussCard("increment")}
           disabled={index > sortedCards.length}></Next>
         <CardGroup
           title={card.title}
@@ -95,7 +95,7 @@ Click ok to go ahead.`);
           readOnly={true}>
           <VotesLine readonly={true} votes={votes}></VotesLine>
         </CardGroup>
-      </ButtonsContainer>
+      </CardDiscussContainer>
     </>
   );
 };

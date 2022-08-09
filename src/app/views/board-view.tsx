@@ -65,14 +65,14 @@ function BoardCard(props: {
   const { id: userId } = getUser() ?? setUserName();
   return (
     <CardGroup
-      onDrop={(src) => State.moveCard(src, card.cards[0].position)}
+      onDrop={async (src) => await State.moveCard(src, card.cards[0].position)}
       cards={cards}
       canDrag={stage == Stage.Group}
       onCloseClicked={deleteCard}
       onTextChange={changeCardText}
       title={card.title}
-      onTitleChange={(title) =>
-        State.setGroupTitle({ ...card.cards[0].position }, title)
+      onTitleChange={async (title) =>
+        await State.setGroupTitle({ ...card.cards[0].position }, title)
       }
       blur={stage == Stage.AddTickets && cards[0].ownerId != getUser()?.id}
       readOnly={readOnly}>
@@ -97,7 +97,7 @@ function BoardColumn(props: {
   return (
     <Column
       title={column.title}
-      onDrop={(src) => State.moveCardToColumn(src, columnIndex)}
+      onDrop={async (src) => await State.moveCardToColumn(src, columnIndex)}
       onTitleChange={async (t) => await State.setColumnTitle(columnIndex, t)}
       onAddClick={async () => await State.addEmptyCard(columnIndex)}
       onCloseClick={async () => await State.deleteColumn(columnIndex)}
