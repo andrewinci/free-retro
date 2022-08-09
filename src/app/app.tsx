@@ -4,7 +4,7 @@ import { Stage } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
 import BoardView from "./views/board-view";
 import CreateRetroView from "./views/create-retro";
-import { DiscussView } from "./views/discuss";
+import DiscussView from "./views/discuss";
 import EndRetroView from "./views/end-view";
 import JoinRetroView from "./views/join-retro";
 import { HTML5Backend } from "react-dnd-html5-backend";

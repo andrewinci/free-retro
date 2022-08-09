@@ -43,10 +43,7 @@ const Next = styled(RightArrowButton)`
   }
 `;
 
-export const DiscussView = (props: {
-  cards: CardGroupState[];
-  index: number;
-}) => {
+const DiscussView = (props: { cards: CardGroupState[]; index: number }) => {
   const { cards, index } = props;
 
   const closeRetro = async () => {
@@ -105,3 +102,5 @@ Click ok to go ahead.`);
     </>
   );
 };
+
+export default DiscussView;

@@ -37,9 +37,9 @@ Deploy to AWS: `yarn deploy`
 
 ## Todo
 
-- [ ] Improve code coverage
-- [ ] TTL in dynamodb
-- [ ] Users management
 - [ ] List of actions
 - [ ] Balance votes with number of tickets
 - [ ] Show votes in UI
+- [ ] Users management
+- [ ] Improve code coverage tp 80%
+- [ ] TTL in dynamodb
