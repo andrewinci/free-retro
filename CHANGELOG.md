@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/andrewinci/free-retro/compare/v1.1.0...v1.2.0) (2022-08-09)
+
+
+### Bug Fixes
+
+* Add missign await ([547999c](https://github.com/andrewinci/free-retro/commit/547999ce2fb5f7d22102067a73feae33894ca3be))
+
+
+### Features
+
+* disable buttons if no cards are available ([72cba78](https://github.com/andrewinci/free-retro/commit/72cba78244c010a996db72cee34e0cff18ff149a))
+* remove unused field username ([c68c7fc](https://github.com/andrewinci/free-retro/commit/c68c7fc6214192d49666addca614004c2951fc18))
+
 # [1.1.0](https://github.com/andrewinci/free-retro/compare/v1.0.1...v1.1.0) (2022-08-08)
 
 
