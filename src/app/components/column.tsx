@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
 import { CardPosition } from "../state";
@@ -44,7 +45,7 @@ type ColumnProps = {
   onTitleChange?: (_: string) => void;
   onAddClick?: () => void;
   onCloseClick?: () => void;
-};
+} & { style?: CSSProperties | undefined };
 
 export const Column = (props: ColumnProps) => {
   const { title, children, onTitleChange, readOnly } = props;
@@ -61,7 +62,7 @@ export const Column = (props: ColumnProps) => {
     }),
   }));
   return (
-    <StyledColumn ref={drop}>
+    <StyledColumn ref={drop} style={props.style}>
       <TopCloseButton
         hidden={(children?.length ?? 0) > 0 || readOnly}
         onClick={() => (onCloseClick ? onCloseClick() : {})}

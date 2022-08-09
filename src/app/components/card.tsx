@@ -3,6 +3,7 @@ import { CloseButton } from "./buttons";
 import { GroupTitle, TextArea } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
 import { CardPosition } from "../state";
+import { CSSProperties } from "react";
 
 type CardContainerProps = {
   className?: string;
@@ -68,7 +69,10 @@ const CardContent = (props: CardProps & CardContainerProps) => {
   );
 };
 
-export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
+export const CardGroup = (
+  props: CardGroupProps &
+    CardContainerProps & { style?: CSSProperties | undefined }
+) => {
   const cardProps = props.cards.map((c) => ({ ...props, ...c }));
   const [_, drop] = useDrop(() => ({
     accept: "card",
@@ -80,7 +84,7 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
     }),
   }));
   return (
-    <Container ref={drop} className={props.className}>
+    <Container ref={drop} style={props.style}>
       <GroupTitle
         hidden={cardProps.length == 1}
         text={props.title}

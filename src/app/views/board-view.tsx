@@ -5,6 +5,7 @@ import { Column, ColumnContainer } from "../components/column";
 import { VotesLine } from "../components/vote-line";
 import { Stage, ColumnState, getUser, setUserName } from "../state";
 import * as State from "../state";
+import { StageText } from "./stage-text";
 
 const NextButton = styled(RightArrowButton)`
   position: fixed;
@@ -13,33 +14,6 @@ const NextButton = styled(RightArrowButton)`
   height: 5em;
   width: 5em;
 `;
-
-const StageText = styled.div`
-  position: fixed;
-  left: 2em;
-  top: 2em;
-  h2 {
-    margin: 0;
-  }
-  p {
-    margin: 0;
-  }
-`;
-
-export function stageToString(stage: Stage) {
-  switch (stage) {
-    case Stage.AddTickets:
-      return "Add Tickets";
-    case Stage.Group:
-      return "Group";
-    case Stage.Vote:
-      return "Vote";
-    case Stage.Discuss:
-      return "Discuss";
-    case Stage.End:
-      return "End";
-  }
-}
 
 function BoardCard(props: {
   card: State.CardGroupState;
@@ -133,10 +107,7 @@ const BoardView = (props: {
   const next = async () => await changeStage("next");
   return (
     <>
-      <StageText>
-        <p>step:</p>
-        <h2>{stageToString(stage)}</h2>
-      </StageText>
+      <StageText stage={stage} />
       <NextButton onClick={next}>Next</NextButton>
       <ColumnContainer>
         {columnsData.map((column, i) => (
