@@ -11,7 +11,7 @@ export const EmptyButton = styled.button`
   outline: inherit;
   width: 25px;
   border-radius: 5px;
-  :hover {
+  :hover:active {
     background-color: #a8a8a8;
   }
 `;

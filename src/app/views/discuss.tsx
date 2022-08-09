@@ -28,6 +28,9 @@ const CardDiscussContainer = styled.div`
 const Prev = styled(LeftArrowButton)`
   height: 3em;
   width: 3em;
+  &:disabled {
+    fill: #eaeaea;
+  }
 `;
 
 const Next = styled(RightArrowButton)`
@@ -35,6 +38,9 @@ const Next = styled(RightArrowButton)`
   right: 1em;
   height: 3em;
   width: 3em;
+  &:disabled {
+    fill: #eaeaea;
+  }
 `;
 
 export const DiscussView = (props: {
@@ -83,7 +89,7 @@ Click ok to go ahead.`);
           disabled={index <= 0}></Prev>
         <Next
           onClick={async () => await State.changeDiscussCard("increment")}
-          disabled={index > sortedCards.length}></Next>
+          disabled={index >= sortedCards.length - 1}></Next>
         <CardGroup
           title={card.title}
           cards={card.cards.map((c) => ({
