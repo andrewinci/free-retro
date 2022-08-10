@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/andrewinci/free-retro/compare/v1.2.0...v1.3.0) (2022-08-10)
+
+
+### Features
+
+* infra improvements ([950b6a0](https://github.com/andrewinci/free-retro/commit/950b6a000d433c9432fb061e7bc8677cbbcd10ec))
+
 # [1.2.0](https://github.com/andrewinci/free-retro/compare/v1.1.0...v1.2.0) (2022-08-09)
 
 
