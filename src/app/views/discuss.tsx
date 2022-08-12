@@ -25,10 +25,11 @@ const CardDiscussContainer = styled.div`
   min-width: 20rem;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   align-content: space-between;
   flex-wrap: nowrap;
   justify-content: space-evenly;
+  margin-bottom: 10em;
 `;
 
 const Prev = styled(LeftArrowButton)`
@@ -55,7 +56,7 @@ const Container = styled.div`
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: space-around;
 `;
 
@@ -120,7 +121,10 @@ Click ok to go ahead.`);
             onClick={async () => await State.changeDiscussCard("increment")}
             disabled={index >= sortedCards.length - 1}></Next>
         </CardDiscussContainer>
-        <Column title="Actions" style={{ maxWidth: "23em" }}></Column>
+        <Column
+          title="Actions"
+          style={{ maxWidth: "25em" }}
+          canClose={false}></Column>
       </Container>
     </>
   );
