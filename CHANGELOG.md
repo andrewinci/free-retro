@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/andrewinci/free-retro/compare/v1.3.0...v1.4.0) (2022-08-13)
+
+
+### Features
+
+* Remove the state of disconnected clients ([c9d856e](https://github.com/andrewinci/free-retro/commit/c9d856e5398d1145102850d2edf842dd739153dd))
+
 # [1.3.0](https://github.com/andrewinci/free-retro/compare/v1.2.0...v1.3.0) (2022-08-10)
 
 
