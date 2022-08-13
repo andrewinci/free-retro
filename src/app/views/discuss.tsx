@@ -3,12 +3,13 @@ import {
   CloseButton,
   LeftArrowButton,
   RightArrowButton,
-} from "../components/buttons";
-import { CardGroup } from "../components/card";
-import { VotesLine } from "../components/vote-line";
+  ActionItem,
+  CardGroup,
+  Column,
+  VotesLine,
+} from "../components";
 import { CardGroupState, Stage } from "../state";
 import * as State from "../state";
-import { Column } from "../components";
 import { StageText } from "./stage-text";
 
 const CloseRetro = styled(CloseButton)`
@@ -121,10 +122,10 @@ Click ok to go ahead.`);
             onClick={async () => await State.changeDiscussCard("increment")}
             disabled={index >= sortedCards.length - 1}></Next>
         </CardDiscussContainer>
-        <Column
-          title="Actions"
-          style={{ maxWidth: "25em" }}
-          canClose={false}></Column>
+        <Column title="Actions" style={{ maxWidth: "25em" }} canClose={false}>
+          <ActionItem text="Example"></ActionItem>
+          <ActionItem text="Example 2" done={true}></ActionItem>
+        </Column>
       </Container>
     </>
   );
