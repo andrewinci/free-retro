@@ -258,3 +258,24 @@ function recalculatePositions(state: AppState): void {
     }
   }
 }
+
+export const addAction = () =>
+  changeState((state) => {
+    if (!state.actions) state.actions = [];
+    state.actions.push({
+      text: "",
+      done: false,
+    });
+  });
+
+export const setActionText = (actionIndex: number, text: string) =>
+  changeState((state) => {
+    if (!state.actions || state.actions.length < actionIndex) return;
+    state.actions[actionIndex].text = text;
+  });
+
+export const setActionDone = (actionIndex: number, done: boolean) =>
+  changeState((state) => {
+    if (!state.actions || state.actions.length < actionIndex) return;
+    state.actions[actionIndex].done = done;
+  });

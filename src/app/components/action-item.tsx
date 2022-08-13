@@ -55,7 +55,9 @@ export const ActionItem = (props: ActionItemProps) => {
       <TextArea
         placeholder="Todo item...."
         text={text}
-        onTextChange={onTextChange}></TextArea>
+        onTextChange={onTextChange}
+        reduceTextChangeUpdates={true}
+      />
       <div>
         <input
           id={id}

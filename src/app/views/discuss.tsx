@@ -8,7 +8,7 @@ import {
   Column,
   VotesLine,
 } from "../components";
-import { CardGroupState, Stage } from "../state";
+import { ActionState, CardGroupState, Stage } from "../state";
 import * as State from "../state";
 import { StageText } from "./stage-text";
 
@@ -61,8 +61,14 @@ const Container = styled.div`
   justify-content: space-around;
 `;
 
-const DiscussView = (props: { cards: CardGroupState[]; index: number }) => {
-  const { cards, index } = props;
+type DiscussViewProps = {
+  cards: CardGroupState[];
+  cardIndex: number;
+  actions: ActionState[];
+};
+
+const DiscussView = (props: DiscussViewProps) => {
+  const { cards, cardIndex, actions } = props;
 
   const closeRetro = async () => {
     const res = confirm(`This action will close the retro session.
@@ -91,9 +97,9 @@ Click ok to go ahead.`);
     .sort((a, b) => b.votes - a.votes);
 
   const { card, votes } =
-    index >= sortedCards.length
+    cardIndex >= sortedCards.length
       ? sortedCards[sortedCards.length - 1]
-      : sortedCards[index];
+      : sortedCards[cardIndex];
 
   return (
     <>
@@ -103,7 +109,7 @@ Click ok to go ahead.`);
         <CardDiscussContainer>
           <Prev
             onClick={async () => await State.changeDiscussCard("decrement")}
-            disabled={index <= 0}></Prev>
+            disabled={cardIndex <= 0}></Prev>
 
           <CardGroup
             style={{ minWidth: "20em" }}
@@ -120,11 +126,22 @@ Click ok to go ahead.`);
 
           <Next
             onClick={async () => await State.changeDiscussCard("increment")}
-            disabled={index >= sortedCards.length - 1}></Next>
+            disabled={cardIndex >= sortedCards.length - 1}></Next>
         </CardDiscussContainer>
-        <Column title="Actions" style={{ maxWidth: "25em" }} canClose={false}>
-          <ActionItem text="Example"></ActionItem>
-          <ActionItem text="Example 2" done={true}></ActionItem>
+        <Column
+          title="Actions"
+          style={{ maxWidth: "25em" }}
+          canClose={false}
+          onAddClick={async () => await State.addAction()}>
+          {actions.map((a, i) => (
+            <ActionItem
+              key={i}
+              text={a.text}
+              done={a.done}
+              onDoneChange={async (done) => await State.setActionDone(i, done)}
+              onTextChange={async (text) => await State.setActionText(i, text)}
+            />
+          ))}
         </Column>
       </Container>
     </>

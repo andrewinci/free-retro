@@ -73,7 +73,8 @@ export const App = () => {
         return (
           <DiscussView
             cards={appState.columns?.flatMap((c) => c.groups) ?? []}
-            index={appState.discussCardIndex?.value ?? 0}></DiscussView>
+            cardIndex={appState.discussCardIndex?.value ?? 0}
+            actions={appState.actions ?? []}></DiscussView>
         );
       case Stage.End:
         return <EndRetroView></EndRetroView>;

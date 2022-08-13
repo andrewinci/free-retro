@@ -10,7 +10,8 @@ describe("Test discuss view", () => {
       <DndProvider backend={TestBackend}>
         <DiscussView
           cards={[{ cards: [], votes: { a: new Counter(1) } }]}
-          index={0}
+          cardIndex={0}
+          actions={[]}
         />
       </DndProvider>
     );
