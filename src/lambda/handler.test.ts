@@ -117,4 +117,5 @@ describe("integration test", () => {
   const sendToClient = jest
     .spyOn(ws, "sendToClient")
     .mockImplementation(jest.fn());
+  jest.spyOn(Dynamo, "deleteDynamoItems").mockImplementation(jest.fn());
 });
