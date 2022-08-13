@@ -28,6 +28,7 @@ export class StaticWebsite extends Construct {
       bucketName: `${name}-static-webapp`,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       removalPolicy: RemovalPolicy.DESTROY,
+      encryption: s3.BucketEncryption.S3_MANAGED,
     });
 
     // Create Origin Access Identity to be use Canonical User Id in S3 bucket policy

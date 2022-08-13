@@ -3,7 +3,7 @@ import {
   APIGatewayProxyResult,
   Context,
 } from "aws-lambda";
-import { getDynamoAppState, storeToDynamo } from "./dynamo";
+import { deleteDynamoItems, getDynamoAppState, storeToDynamo } from "./dynamo";
 import { BroadcastMessage, WSRequest, WSServerMessage } from "./model";
 import { sendToClient } from "./ws";
 
@@ -18,7 +18,6 @@ export const lambdaHandler = async (
   );
   const { routeKey, domainName, connectionId } = event.requestContext;
   const body = parseBody(event.body);
-
   if (routeKey == "$default" && body && connectionId) {
     await handle({
       routeKey,
@@ -54,9 +53,9 @@ async function handle(request: WSRequest) {
       break;
   }
 }
-
+// http://127.0.0.1:8000/#71165e4c-13a9-4bd3-b296-8555370f8089
 export async function handleBroadcast(request: WSRequest) {
-  console.log("Handle join", request);
+  console.log("Handle broadcast", request);
   const dynamoState = await getDynamoAppState(request.body.sessionId);
   const { sessionId, state } = request.body as BroadcastMessage;
   const storeToDynamoPromise = storeToDynamo({
@@ -72,9 +71,19 @@ export async function handleBroadcast(request: WSRequest) {
 
   const sendPromises = (dynamoState?.connections ?? [])
     .filter((c) => c != request.connectionId)
-    .map((c) => sendToClient(broadcastMessage, request.endpoint, c));
+    .map(async (c) => ({
+      connectionId: c,
+      sendResult: await sendToClient(broadcastMessage, request.endpoint, c),
+    }));
 
-  await Promise.all(sendPromises);
+  const sendResult = await Promise.all(sendPromises);
+  // delete disconnected clients states
+  const clientConnectionsToDelete = sendResult
+    .filter((c) => !c.sendResult)
+    .map((c) => ({ connectionId: c.connectionId, sessionId }));
+  console.log(clientConnectionsToDelete);
+  await deleteDynamoItems(clientConnectionsToDelete);
+  // wait for the last state to be stored
   await storeToDynamoPromise;
 }
 

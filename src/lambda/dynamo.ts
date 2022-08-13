@@ -2,16 +2,18 @@ import {
   DynamoDBClient,
   PutItemCommand,
   QueryCommand,
+  BatchWriteItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 
-//todo: load from env variables
-const TABLE_NAME = process.env.DYNAMO_TABLE_NAME;
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const TABLE_NAME = process.env.DYNAMO_TABLE_NAME!;
 const AWS_REGION = "eu-west-1";
 
 export type DynamoRecord = {
   //hash key
   sessionId: string;
+  // range key
   connectionId: string;
   appState: string;
 };
@@ -23,6 +25,31 @@ export type DynamoAppState = {
 };
 
 const client = new DynamoDBClient({ region: AWS_REGION });
+
+export const deleteDynamoItems = async (
+  connections: {
+    sessionId: string;
+    connectionId: string;
+  }[]
+) => {
+  if (!connections || connections.length == 0) {
+    // nothing to do
+    return;
+  }
+  const command = new BatchWriteItemCommand({
+    RequestItems: {
+      [TABLE_NAME]: connections.map((c) => ({
+        DeleteRequest: {
+          Key: {
+            sessionId: { S: c.sessionId },
+            connectionId: { S: c.connectionId },
+          },
+        },
+      })),
+    },
+  });
+  await client.send(command);
+};
 
 export const storeToDynamo = async (record: DynamoRecord) => {
   const command = new PutItemCommand({

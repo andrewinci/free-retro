@@ -4,7 +4,8 @@ import { WebSocketLambdaIntegration } from "@aws-cdk/aws-apigatewayv2-integratio
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
 import * as acm from "aws-cdk-lib/aws-certificatemanager";
-import { RemovalPolicy } from "aws-cdk-lib";
+import * as sqs from "aws-cdk-lib/aws-sqs";
+import { Duration, RemovalPolicy } from "aws-cdk-lib";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { SecurityPolicy } from "aws-cdk-lib/aws-apigateway";
 
@@ -30,7 +31,16 @@ export class WSBackend extends Construct {
       sortKey: { name: "connectionId", type: dynamodb.AttributeType.STRING },
       readCapacity: 10,
       writeCapacity: 10,
+      removalPolicy: RemovalPolicy.SNAPSHOT,
+      encryption: dynamodb.TableEncryption.AWS_MANAGED,
+    });
+
+    // dead letter queue for the lambda
+    const dlq = new sqs.Queue(this, `${name}-dlq`, {
+      queueName: `${name}-dlq`,
+      encryption: sqs.QueueEncryption.KMS_MANAGED,
       removalPolicy: RemovalPolicy.DESTROY,
+      retentionPeriod: Duration.days(4),
     });
 
     // lambda to deal with the requests
@@ -43,6 +53,8 @@ export class WSBackend extends Construct {
       environment: {
         DYNAMO_TABLE_NAME: dynamoTable.tableName,
       },
+      reservedConcurrentExecutions: 20,
+      deadLetterQueue: dlq,
     });
 
     // allow the lambda to read/write/query the sessions dynamo table
@@ -51,6 +63,7 @@ export class WSBackend extends Construct {
     // Create websocket api gateway
     const api = new apiGw2.WebSocketApi(this, `${name}-api`, {
       apiName: `${name}-api`,
+      description: `WebSocket api for ${name}`,
       connectRouteOptions: {
         integration: new WebSocketLambdaIntegration(
           "handle-connect",

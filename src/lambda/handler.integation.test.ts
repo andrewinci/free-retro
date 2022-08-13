@@ -127,6 +127,34 @@ describe("lambda integration tests", () => {
       );
       expect(storeToDynamo.mock.calls.length).toBe(1);
     });
+    it("should should delete the state of the offline clients", async () => {
+      // arrange
+      const connections = ["1", "2", "3"];
+      sendToClient.mockResolvedValueOnce(true);
+      // mock the connection 2 to be offline
+      sendToClient.mockResolvedValueOnce(false);
+      // mock the connection 3 to be ONLINE
+      sendToClient.mockResolvedValueOnce(true);
+      const getDynamoAppState = jest
+        .spyOn(Dynamo, "getDynamoAppState")
+        .mockResolvedValueOnce({
+          ...validDyanmoState,
+          connections,
+        });
+      //act
+      const res = lambdaHandler(validBroadcastRequest, lambdaContext);
+      // assert
+      await expect(res).resolves.not.toThrow();
+      expect(getDynamoAppState.mock.calls.length).toBe(1);
+      expect(sendToClient.mock.calls.map((params) => params[2])).toEqual(
+        connections
+      );
+      expect(storeToDynamo.mock.calls.length).toBe(1);
+      expect(deleteDynamoItems.mock.calls.length).toBe(1);
+      expect(deleteDynamoItems.mock.calls[0][0]).toEqual([
+        { connectionId: "2", sessionId: "sessionId" },
+      ]);
+    });
   });
   // helpers
   const lambdaContext = {} as unknown as Context;
@@ -164,6 +192,9 @@ describe("lambda integration tests", () => {
 
   const storeToDynamo = jest
     .spyOn(Dynamo, "storeToDynamo")
+    .mockImplementation(jest.fn());
+  const deleteDynamoItems = jest
+    .spyOn(Dynamo, "deleteDynamoItems")
     .mockImplementation(jest.fn());
   const sendToClient = jest
     .spyOn(ws, "sendToClient")
