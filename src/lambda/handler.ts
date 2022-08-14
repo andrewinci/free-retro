@@ -9,13 +9,8 @@ import { sendToClient } from "./ws";
 
 export const lambdaHandler = async (
   event: APIGatewayProxyEvent,
-  context: Context
+  _: Context
 ): Promise<APIGatewayProxyResult> => {
-  console.log(`Event: ${JSON.stringify(event, null, 2)}`);
-  console.log(`Context: ${JSON.stringify(context, null, 2)}`);
-  console.log(
-    `New connection established: ${event.requestContext.connectionId}`
-  );
   const { routeKey, domainName, connectionId } = event.requestContext;
   const body = parseBody(event.body);
   if (routeKey == "$default" && body && connectionId) {
