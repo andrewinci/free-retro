@@ -4,8 +4,14 @@ import { StaticWebsite } from "./static-website";
 import { WSBackend } from "./ws-backend";
 import { Route53Records } from "./route53-records";
 import { Certificates } from "./certificates";
+import {
+  Monitoring,
+  TELEGRAM_BOT_TOKEN_ENV_NAME,
+  TELEGRAM_CHAT_ID_ENV_NAME,
+} from "./monitor";
 
 export class FreeRetroService extends Stack {
+  LAMBDA_TIMEOUT_SEC = 3;
   constructor(scope: Construct, id: string, props: StackProps | undefined) {
     super(scope, id, props);
     const baseProps = {
@@ -36,6 +42,29 @@ export class FreeRetroService extends Stack {
       name: `${id}-backend`,
       certificate: certificates.apiCertificate,
       domainName: `ws.${domainName}`,
+      lambdaTimeout: this.LAMBDA_TIMEOUT_SEC,
+      ...baseProps,
+    });
+
+    // monitors
+    new Monitoring(this, `monitoring`, {
+      name: `${id}-monitoring`,
+      apiProps: {
+        apiId: backend.api.apiId,
+      },
+      lambdaProps: {
+        wsLambda: backend.lambdaFunction,
+        lambdaTimeoutSeconds: this.LAMBDA_TIMEOUT_SEC,
+      },
+      tgForwarderProps: {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        tgBotToken: process.env[TELEGRAM_BOT_TOKEN_ENV_NAME]!,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        tgChatId: process.env[TELEGRAM_CHAT_ID_ENV_NAME]!,
+      },
+      dynamoProps: {
+        table: backend.dynamoTable,
+      },
       ...baseProps,
     });
 
