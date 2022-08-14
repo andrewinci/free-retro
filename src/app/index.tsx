@@ -1,14 +1,15 @@
 import { createRoot } from "react-dom/client";
 import { App } from "./app";
-import { initUserId } from "./state";
+import { initUserId, Stage } from "./state";
 import { initAppState } from "./state/automerge-state";
 import { wsInit } from "./ws";
 
 // check if the sessionId is available in the url hash
 const sessionId = location.hash.length > 1 ? location.hash.substring(1) : null;
-
+// if no session Id is specified, the stage is Create
+const stage = sessionId == null ? Stage.Create : Stage.Join;
 // init the application state
-const state = initAppState(sessionId);
+const state = initAppState(sessionId, stage);
 location.hash = state.sessionId;
 
 // init the websocket

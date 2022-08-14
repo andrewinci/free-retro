@@ -20,7 +20,7 @@ export function wsInit() {
     const serverMessage = JSON.parse(event.data) as WSServerMessage;
     switch (serverMessage.action) {
       case "update":
-        loadNewState(serverMessage.state);
+        loadNewState(serverMessage.state, serverMessage.recreateState);
         break;
       case "error":
         console.error("Error from the server", serverMessage);
@@ -40,12 +40,20 @@ export function joinSession(sessionId: string) {
   socket.send(JSON.stringify(joinMessage));
 }
 
-export function broadcast<T>(sessionId: string, state: T) {
+// broadcast the state to other clients in the same session
+// if recreateState is true, force the other client to drop the
+// current state and set the broadcasted one
+export function broadcast<T>(
+  sessionId: string,
+  state: T,
+  recreateState: boolean
+) {
   const rawState = Automerge.save(state);
   const broadcastMessage: BroadcastMessage = {
     action: "broadcast",
     sessionId: sessionId,
     state: toBase64(rawState),
+    recreateState,
   };
   socket.send(JSON.stringify(broadcastMessage));
 }
