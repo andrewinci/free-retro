@@ -2,11 +2,15 @@
  * @jest-environment jsdom
  */
 
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import renderer from "react-test-renderer";
 import { TextArea } from "./textarea";
+import { act } from "react-dom/test-utils";
 
 describe("textArea", () => {
+  const div = document.createElement("div");
+  const root = createRoot(div);
+
   it("should render", () => {
     const component = renderer.create(<TextArea />);
     expect(component).toBeDefined();
@@ -14,10 +18,10 @@ describe("textArea", () => {
 
   it("should trigger textChange after every letter if reduceTextChangeUpdates=false", () => {
     const mockFunction = jest.fn();
-    const div = document.createElement("div");
-    ReactDOM.render(
-      <TextArea text={""} onTextChange={(t) => mockFunction(t)}></TextArea>,
-      div
+    act(() =>
+      root.render(
+        <TextArea text={""} onTextChange={(t) => mockFunction(t)}></TextArea>
+      )
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
@@ -37,13 +41,13 @@ describe("textArea", () => {
   });
   it("should trigger textChange only if change focus or a space is typed when reduceTextChangeUpdates=true", () => {
     const mockFunction = jest.fn();
-    const div = document.createElement("div");
-    ReactDOM.render(
-      <TextArea
-        reduceTextChangeUpdates={true}
-        text={"sample"}
-        onTextChange={(t) => mockFunction(t)}></TextArea>,
-      div
+    act(() =>
+      root.render(
+        <TextArea
+          reduceTextChangeUpdates={true}
+          text={"sample"}
+          onTextChange={(t) => mockFunction(t)}></TextArea>
+      )
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
@@ -65,14 +69,14 @@ describe("textArea", () => {
   });
   it("should not trigger textChange if readonly - reduceTextChangeUpdates=true", () => {
     const mockFunction = jest.fn();
-    const div = document.createElement("div");
-    ReactDOM.render(
-      <TextArea
-        reduceTextChangeUpdates={true}
-        text={"sample"}
-        onTextChange={(t) => mockFunction(t)}
-        readOnly={true}></TextArea>,
-      div
+    act(() =>
+      root.render(
+        <TextArea
+          reduceTextChangeUpdates={true}
+          text={"sample"}
+          onTextChange={(t) => mockFunction(t)}
+          readOnly={true}></TextArea>
+      )
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
@@ -85,13 +89,13 @@ describe("textArea", () => {
   });
   it("should not trigger textChange if readonly - reduceTextChangeUpdates=false", () => {
     const mockFunction = jest.fn();
-    const div = document.createElement("div");
-    ReactDOM.render(
-      <TextArea
-        text={"sample"}
-        onTextChange={(t) => mockFunction(t)}
-        readOnly={true}></TextArea>,
-      div
+    act(() =>
+      root.render(
+        <TextArea
+          text={"sample"}
+          onTextChange={(t) => mockFunction(t)}
+          readOnly={true}></TextArea>
+      )
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
@@ -104,21 +108,26 @@ describe("textArea", () => {
   });
   it("should not trigger textChange if the text doesn't change", () => {
     const mockFunction = jest.fn();
-    const div = document.createElement("div");
-    ReactDOM.render(
-      <TextArea
-        text={"sample"}
-        onTextChange={(t) => mockFunction(t)}></TextArea>,
-      div
+    act(() =>
+      root.render(
+        <TextArea
+          text={"sample"}
+          onTextChange={(t) => mockFunction(t)}></TextArea>
+      )
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
-    input.dispatchEvent(
-      new KeyboardEvent("keyup", { bubbles: true, key: "s" })
-    );
+    act(() => {
+      input.dispatchEvent(
+        new KeyboardEvent("keyup", { bubbles: true, key: "s" })
+      );
+    });
     for (let i = 0; i < 10; i++) {
-      input.dispatchEvent(new Event("focus", { bubbles: true }));
-      input.dispatchEvent(new Event("focusout", { bubbles: true }));
+      // react 18: https://reactjs.org/docs/test-utils.html#act
+      act(() => {
+        input.dispatchEvent(new Event("focus", { bubbles: true }));
+        input.dispatchEvent(new Event("focusout", { bubbles: true }));
+      });
     }
     expect(mockFunction).toBeCalledTimes(1);
   });

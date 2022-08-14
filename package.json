@@ -8,7 +8,7 @@
     "postinstall": "husky install",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "coverage": "jest --coverage",
-    "test": "jest",
+    "test": "jest --silent",
     "copy_artifacts": "mkdir -p dist/app/ && cp src/app/index.html dist/app/index.html && cp artifacts/* dist/app/",
     "build:app": "yarn copy_artifacts  && esbuild --bundle src/app/index.tsx --outdir=dist/app --sourcemap --minify",
     "build:lambda": "esbuild --bundle src/lambda/handler.ts --tsconfig=tsconfig.lambda.json --platform=node --outdir=dist/lambda --sourcemap  --minify",

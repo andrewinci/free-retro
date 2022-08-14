@@ -105,6 +105,7 @@ describe("integration test", () => {
       action: "broadcast",
       sessionId: "sessionId",
       state: "client state",
+      recreateState: false,
     },
     connectionId: "connectionId",
     endpoint: "endpoint",
