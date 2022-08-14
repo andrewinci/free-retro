@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/andrewinci/free-retro/compare/v1.5.0...v1.5.1) (2022-08-14)
+
+
+### Bug Fixes
+
+* Fix unsupported dynamo removalPolicy ([483c3c1](https://github.com/andrewinci/free-retro/commit/483c3c10f49e718f15aeddbe145c1ca30ed29aad))
+
 # [1.5.0](https://github.com/andrewinci/free-retro/compare/v1.4.0...v1.5.0) (2022-08-14)
 
 
