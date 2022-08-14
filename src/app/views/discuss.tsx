@@ -23,7 +23,7 @@ const CloseRetro = styled(CloseButton)`
 const CardDiscussContainer = styled.div`
   flex: 1;
   flex-grow: 1;
-  min-width: 20rem;
+  min-width: 450px;
   display: flex;
   flex-direction: row;
   align-items: center;
