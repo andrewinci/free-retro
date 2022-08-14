@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { EmptyButton } from "../components/buttons";
 import * as State from "../state";
-import { getAppState, Stage } from "../state";
+import { ActionState, Stage } from "../state";
 
 const Container = styled.div`
   position: absolute;
@@ -25,8 +25,11 @@ const RefreshPage = styled(EmptyButton)`
   margin-top: 0.5em;
 `;
 
-const EndRetroView = () => {
-  const { sessionId, actions } = getAppState();
+const EndRetroView = (props: {
+  sessionId: string;
+  actions?: ActionState[];
+}) => {
+  const { sessionId, actions } = props;
   return (
     <Container>
       <StyledP>This retro is now concluded.</StyledP>

@@ -77,7 +77,11 @@ export const App = () => {
             actions={appState.actions ?? []}></DiscussView>
         );
       case Stage.End:
-        return <EndRetroView></EndRetroView>;
+        return (
+          <EndRetroView
+            sessionId={appState.sessionId}
+            actions={appState.actions}></EndRetroView>
+        );
     }
   };
   return (
