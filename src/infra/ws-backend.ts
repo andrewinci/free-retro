@@ -37,7 +37,7 @@ export class WSBackend extends Construct {
       sortKey: { name: "connectionId", type: dynamodb.AttributeType.STRING },
       readCapacity: 10,
       writeCapacity: 10,
-      removalPolicy: RemovalPolicy.SNAPSHOT,
+      removalPolicy: RemovalPolicy.RETAIN,
       encryption: dynamodb.TableEncryption.AWS_MANAGED,
     });
 
