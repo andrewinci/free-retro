@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/andrewinci/free-retro/compare/v1.5.1...v1.6.0) (2022-08-14)
+
+
+### Features
+
+* reuse the same sessionid for multiple retros ([#9](https://github.com/andrewinci/free-retro/issues/9)) ([034a9d1](https://github.com/andrewinci/free-retro/commit/034a9d1c8cdb7f4f77b6df53333825161b72c6ec))
+
 ## [1.5.1](https://github.com/andrewinci/free-retro/compare/v1.5.0...v1.5.1) (2022-08-14)
 
 
