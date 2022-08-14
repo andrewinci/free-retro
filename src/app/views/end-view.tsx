@@ -26,12 +26,13 @@ const RefreshPage = styled(EmptyButton)`
 `;
 
 const EndRetroView = () => {
+  const { sessionId, actions } = getAppState();
   return (
     <Container>
       <StyledP>This retro is now concluded.</StyledP>
       <RefreshPage
         onClick={() => {
-          State.initAppState(getAppState().sessionId, Stage.Create);
+          State.initAppState(sessionId, Stage.Create, actions);
         }}>
         🚀 Start a new retro
       </RefreshPage>

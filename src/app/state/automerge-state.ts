@@ -2,7 +2,7 @@ import * as Automerge from "automerge";
 import { toBinaryDocument } from "../helper/binary-document";
 import { randomId } from "../helper/random";
 import { broadcast } from "../ws";
-import { AppState, Stage } from "./model";
+import { ActionState, AppState, Stage } from "./model";
 
 const observable = new Automerge.Observable();
 let appState: AppState;
@@ -12,13 +12,23 @@ export const getAppState = () => {
   throw new Error("AppState not initialized");
 };
 
-export const initAppState = (sessionId: string | null, stage: Stage) => {
+export const initAppState = (
+  sessionId: string | null,
+  stage: Stage,
+  actions: ActionState[] | undefined = undefined
+) => {
   appState = Automerge.change(
     Automerge.init<AppState>({ observable }),
     (state) => {
       // set initial values
       state.sessionId = sessionId ?? randomId();
       state.stage = stage;
+      if (actions) {
+        state.actions = actions.map((a) => ({
+          text: a.text,
+          done: a.done,
+        }));
+      }
     }
   );
   return appState;
@@ -42,7 +52,7 @@ export function loadNewState(remoteRawState: string, recreateState: boolean) {
     toBinaryDocument(remoteRawState)
   );
   if (recreateState) {
-    initAppState(remoteState.sessionId, remoteState.stage);
+    initAppState(remoteState.sessionId, remoteState.stage, remoteState.actions);
   }
   appState = Automerge.merge(appState, remoteState);
 }
