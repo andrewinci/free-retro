@@ -48,11 +48,11 @@ async function handle(request: WSRequest) {
       break;
   }
 }
-// http://127.0.0.1:8000/#71165e4c-13a9-4bd3-b296-8555370f8089
+
 export async function handleBroadcast(request: WSRequest) {
-  console.log("Handle broadcast", request);
+  console.log("Handle broadcast");
   const dynamoState = await getDynamoAppState(request.body.sessionId);
-  const { sessionId, state } = request.body as BroadcastMessage;
+  const { sessionId, state, recreateState } = request.body as BroadcastMessage;
   const storeToDynamoPromise = storeToDynamo({
     appState: state,
     connectionId: request.connectionId,
@@ -61,7 +61,8 @@ export async function handleBroadcast(request: WSRequest) {
 
   const broadcastMessage: WSServerMessage = {
     action: "update",
-    state: state,
+    state,
+    recreateState,
   };
 
   const sendPromises = (dynamoState?.connections ?? [])
@@ -83,7 +84,7 @@ export async function handleBroadcast(request: WSRequest) {
 }
 
 export async function handleJoin(request: WSRequest) {
-  console.log("Handle join", request);
+  console.log("Handle join");
   const state = await getDynamoAppState(request.body.sessionId);
   if (!state) {
     const message = `Session id ${request.body.sessionId} not found`;
@@ -99,6 +100,7 @@ export async function handleJoin(request: WSRequest) {
   const updateMessage: WSServerMessage = {
     action: "update",
     state: state.lastState,
+    recreateState: false,
   };
 
   await storeToDynamo({

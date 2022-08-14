@@ -28,6 +28,7 @@ describe("lambda integration tests", () => {
       expect(sendToClient.mock.calls[0][0]).toEqual({
         action: "update",
         state: "last server state",
+        recreateState: false,
       });
       expect(storeToDynamo.mock.calls.length).toBe(1);
       expect(storeToDynamo.mock.calls[0][0]).toEqual({

@@ -43,7 +43,7 @@ export const createRetro = (retroName: string) =>
   changeState((state) => {
     state.retroName = retroName;
     state.stage = Stage.AddTickets;
-  });
+  }, true);
 
 export const changeStage = (change: "next" | "back") => {
   const currentStage = getAppState().stage ?? 0;

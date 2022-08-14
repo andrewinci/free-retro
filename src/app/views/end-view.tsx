@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { EmptyButton } from "../components/buttons";
+import * as State from "../state";
+import { getAppState, Stage } from "../state";
 
 const Container = styled.div`
   position: absolute;
@@ -26,15 +28,12 @@ const RefreshPage = styled(EmptyButton)`
 const EndRetroView = () => {
   return (
     <Container>
-      <StyledP>
-        This retro is now concluded. Refresh the page to create a new one.
-      </StyledP>
+      <StyledP>This retro is now concluded.</StyledP>
       <RefreshPage
         onClick={() => {
-          location.hash = "";
-          location.reload();
+          State.initAppState(getAppState().sessionId, Stage.Create);
         }}>
-        🚀 Refresh page
+        🚀 Start a new retro
       </RefreshPage>
     </Container>
   );
