@@ -3,6 +3,7 @@ export type BroadcastMessage = {
   action: "broadcast";
   sessionId: string;
   state: string;
+  recreateState: boolean;
 };
 
 // message sent by the client to the server
@@ -22,6 +23,7 @@ export type ErrorMessage = {
 export type UpdateMessage = {
   action: "update";
   state: string;
+  recreateState: boolean;
 };
 
 export type WSServerMessage = UpdateMessage | ErrorMessage;
