@@ -1,6 +1,6 @@
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
-import { CardPosition } from "../state";
+import { Id } from "../state";
 import { AddButton, CloseButton } from "./buttons";
 import { Title } from "./textarea";
 
@@ -40,7 +40,7 @@ type ColumnProps = {
   title: string;
   children?: React.ReactNode[];
   readOnly?: boolean;
-  onDrop?: (id: CardPosition) => void;
+  onDrop?: (cardId: Id) => void;
   onTitleChange?: (_: string) => void;
   onAddClick?: () => void;
   onCloseClick?: () => void;
@@ -51,9 +51,9 @@ export const Column = (props: ColumnProps) => {
   const { onDrop, onAddClick, onCloseClick } = props;
   const [_, drop] = useDrop(() => ({
     accept: "card",
-    drop: (id: CardPosition, monitor) => {
+    drop: (item: { id: Id }, monitor) => {
       if (!monitor.didDrop() && onDrop) {
-        onDrop(id);
+        onDrop(item.id);
       }
     },
     collect: (monitor) => ({
@@ -74,10 +74,10 @@ export const Column = (props: ColumnProps) => {
           onTextChange={(t) => (onTitleChange ? onTitleChange(t) : {})}
         />
       </div>
-      {children}
       {!readOnly && (
         <BottomAddButton onClick={() => (onAddClick ? onAddClick() : {})} />
       )}
+      {children}
     </StyledColumn>
   );
 };

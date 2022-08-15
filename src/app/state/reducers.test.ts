@@ -22,9 +22,9 @@ describe("reducers", () => {
         s.columns = [
           {
             groups: [
-              { cards: [], votes: {} },
-              { cards: [], votes: {} },
-              { cards: [], votes: {} },
+              { id: "1", cards: [], votes: {} },
+              { id: "2", cards: [], votes: {} },
+              { id: "3", cards: [], votes: {} },
             ],
             title: "",
           },
@@ -42,7 +42,7 @@ describe("reducers", () => {
         s.discussCardIndex = new Automerge.Counter(2);
         s.columns = [
           {
-            groups: [{ cards: [], votes: {} }],
+            groups: [{ id: "1", cards: [], votes: {} }],
             title: "",
           },
         ];
