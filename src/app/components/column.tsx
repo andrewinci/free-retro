@@ -74,10 +74,10 @@ export const Column = (props: ColumnProps) => {
           onTextChange={(t) => (onTitleChange ? onTitleChange(t) : {})}
         />
       </div>
-      {children}
       {!readOnly && (
         <BottomAddButton onClick={() => (onAddClick ? onAddClick() : {})} />
       )}
+      {children}
     </StyledColumn>
   );
 };

@@ -9,10 +9,10 @@ import {
   GroupPosition,
   Stage,
 } from "./model";
+
 export const EMPTY_COLUMN_TITLE = "Empty column";
 
 // app state reducers
-
 export const changeDiscussCard = (changeType: "increment" | "decrement") => {
   // avoid to trigger changes if the index is out of bound
   const { columns, discussCardIndex } = getAppState();
@@ -126,7 +126,7 @@ export const addEmptyCard = (columnIndex: number) =>
   changeState((state) => {
     if (!state.columns) return;
     const column = state.columns[columnIndex];
-    column.groups.push({
+    column.groups.unshift({
       votes: {},
       cards: [
         {
