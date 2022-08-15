@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/andrewinci/free-retro/compare/v1.6.0...v1.6.1) (2022-08-15)
+
+
+### Bug Fixes
+
+* Tweak monitor threshold ([a2319cd](https://github.com/andrewinci/free-retro/commit/a2319cda27084797b9057907958ad22d777239e3))
+
 # [1.6.0](https://github.com/andrewinci/free-retro/compare/v1.5.1...v1.6.0) (2022-08-14)
 
 
