@@ -1,21 +1,14 @@
 import * as Automerge from "automerge";
 
+export type Id = string;
+
 export type User = {
   id: string;
   username: string;
 };
 
-export type GroupPosition = {
-  column: number;
-  group: number;
-};
-
-export type CardPosition = {
-  card: number;
-} & GroupPosition;
-
 type Card = {
-  position: CardPosition;
+  id: Id;
   originColumn: string;
   ownerId: string;
   text: string;
@@ -23,6 +16,7 @@ type Card = {
 };
 
 export type CardGroupState = {
+  id: Id;
   title?: string;
   cards: Card[];
   votes: Record<string, Automerge.Counter>;

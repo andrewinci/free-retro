@@ -42,44 +42,42 @@ export function stageToString(stage: Stage) {
 }
 
 function BoardCard(props: {
-  card: State.CardGroupState;
-  cardIndex: number;
-  columnIndex: number;
+  cardGroup: State.CardGroupState;
   stage: Stage;
   readOnly: boolean;
 }): JSX.Element {
-  const { card, cardIndex, columnIndex, stage, readOnly } = props;
-  const cards = card.cards.map((c) => ({
+  const { cardGroup, stage, readOnly } = props;
+  const cards = cardGroup.cards.map((c) => ({
     ...c,
     cardType: stage == Stage.AddTickets ? undefined : c.originColumn,
-    id: c.position,
+    id: c.id,
   }));
   // event handlers
-  const deleteCard = async () => await State.deleteCard(columnIndex, cardIndex);
+  const deleteCardGroup = async () => await State.deleteCardGroup(cardGroup.id);
   const changeCardText = async (text: string) =>
-    await State.updateCardText(columnIndex, cardIndex, text);
+    await State.updateFirstCardText(cardGroup.id, text);
   const addVotes = async () =>
-    await State.updateCardVotes(columnIndex, cardIndex, "increment");
+    await State.updateGroupVotes(cardGroup.id, "increment");
   const removeVotes = async () =>
-    await State.updateCardVotes(columnIndex, cardIndex, "decrement");
+    await State.updateGroupVotes(cardGroup.id, "decrement");
   const { id: userId } = getUser() ?? setUserName();
   return (
     <CardGroup
-      onDrop={async (src) => await State.moveCard(src, card.cards[0].position)}
+      onDrop={async (src) => await State.moveCardToGroup(src, cardGroup.id)}
       cards={cards}
       canDrag={stage == Stage.Group}
-      onCloseClicked={deleteCard}
+      onCloseClicked={deleteCardGroup}
       onTextChange={changeCardText}
-      title={card.title}
+      title={cardGroup.title}
       onTitleChange={async (title) =>
-        await State.setGroupTitle({ ...card.cards[0].position }, title)
+        await State.setGroupTitle(cardGroup.id, title)
       }
       blur={stage == Stage.AddTickets && cards[0].ownerId != getUser()?.id}
       readOnly={readOnly}>
       {stage != Stage.AddTickets && stage != Stage.Group && (
         <VotesLine
           readonly={false}
-          votes={card.votes[userId]?.value ?? 0}
+          votes={cardGroup.votes[userId]?.value ?? 0}
           onAddVoteClicked={addVotes}
           onRemoveVoteClicked={removeVotes}></VotesLine>
       )}
@@ -102,12 +100,10 @@ function BoardColumn(props: {
       onAddClick={async () => await State.addEmptyCard(columnIndex)}
       onCloseClick={async () => await State.deleteColumn(columnIndex)}
       readOnly={readOnly}>
-      {column.groups.map((card, cardIndex) => (
+      {column.groups.map((group) => (
         <BoardCard
-          key={cardIndex}
-          card={card}
-          columnIndex={columnIndex}
-          cardIndex={cardIndex}
+          key={group.id}
+          cardGroup={group}
           stage={stage}
           readOnly={readOnly}></BoardCard>
       ))}

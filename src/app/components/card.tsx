@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CloseButton } from "./buttons";
 import { GroupTitle, TextArea } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
-import { CardPosition } from "../state";
+import { Id } from "../state";
 
 type CardContainerProps = {
   className?: string;
@@ -12,11 +12,11 @@ type CardContainerProps = {
   canDrag?: boolean;
   onCloseClicked?: () => void;
   onTextChange?: (_: string) => void;
-  onDrop?: (id: CardPosition) => void;
+  onDrop?: (id: Id) => void;
 };
 
 type CardProps = {
-  id?: CardPosition;
+  id?: Id;
   text: string;
   cardType?: string;
   color?: string;
@@ -36,7 +36,7 @@ const CardContent = (props: CardProps & CardContainerProps) => {
     () => ({
       canDrag: () => canDrag ?? false,
       type: "card",
-      item: props.id,
+      item: { id: props.id },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -72,8 +72,8 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
   const cardProps = props.cards.map((c) => ({ ...props, ...c }));
   const [_, drop] = useDrop(() => ({
     accept: "card",
-    drop: (id: CardPosition, _) => {
-      props?.onDrop ? props.onDrop(id) : {};
+    drop: (item: { id: Id }, _) => {
+      props?.onDrop ? props.onDrop(item.id) : {};
     },
     collect: (monitor) => ({
       item: monitor.getItem(),
@@ -90,8 +90,8 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
           props.onTitleChange ? props.onTitleChange(text) : {}
         }
       />
-      {cardProps.map((p, i) => (
-        <CardContent {...p} key={i}></CardContent>
+      {cardProps.map((p) => (
+        <CardContent {...p} key={p.id}></CardContent>
       ))}
       {props.children}
     </Container>

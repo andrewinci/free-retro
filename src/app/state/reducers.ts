@@ -1,14 +1,9 @@
-import { randomColor } from "../helper/random";
+import { randomColor, randomId } from "../helper/random";
 import { changeState, getAppState } from "./automerge-state";
 import { getUser, setUserName } from "./user";
 import * as Automerge from "automerge";
-import {
-  AppState,
-  CardPosition,
-  ColumnState,
-  GroupPosition,
-  Stage,
-} from "./model";
+import { Id, ColumnState, Stage } from "./model";
+import { findCardPosition, findGroupPosition } from "../helper/position-finder";
 
 export const EMPTY_COLUMN_TITLE = "Empty column";
 
@@ -89,37 +84,49 @@ export const setColumnTitle = (columnIndex: number, title: string) =>
     }
   });
 
-export const moveCardToColumn = (src: CardPosition, column: number) =>
-  changeState((state) => moveCardToColumnInPlace(state, src, column));
-
 // card reducers
-export const setGroupTitle = (position: GroupPosition, title: string) =>
+export const setGroupTitle = (groupId: Id, title: string) =>
   changeState((state) => {
     if (!state.columns) return;
-    const { column, group } = position;
+    const groupPosition = findGroupPosition(groupId, state);
+    if (!groupPosition) return;
+    const { column, group } = groupPosition;
     state.columns[column].groups[group].title = title;
   });
 
-export const moveCard = (src: CardPosition, dst: GroupPosition) =>
+export const moveCardToGroup = (srcCardId: Id, dstGroupId: Id) =>
   changeState((state) => {
+    console.log(state);
+    console.log("Move card to group");
+    console.log("srcCardId", srcCardId);
+    console.log("dstGroupId", dstGroupId);
     if (!state.columns) return;
-    const srcGroup = state.columns[src.column].groups[src.group];
-    const srcCard = srcGroup.cards[src.card];
-    const dstGroup = state.columns[dst.column].groups[dst.group];
+    const srcCardPosition = findCardPosition(srcCardId, state);
+    const dstGroupPosition = findGroupPosition(dstGroupId, state);
+    console.log("srcCardPosition", srcCardPosition);
+    console.log("dstGroupPosition", dstGroupPosition);
+    if (!srcCardPosition || !dstGroupPosition) return;
+    const srcGroup =
+      state.columns[srcCardPosition.column].groups[srcCardPosition.group];
+    const srcCard = srcGroup.cards[srcCardPosition.card];
+    const dstGroup =
+      state.columns[dstGroupPosition.column].groups[dstGroupPosition.group];
     dstGroup.cards.push({
-      position: { ...dst, card: dstGroup.cards.length },
+      id: srcCardId,
       originColumn: srcCard.originColumn,
       ownerId: srcCard.ownerId,
       text: srcCard.text,
       color: srcCard.color,
     });
-    srcGroup.cards.splice(src.card, 1);
+    // remove the card from the source group
+    srcGroup.cards.splice(srcCardPosition.card, 1);
     // delete the group if there are no more cards
     if (srcGroup.cards.length == 0) {
-      state.columns[src.column].groups.splice(src.group, 1);
+      state.columns[srcCardPosition.column].groups.splice(
+        srcCardPosition.group,
+        1
+      );
     }
-    // re-calculate all the positions
-    recalculatePositions(state);
   });
 
 export const addEmptyCard = (columnIndex: number) =>
@@ -127,16 +134,13 @@ export const addEmptyCard = (columnIndex: number) =>
     if (!state.columns) return;
     const column = state.columns[columnIndex];
     column.groups.unshift({
+      id: randomId(),
       votes: {},
       cards: [
         {
-          position: {
-            column: columnIndex,
-            group: column.groups.length,
-            card: 0,
-          },
+          id: randomId(),
           originColumn: column.title,
-          ownerId: getUser()?.id ?? "", //todo
+          ownerId: getUser()?.id ?? "",
           text: "",
           color: randomColor(),
         },
@@ -144,21 +148,21 @@ export const addEmptyCard = (columnIndex: number) =>
     });
   });
 
-export const deleteCard = (columnIndex: number, cardIndex: number) =>
+export const deleteCardGroup = (groupId: Id) =>
   changeState((state) => {
     if (!state.columns) return;
-    state.columns[columnIndex].groups.splice(cardIndex, 1);
+    const groupPosition = findGroupPosition(groupId, state);
+    if (!groupPosition) return;
+    state.columns[groupPosition.column].groups.splice(groupPosition.group, 1);
   });
 
-export const updateCardText = (
-  columnIndex: number,
-  cardIndex: number,
-  newText: string
-) =>
+export const updateFirstCardText = (groupId: Id, newText: string) =>
   changeState((state) => {
     if (!state.columns) return;
-    const card = state.columns[columnIndex].groups[cardIndex];
-    // strong assumption: only one card in the group
+    const groupPosition = findGroupPosition(groupId, state);
+    if (!groupPosition) return;
+    const card =
+      state.columns[groupPosition.column].groups[groupPosition.group];
     card.cards[0].text = newText;
   });
 
@@ -176,15 +180,17 @@ const canUserAddVotes = () => {
   return total < 5;
 };
 
-export const updateCardVotes = (
-  columnIndex: number,
-  cardIndex: number,
+export const updateGroupVotes = (
+  groupId: Id,
   changeType: "increment" | "decrement"
 ) =>
   changeState((state) => {
     if (!state.columns) return;
-    const userId = (getUser() ?? setUserName()).id;
-    const card = state.columns[columnIndex].groups[cardIndex];
+    const groupPosition = findGroupPosition(groupId, state);
+    if (!groupPosition) return;
+    const userId = getUser()?.id ?? "";
+    const card =
+      state.columns[groupPosition.column].groups[groupPosition.group];
     if (!card.votes[userId]) {
       card.votes[userId] = new Automerge.Counter(0);
     }
@@ -198,63 +204,38 @@ export const updateCardVotes = (
     }
   });
 
-const moveCardToColumnInPlace = (
-  state: AppState,
-  src: CardPosition,
-  column: number
-) => {
-  if (!state.columns) return;
-  const srcGroup = state.columns[src.column].groups[src.group];
-  const srcCard = srcGroup.cards[src.card];
-  let dstColumn: ColumnState | undefined = state.columns[column];
-  if (srcCard.originColumn != dstColumn.title) {
-    dstColumn = state.columns.find((c) => c.title == srcCard.originColumn);
-  }
-  if (!dstColumn) return;
-  dstColumn.groups.push({
-    votes: {},
-    cards: [
-      {
-        position: { column, group: dstColumn.groups.length, card: 0 },
-        originColumn: srcCard.originColumn,
-        ownerId: srcCard.ownerId,
-        text: srcCard.text,
-        color: srcCard.color,
-      },
-    ],
-  });
-  srcGroup.cards.splice(src.card, 1);
-  // delete the group if there are no more cards
-  if (srcGroup.cards.length == 0) {
-    state.columns[src.column].groups.splice(src.group, 1);
-  }
-  // re-calculate all the positions
-  recalculatePositions(state);
-};
-
-// in place mutations
-function recalculatePositions(state: AppState): void {
-  if (!state.columns) return;
-  for (let column = 0; column < state.columns.length; column++) {
-    const columnState = state.columns[column];
-    const groups = columnState.groups;
-    for (let group = 0; group < groups.length; group++) {
-      const cards = state.columns[column].groups[group].cards;
-      // single cards should be in the right column
-      if (cards.length == 1 && cards[0].originColumn != columnState.title) {
-        const rightColumnIndex = state.columns.findIndex(
-          (c) => c.title == cards[0].originColumn
-        );
-        moveCardToColumnInPlace(
-          state,
-          { column, group, card: 0 },
-          rightColumnIndex
-        );
-      } else {
-        for (let card = 0; card < cards.length; card++) {
-          cards[card].position = { column, group, card };
-        }
-      }
+export const moveCardToColumn = (srcCardId: Id, column: number) =>
+  changeState((state) => {
+    if (!state.columns) return;
+    const srcCardPosition = findCardPosition(srcCardId, state);
+    if (!srcCardPosition) return;
+    const srcGroup =
+      state.columns[srcCardPosition.column].groups[srcCardPosition.group];
+    const srcCard = srcGroup.cards[srcCardPosition.card];
+    let dstColumn: ColumnState | undefined = state.columns[column];
+    if (srcCard.originColumn != dstColumn.title) {
+      dstColumn = state.columns.find((c) => c.title == srcCard.originColumn);
     }
-  }
-}
+    if (!dstColumn) return;
+    dstColumn.groups.push({
+      id: randomId(),
+      votes: {},
+      cards: [
+        {
+          id: srcCardId,
+          originColumn: srcCard.originColumn,
+          ownerId: srcCard.ownerId,
+          text: srcCard.text,
+          color: srcCard.color,
+        },
+      ],
+    });
+    srcGroup.cards.splice(srcCardPosition.card, 1);
+    // delete the group if there are no more cards
+    if (srcGroup.cards.length == 0) {
+      state.columns[srcCardPosition.column].groups.splice(
+        srcCardPosition.group,
+        1
+      );
+    }
+  });

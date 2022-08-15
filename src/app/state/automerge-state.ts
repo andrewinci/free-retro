@@ -29,7 +29,7 @@ export function onStateChange(f: (newState: AppState) => void) {
 }
 
 export async function changeState(
-  f: (state: AppState) => void,
+  f: (mutableState: AppState) => void,
   recreateState = false
 ) {
   appState = Automerge.change(appState, (s) => f(s));

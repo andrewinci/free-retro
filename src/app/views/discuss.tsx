@@ -90,6 +90,7 @@ Click ok to go ahead.`);
         <CardGroup
           title={card.title}
           cards={card.cards.map((c) => ({
+            id: c.id,
             text: c.text,
             cardType: c.originColumn,
             color: c.color,
