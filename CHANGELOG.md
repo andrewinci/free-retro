@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/andrewinci/free-retro/compare/v1.6.1...v1.6.2) (2022-08-15)
+
+
+### Bug Fixes
+
+* Cards grouping and ids ([#15](https://github.com/andrewinci/free-retro/issues/15)) ([9233ec4](https://github.com/andrewinci/free-retro/commit/9233ec47d19ab793d36bfddb44bcd5f5c6233a60))
+
 ## [1.6.1](https://github.com/andrewinci/free-retro/compare/v1.6.0...v1.6.1) (2022-08-15)
 
 
