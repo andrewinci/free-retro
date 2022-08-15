@@ -204,7 +204,7 @@ export class Monitoring extends Construct {
       new cw.Alarm(this, `lambda-invocations-alarm`, {
         alarmName: `${name} lambda invocations`,
         metric: wsLambda.metricInvocations(),
-        threshold: 10000, //!k invocations in 5 minutes
+        threshold: 1000, //1k invocations in 5 minutes
         evaluationPeriods: 1,
         treatMissingData: TreatMissingData.NOT_BREACHING,
       }),

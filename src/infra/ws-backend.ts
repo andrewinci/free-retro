@@ -60,7 +60,7 @@ export class WSBackend extends Construct {
       environment: {
         DYNAMO_TABLE_NAME: this.dynamoTable.tableName,
       },
-      reservedConcurrentExecutions: 20,
+      reservedConcurrentExecutions: 50,
       deadLetterQueue: dlq,
     });
 
