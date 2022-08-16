@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/andrewinci/free-retro/compare/v1.6.2...v1.7.0) (2022-08-16)
+
+
+### Features
+
+* autofocus text-area ([e0d2b33](https://github.com/andrewinci/free-retro/commit/e0d2b33b0ead640c959c3b1af1d9b3bf35114d43))
+
 ## [1.6.2](https://github.com/andrewinci/free-retro/compare/v1.6.1...v1.6.2) (2022-08-15)
 
 
