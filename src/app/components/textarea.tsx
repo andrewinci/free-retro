@@ -62,11 +62,14 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useMemo(() => setState({ ...state, current: text }), [text]);
   useEffect(() => {
+    // resize the text area on mount
     autosize(textInput.current);
-    if (readOnly) {
-      textInput.current?.blur();
+    // autofocus writable empty text
+    if (!readOnly && text == "") {
+      textInput.current?.focus();
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const textChanged = (text: string, key: string | null = null) => {
     // nothing to do if it is readonly

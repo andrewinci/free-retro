@@ -25,7 +25,10 @@ export const initAppState = (sessionId: string | null, stage: Stage) => {
 };
 
 export function onStateChange(f: (newState: AppState) => void) {
-  observable.observe(appState, (a, b, newState) => f(newState));
+  observable.observe(appState, (a, b, newState) => {
+    console.log(newState);
+    f(newState);
+  });
 }
 
 export async function changeState(
