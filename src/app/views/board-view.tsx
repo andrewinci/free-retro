@@ -72,6 +72,7 @@ function BoardCard(props: {
       onTitleChange={async (title) =>
         await State.setGroupTitle(cardGroup.id, title)
       }
+      readOnlyTitle={stage != Stage.Group}
       blur={stage == Stage.AddTickets && cards[0].ownerId != getUser()?.id}
       readOnly={readOnly}>
       {stage != Stage.AddTickets && stage != Stage.Group && (

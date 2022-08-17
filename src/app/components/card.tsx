@@ -69,7 +69,7 @@ const CardContent = (props: CardProps & CardContainerProps) => {
 };
 
 export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
-  const cardProps = props.cards.map((c) => ({ ...props, ...c }));
+  const cards = props.cards.map((c) => ({ ...props, ...c }));
   const [_, drop] = useDrop(() => ({
     accept: "card",
     drop: (item: { id: Id }, _) => {
@@ -82,7 +82,7 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
   return (
     <Container ref={drop} className={props.className}>
       <GroupTitle
-        hidden={cardProps.length == 1}
+        hidden={cards.length == 1}
         text={props.title}
         placeholder="Group title"
         readOnly={props.readOnlyTitle}
@@ -90,7 +90,7 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
           props.onTitleChange ? props.onTitleChange(text) : {}
         }
       />
-      {cardProps.map((p) => (
+      {cards.map((p) => (
         <CardContent {...p} key={p.id}></CardContent>
       ))}
       {props.children}

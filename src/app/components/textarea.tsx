@@ -10,6 +10,7 @@ const StyledTextArea = styled.textarea`
   width: 100%;
   height: 100%;
   outline: none;
+  min-height: 1em;
   resize: none;
   overflow: hidden;
   font-size: 1em;
@@ -56,7 +57,9 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   const autosize = (textarea: HTMLTextAreaElement | null) => {
     if (!textarea) return;
     textarea.style.cssText = "height:auto; padding:0";
-    textarea.style.cssText = `height:${textarea.scrollHeight}px`;
+    textarea.style.cssText = `height: ${
+      textarea.scrollHeight > 0 ? textarea.scrollHeight : 47
+    }px`;
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
