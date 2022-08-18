@@ -1,6 +1,6 @@
 import { DndProvider } from "react-dnd";
 import renderer from "react-test-renderer";
-import { Column, ColumnContainer } from "./column";
+import { Column, ColumnGroup } from "./column";
 import { TestBackend } from "react-dnd-test-backend";
 
 describe("Test column components", () => {
@@ -15,9 +15,9 @@ describe("Test column components", () => {
   test("ColumnContainer should render", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
-        <ColumnContainer>
+        <ColumnGroup>
           <Column title="column title" />
-        </ColumnContainer>
+        </ColumnGroup>
       </DndProvider>
     );
     expect(component).toBeDefined();

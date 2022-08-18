@@ -1,25 +1,9 @@
 import styled from "styled-components";
 
-export const EmptyButton = styled.button`
-  margin-left: 0.5em;
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  width: 25px;
-  border-radius: 5px;
-  :hover:active {
-    background-color: #a8a8a8;
-  }
-`;
-
 export const AddButton = (
   props: React.ButtonHTMLAttributes<HTMLButtonElement>
 ) => (
-  <EmptyButton {...props}>
+  <ButtonContainer {...props}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
@@ -28,7 +12,7 @@ export const AddButton = (
       {" "}
       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />{" "}
     </svg>
-  </EmptyButton>
+  </ButtonContainer>
 );
 
 const Arrow = (props: React.HTMLAttributes<HTMLOrSVGElement>) => (
@@ -63,19 +47,19 @@ const LeftArrow = styled(RightArrow)`
 export const RightArrowButton = (
   props: React.ButtonHTMLAttributes<HTMLButtonElement>
 ) => (
-  <EmptyButton {...props}>
+  <ButtonContainer {...props}>
     <RightArrow></RightArrow>
     {props.children}
-  </EmptyButton>
+  </ButtonContainer>
 );
 
 export const LeftArrowButton = (
   props: React.ButtonHTMLAttributes<HTMLButtonElement>
 ) => (
-  <EmptyButton {...props}>
+  <ButtonContainer {...props}>
     <LeftArrow></LeftArrow>
     {props.children}
-  </EmptyButton>
+  </ButtonContainer>
 );
 
 export const CloseButton = styled(AddButton)`
@@ -83,4 +67,20 @@ export const CloseButton = styled(AddButton)`
   border-radius: 50%;
   height: 25px;
   width: 25px;
+`;
+
+export const ButtonContainer = styled.button`
+  margin-left: 0.5em;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  width: 25px;
+  border-radius: 5px;
+  :hover:active {
+    background-color: #a8a8a8;
+  }
 `;

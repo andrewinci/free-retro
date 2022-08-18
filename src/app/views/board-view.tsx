@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { AddButton, RightArrowButton } from "../components/buttons";
 import { CardGroup } from "../components/card";
-import { Column, ColumnContainer } from "../components/column";
+import { Column, ColumnGroup } from "../components/column";
 import { VotesLine } from "../components/vote-line";
 import { Stage, ColumnState, getUser, setUserName } from "../state";
 import * as State from "../state";
@@ -135,7 +135,7 @@ const BoardView = (props: {
         <h2>{stageToString(stage)}</h2>
       </StageText>
       <NextButton onClick={next}>Next</NextButton>
-      <ColumnContainer>
+      <ColumnGroup>
         {columnsData.map((column, i) => (
           <BoardColumn
             key={i}
@@ -148,7 +148,7 @@ const BoardView = (props: {
         {!readOnly && (
           <AddButton onClick={async () => await State.addColumn()} />
         )}
-      </ColumnContainer>
+      </ColumnGroup>
     </>
   );
 };

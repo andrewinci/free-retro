@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { EmptyButton } from "../components/buttons";
+import { ButtonContainer } from "../components/buttons";
 import { joinSession } from "../ws";
 
 const Container = styled.div`
@@ -10,7 +10,7 @@ const Container = styled.div`
   transform: translateX(-50%);
 `;
 
-const JoinRetro = styled(EmptyButton)`
+const JoinRetro = styled(ButtonContainer)`
   background: #d9d9d9;
   width: 100%;
   height: 1.8em;

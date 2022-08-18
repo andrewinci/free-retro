@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { EmptyButton } from "../components/buttons";
+import { ButtonContainer } from "../components/buttons";
 import * as State from "../state";
 
 const Container = styled.div`
@@ -21,7 +21,7 @@ const Input = styled.input`
   text-align: center;
 `;
 
-const CreateButton = styled(EmptyButton)`
+const CreateButton = styled(ButtonContainer)`
   background: #d9d9d9;
   width: 100%;
   height: 1.8em;

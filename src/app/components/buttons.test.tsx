@@ -2,14 +2,14 @@ import renderer from "react-test-renderer";
 import {
   AddButton,
   CloseButton,
-  EmptyButton,
+  ButtonContainer,
   LeftArrowButton,
   RightArrowButton,
 } from "./buttons";
 
 describe("Test button components", () => {
   test("EmptyButton should render", () => {
-    const component = renderer.create(<EmptyButton></EmptyButton>);
+    const component = renderer.create(<ButtonContainer></ButtonContainer>);
     expect(component).toBeDefined();
   });
   test("AddButton should render", () => {

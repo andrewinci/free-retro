@@ -4,37 +4,14 @@ import { Id } from "../state";
 import { AddButton, CloseButton } from "./buttons";
 import { Title } from "./textarea";
 
-const StyledColumnContainer = styled.div`
+const ColumnGroupContainer = styled.div`
   display: inline-flex;
 `;
 
-export const ColumnContainer = (props: { children: React.ReactNode }) => {
+export const ColumnGroup = (props: { children: React.ReactNode }) => {
   const { children } = props;
-  return <StyledColumnContainer>{children}</StyledColumnContainer>;
+  return <ColumnGroupContainer>{children}</ColumnGroupContainer>;
 };
-
-const StyledColumn = styled.div`
-  min-width: 20rem;
-  height: 80vh;
-  flex: 1;
-  flex-grow: 0 1;
-  border-radius: 0.4rem;
-  margin-right: 1em;
-  border: 2px solid #d4d4d4;
-  padding: 0.5rem 0.3rem;
-  position: relative;
-  overflow-y: scroll;
-`;
-
-const BottomAddButton = styled(AddButton)`
-  bottom: 0.5em;
-`;
-
-const TopCloseButton = styled(CloseButton)`
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
-`;
 
 type ColumnProps = {
   title: string;
@@ -61,7 +38,7 @@ export const Column = (props: ColumnProps) => {
     }),
   }));
   return (
-    <StyledColumn ref={drop}>
+    <ColumnContainer ref={drop}>
       <TopCloseButton
         hidden={(children?.length ?? 0) > 0 || readOnly}
         onClick={() => (onCloseClick ? onCloseClick() : {})}
@@ -78,6 +55,29 @@ export const Column = (props: ColumnProps) => {
         <BottomAddButton onClick={() => (onAddClick ? onAddClick() : {})} />
       )}
       {children}
-    </StyledColumn>
+    </ColumnContainer>
   );
 };
+
+const ColumnContainer = styled.div`
+  min-width: 20rem;
+  height: 80vh;
+  flex: 1;
+  flex-grow: 0 1;
+  border-radius: 0.4rem;
+  margin-right: 1em;
+  border: 2px solid #d4d4d4;
+  padding: 0.5rem 0.3rem;
+  position: relative;
+  overflow-y: scroll;
+`;
+
+const BottomAddButton = styled(AddButton)`
+  bottom: 0.5em;
+`;
+
+const TopCloseButton = styled(CloseButton)`
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+`;
