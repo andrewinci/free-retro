@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/andrewinci/free-retro/compare/v1.7.0...v1.7.1) (2022-08-18)
+
+
+### Bug Fixes
+
+* missing group title ([14dff2f](https://github.com/andrewinci/free-retro/commit/14dff2f0c20b4577e06f5b4f91fb2dc8978e58d3))
+
 # [1.7.0](https://github.com/andrewinci/free-retro/compare/v1.6.2...v1.7.0) (2022-08-16)
 
 
