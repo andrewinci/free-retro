@@ -46,8 +46,9 @@ const EndRetroView = (props: {
         Review the actions or start a new one. ✅ <br />
         <br />
         <strong>Note:</strong>these actions will be still available in the new
-        retro as long as as <br />
-        same retro id is used ({sessionId}) 💾
+        retro
+        <br />
+        as long as the same retro id is used ({sessionId}) 💾
       </StyledP>
       <RefreshPageButton
         onClick={() => {
