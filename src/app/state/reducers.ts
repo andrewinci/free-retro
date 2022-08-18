@@ -96,15 +96,10 @@ export const setGroupTitle = (groupId: Id, title: string) =>
 
 export const moveCardToGroup = (srcCardId: Id, dstGroupId: Id) =>
   changeState((state) => {
-    console.log(state);
-    console.log("Move card to group");
-    console.log("srcCardId", srcCardId);
-    console.log("dstGroupId", dstGroupId);
     if (!state.columns) return;
     const srcCardPosition = findCardPosition(srcCardId, state);
     const dstGroupPosition = findGroupPosition(dstGroupId, state);
-    console.log("srcCardPosition", srcCardPosition);
-    console.log("dstGroupPosition", dstGroupPosition);
+
     if (!srcCardPosition || !dstGroupPosition) return;
     const srcGroup =
       state.columns[srcCardPosition.column].groups[srcCardPosition.group];
