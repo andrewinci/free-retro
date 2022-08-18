@@ -16,7 +16,11 @@ describe("Test card component", () => {
   test("CardGroup should render", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
-        <CardGroup cards={[{ text: "test1" }, { text: "test2" }]}></CardGroup>
+        <CardGroup
+          cards={[
+            { id: "1", text: "test1" },
+            { id: "2", text: "test2" },
+          ]}></CardGroup>
       </DndProvider>
     );
     expect(component).toBeDefined();
