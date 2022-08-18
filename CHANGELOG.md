@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/andrewinci/free-retro/compare/v1.8.1...v1.9.0) (2022-08-18)
+
+
+### Features
+
+* List of actions ([#8](https://github.com/andrewinci/free-retro/issues/8)) ([100b6b8](https://github.com/andrewinci/free-retro/commit/100b6b8c3a8f81bd39f09eef15ab757ef0188875))
+
 ## [1.8.1](https://github.com/andrewinci/free-retro/compare/v1.8.0...v1.8.1) (2022-08-18)
 
 
