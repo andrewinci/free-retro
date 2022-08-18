@@ -3088,10 +3088,10 @@ console-control-strings@^1.1.0:
   resolved "https://registry.npmjs.org/console-control-strings/-/console-control-strings-1.1.0.tgz"
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
-constructs@^10.1.76:
-  version "10.1.76"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.76.tgz#bb00d0cc676f6657cdd226768accc68b07ff5022"
-  integrity sha512-jFv9KVYx/nW9h1/TWP/wU44Djj8EEJnL708utTkpw4MyD5sOWKmFWy+IKVXWMJXCrda1CYoyhP6yO6YjQ1BkpA==
+constructs@^10.1.79:
+  version "10.1.79"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.1.79.tgz#7ac8b367184d8702ad0adff2c460f4c1acdbd535"
+  integrity sha512-cOuogoNSY9LhyuihEjQI98IU/hH1iAKh4xL30HY2wVD8VnCzrfLiga5f+0/MDyk++I6XO9/NYnENdFH3RXbJww==
 
 conventional-changelog-angular@^5.0.0:
   version "5.0.13"
