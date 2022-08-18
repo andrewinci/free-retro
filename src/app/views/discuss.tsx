@@ -3,11 +3,14 @@ import {
   CloseButton,
   LeftArrowButton,
   RightArrowButton,
-} from "../components/buttons";
-import { CardGroup } from "../components/card";
-import { VotesLine } from "../components/vote-line";
-import { CardGroupState } from "../state";
+  CardGroup,
+  VotesLine,
+  ActionColumn,
+} from "../components";
+
+import { ActionState, CardGroupState, Stage } from "../state";
 import * as State from "../state";
+import { StageText } from "./stage-text";
 
 const CloseRetro = styled(CloseButton)`
   position: fixed;
@@ -18,14 +21,21 @@ const CloseRetro = styled(CloseButton)`
 `;
 
 const CardDiscussContainer = styled.div`
-  position: absolute;
-  width: 20rem;
-  left: 50%;
-  top: 15%;
-  transform: translateX(-50%);
+  flex: 1;
+  flex-grow: 1;
+  min-width: 450px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: space-between;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  margin-bottom: 10em;
 `;
 
 const Prev = styled(LeftArrowButton)`
+  flex: 1;
+  flex-grow: 0;
   height: 3em;
   width: 3em;
   &:disabled {
@@ -34,8 +44,8 @@ const Prev = styled(LeftArrowButton)`
 `;
 
 const Next = styled(RightArrowButton)`
-  position: absolute;
-  right: 1em;
+  flex: 1;
+  flex-grow: 0;
   height: 3em;
   width: 3em;
   &:disabled {
@@ -43,8 +53,22 @@ const Next = styled(RightArrowButton)`
   }
 `;
 
-const DiscussView = (props: { cards: CardGroupState[]; index: number }) => {
-  const { cards, index } = props;
+const Container = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-around;
+`;
+
+type DiscussViewProps = {
+  cards: CardGroupState[];
+  cardIndex: number;
+  actions: ActionState[];
+};
+
+const DiscussView = (props: DiscussViewProps) => {
+  const { cards, cardIndex, actions } = props;
 
   const closeRetro = async () => {
     const res = confirm(`This action will close the retro session.
@@ -73,33 +97,37 @@ Click ok to go ahead.`);
     .sort((a, b) => b.votes - a.votes);
 
   const { card, votes } =
-    index >= sortedCards.length
+    cardIndex >= sortedCards.length
       ? sortedCards[sortedCards.length - 1]
-      : sortedCards[index];
+      : sortedCards[cardIndex];
 
   return (
     <>
+      <StageText stage={Stage.Discuss} />
       <CloseRetro onClick={async () => await closeRetro()} />
-      <CardDiscussContainer>
-        <Prev
-          onClick={async () => await State.changeDiscussCard("decrement")}
-          disabled={index <= 0}></Prev>
-        <Next
-          onClick={async () => await State.changeDiscussCard("increment")}
-          disabled={index >= sortedCards.length - 1}></Next>
-        <CardGroup
-          title={card.title}
-          cards={card.cards.map((c) => ({
-            id: c.id,
-            text: c.text,
-            cardType: c.originColumn,
-            color: c.color,
-          }))}
-          readOnlyTitle={true}
-          readOnly={true}>
-          <VotesLine readonly={true} votes={votes}></VotesLine>
-        </CardGroup>
-      </CardDiscussContainer>
+      <Container>
+        <CardDiscussContainer>
+          <Prev
+            onClick={async () => await State.changeDiscussCard("decrement")}
+            disabled={cardIndex <= 0}></Prev>
+          <CardGroup
+            title={card.title}
+            cards={card.cards.map((c) => ({
+              id: c.id,
+              text: c.text,
+              cardType: c.originColumn,
+              color: c.color,
+            }))}
+            readOnlyTitle={true}
+            readOnly={true}>
+            <VotesLine readonly={true} votes={votes}></VotesLine>
+          </CardGroup>
+          <Next
+            onClick={async () => await State.changeDiscussCard("increment")}
+            disabled={cardIndex >= sortedCards.length - 1}></Next>
+        </CardDiscussContainer>
+        <ActionColumn style={{ maxWidth: "25em" }} actions={actions} />
+      </Container>
     </>
   );
 };

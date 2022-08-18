@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import styled from "styled-components";
-import { ColumnState, Stage } from "./state";
+import { ColumnState, Stage, ActionState } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
 import BoardView from "./views/board-view";
 import CreateRetroView from "./views/create-retro";
@@ -42,8 +42,10 @@ const CurrentView = (props: {
   stage: Stage;
   columns: ColumnState[];
   discussCardIndex: number;
+  sessionId: string;
+  actions: ActionState[];
 }) => {
-  const { stage, columns, discussCardIndex } = props;
+  const { stage, columns, discussCardIndex, sessionId, actions } = props;
   switch (stage) {
     case Stage.Join:
       return <JoinRetroView />;
@@ -65,11 +67,12 @@ const CurrentView = (props: {
       return (
         <DiscussView
           cards={columns?.flatMap((c) => c.groups) ?? []}
-          index={discussCardIndex}
+          cardIndex={discussCardIndex}
+          actions={actions}
         />
       );
     case Stage.End:
-      return <EndRetroView />;
+      return <EndRetroView sessionId={sessionId} actions={actions} />;
   }
 };
 
@@ -89,9 +92,12 @@ export const App = () => {
           </Title>
           <Space />
           <CurrentView
+            sessionId={appState.sessionId}
             columns={appState.columns ?? []}
             discussCardIndex={appState.discussCardIndex?.value ?? 0}
-            stage={appState.stage}></CurrentView>
+            stage={appState.stage}
+            actions={appState.actions ?? []}
+          />
         </Container>
       </DndProvider>
     </React.StrictMode>

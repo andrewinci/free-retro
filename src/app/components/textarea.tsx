@@ -40,11 +40,11 @@ type onTextChangeHandler = (_: string) => void;
 type TextAreaProps = {
   text?: string;
   reduceTextChangeUpdates?: boolean;
-  onTextChange?: onTextChangeHandler;
   readOnly?: boolean;
   className?: string;
   placeholder?: string;
   hidden?: boolean;
+  onTextChange?: onTextChangeHandler;
 };
 
 export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
@@ -71,11 +71,17 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const textChanged = (text: string, key: string | null = null) => {
+  const textChanged = (text: string, lastKeyPressed: string | null = null) => {
     // nothing to do if it is readonly
     if (readOnly) return;
-    // if reduceTextChangeUpdates, only act when key is " "
-    if (key && key != " " && reduceTextChangeUpdates) return;
+    // if reduceTextChangeUpdates, only act when last key pressed is " " or the text is empty
+    if (
+      lastKeyPressed &&
+      lastKeyPressed != " " &&
+      reduceTextChangeUpdates &&
+      text != ""
+    )
+      return;
     if (onTextChange && text != state.lastUpdate) {
       onTextChange(text);
       setState({ ...state, lastUpdate: text });

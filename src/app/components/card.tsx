@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CloseButton } from "./buttons";
+import { TopCloseButton } from "./buttons";
 import { TextArea, Title } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
 import { Id } from "../state";
@@ -16,7 +16,7 @@ type CardContainerProps = {
 };
 
 type CardProps = {
-  id?: Id;
+  id: Id;
   text: string;
   cardType?: string;
   color?: string;
@@ -103,6 +103,7 @@ const CardGroupContainer = styled.div`
   margin-bottom: 0.8em;
   position: relative;
   max-width: 20rem;
+  min-width: 20rem;
   font-size: 1rem;
 `;
 
@@ -127,14 +128,6 @@ const SingleCardContainer = styled.div<{
     }
     return "";
   }}
-`;
-
-const TopCloseButton = styled(CloseButton)`
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  height: 15px;
-  width: 15px;
 `;
 
 const CardTypeText = styled.p`

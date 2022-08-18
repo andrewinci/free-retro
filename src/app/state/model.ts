@@ -37,10 +37,17 @@ export enum Stage {
   End,
 }
 
+export type ActionState = {
+  id: Id;
+  text: string;
+  done: boolean;
+};
+
 export type AppState = {
   sessionId: string;
   retroName?: string;
   stage: Stage;
   discussCardIndex?: Automerge.Counter;
   columns?: ColumnState[];
+  actions?: ActionState[];
 };

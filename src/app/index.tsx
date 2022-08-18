@@ -13,6 +13,7 @@ const state = initAppState(sessionId, stage);
 location.hash = state.sessionId;
 
 // init the websocket
+//todo: make sure
 wsInit();
 
 // init the userId

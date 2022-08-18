@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
 import { Id } from "../state";
@@ -17,15 +18,16 @@ type ColumnProps = {
   title: string;
   children?: React.ReactNode[];
   readOnly?: boolean;
-  onDrop?: (cardId: Id) => void;
+  canClose?: boolean;
+  onDrop?: (id: string) => void;
   onTitleChange?: (_: string) => void;
   onAddClick?: () => void;
   onCloseClick?: () => void;
-};
+} & { style?: CSSProperties | undefined };
 
 export const Column = (props: ColumnProps) => {
-  const { title, children, onTitleChange, readOnly } = props;
-  const { onDrop, onAddClick, onCloseClick } = props;
+  const { title, children, readOnly, canClose, style } = props;
+  const { onDrop, onAddClick, onCloseClick, onTitleChange } = props;
   const [_, drop] = useDrop(() => ({
     accept: "card",
     drop: (item: { id: Id }, monitor) => {
@@ -38,9 +40,9 @@ export const Column = (props: ColumnProps) => {
     }),
   }));
   return (
-    <ColumnContainer ref={drop}>
+    <ColumnContainer ref={drop} style={style}>
       <TopCloseButton
-        hidden={(children?.length ?? 0) > 0 || readOnly}
+        hidden={(children?.length ?? 0) > 0 || readOnly || !canClose}
         onClick={() => (onCloseClick ? onCloseClick() : {})}
       />
       <div>
