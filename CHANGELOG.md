@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/andrewinci/free-retro/compare/v1.7.1...v1.7.2) (2022-08-18)
+
+
+### Bug Fixes
+
+* default text area to 1 row ([3b4c50c](https://github.com/andrewinci/free-retro/commit/3b4c50cfd7601aa24f820cfe7b15239599de75e8))
+
 ## [1.7.1](https://github.com/andrewinci/free-retro/compare/v1.7.0...v1.7.1) (2022-08-18)
 
 
