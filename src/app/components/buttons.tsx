@@ -84,3 +84,11 @@ export const ButtonContainer = styled.button`
     background-color: #a8a8a8;
   }
 `;
+
+export const TopCloseButton = styled(CloseButton)`
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  height: 15px;
+  width: 15px;
+`;

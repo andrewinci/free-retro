@@ -1,13 +1,15 @@
 import { useId } from "react";
 import styled from "styled-components";
 import { TextArea } from "./textarea";
+import { TopCloseButton } from "./buttons";
 
 const ActionItemContainer = styled.div`
   border: 1px solid #d4d4d4;
   padding: 1em;
   font-size: 1em;
-  min-height: 2em;
+  min-height: 3rem;
   margin: 0 0.5em 0.5em 0.5em;
+  position: relative;
   display: flex;
   border-radius: 0.4rem;
   align-items: center;
@@ -34,7 +36,6 @@ const ActionItemContainer = styled.div`
     left: 50%;
     transform: translate(-51%, -51%) scale(0);
     font-size: 23px;
-    //background-color: green;
     content: "✅";
     border-radius: 3px;
     transition: 0.2s;
@@ -42,18 +43,27 @@ const ActionItemContainer = styled.div`
 `;
 
 export type ActionItemProps = {
-  text?: string;
+  text: string;
   done?: boolean;
   onTextChange?: (_: string) => void;
   onDoneChange?: (_: boolean) => void;
+  onCloseClicked?: () => void;
 };
 
+const ActionItemText = styled(TextArea)`
+  font-size: 1.2em;
+`;
+
 export const ActionItem = (props: ActionItemProps) => {
-  const { text, done, onTextChange, onDoneChange } = props;
+  const { text, done, onTextChange, onDoneChange, onCloseClicked } = props;
   const id = useId();
   return (
     <ActionItemContainer>
-      <TextArea
+      <TopCloseButton
+        hidden={text.length > 0}
+        onClick={() => (onCloseClicked ? onCloseClicked() : {})}
+      />
+      <ActionItemText
         placeholder="Todo item...."
         text={text}
         onTextChange={onTextChange}

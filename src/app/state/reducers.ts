@@ -258,3 +258,10 @@ export const setActionDone = (actionId: Id, done: boolean) =>
     const actionIndex = state.actions.findIndex((s) => s.id == actionId);
     state.actions[actionIndex].done = done;
   });
+
+export const removeAction = (actionId: Id) =>
+  changeState((state) => {
+    if (!state.actions) return;
+    const actionIndex = state.actions.findIndex((s) => s.id == actionId);
+    state.actions.splice(actionIndex, 1);
+  });

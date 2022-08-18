@@ -136,6 +136,7 @@ Click ok to go ahead.`);
               key={a.id}
               text={a.text}
               done={a.done}
+              onCloseClicked={async () => await State.removeAction(a.id)}
               onDoneChange={async (done) =>
                 await State.setActionDone(a.id, done)
               }
