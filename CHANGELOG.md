@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/andrewinci/free-retro/compare/v1.7.2...v1.8.0) (2022-08-18)
+
+
+### Features
+
+* websocket reconnect ([0d983b5](https://github.com/andrewinci/free-retro/commit/0d983b53a3aa18402381ca86c6fc0d2c0efb4698))
+
 ## [1.7.2](https://github.com/andrewinci/free-retro/compare/v1.7.1...v1.7.2) (2022-08-18)
 
 
