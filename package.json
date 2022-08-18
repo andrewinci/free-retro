@@ -140,7 +140,7 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.32.0",
-    "aws-cdk": "^2.35.0",
+    "aws-cdk": "^2.38.0",
     "aws-cdk-lib": "^2.37.1",
     "aws-sdk-client-mock": "^1.0.0",
     "constructs": "^10.1.76",
