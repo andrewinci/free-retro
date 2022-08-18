@@ -67,7 +67,6 @@ export const ActionItem = (props: ActionItemProps) => {
         placeholder="Todo item...."
         text={text}
         onTextChange={onTextChange}
-        reduceTextChangeUpdates={true}
       />
       <div>
         <input
