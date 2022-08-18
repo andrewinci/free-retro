@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/andrewinci/free-retro/compare/v1.8.0...v1.8.1) (2022-08-18)
+
+
+### Bug Fixes
+
+* websocket check connection every second ([7216b42](https://github.com/andrewinci/free-retro/commit/7216b422bda14fcf3b91eaee1115052fe72a0826))
+
 # [1.8.0](https://github.com/andrewinci/free-retro/compare/v1.7.2...v1.8.0) (2022-08-18)
 
 

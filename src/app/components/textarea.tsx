@@ -102,8 +102,8 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
         if (!readOnly) setState({ ...state, current: e.target.value });
       }}
       onKeyUp={(e) => {
-        autosize(e.target);
-        textChanged(e.target.value, e.key);
+        autosize(e.target as HTMLTextAreaElement);
+        textChanged((e.target as HTMLTextAreaElement).value, e.key);
       }}
       onFocus={(e) => autosize(e.target)}
       onBlur={(e) => {
