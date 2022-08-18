@@ -8,8 +8,23 @@ import { toBase64 } from "./helper/binary-document";
 import { loadNewState } from "./state/automerge-state";
 
 const ENDPOINT = "wss:///ws.retroapp.amaker.xyz";
-
 let socket = new WebSocket(ENDPOINT);
+let lastSessionId = "";
+
+const checkConnection = async () => {
+  // if disconnected, try to connect before sending the message
+  if (
+    socket.readyState == socket.CLOSED ||
+    socket.readyState == socket.CLOSING
+  ) {
+    console.log("Socket is closed. Try to reconnect...");
+    await wsInit();
+    if (lastSessionId) joinSession(lastSessionId);
+  }
+};
+
+// check the connection is open every 1s
+setInterval(() => checkConnection(), 1000);
 
 export const wsInit = () =>
   new Promise<void>((resolve) => {
@@ -42,9 +57,10 @@ export const wsInit = () =>
 
 export function joinSession(sessionId: string) {
   console.log("WS Join session");
+  lastSessionId = sessionId;
   const joinMessage: JoinMessage = {
     action: "join",
-    sessionId: sessionId,
+    sessionId,
   };
   socket.send(JSON.stringify(joinMessage));
 }
@@ -57,21 +73,14 @@ export async function broadcast<T>(
   state: T,
   recreateState: boolean
 ) {
+  lastSessionId = sessionId;
   const rawState = Automerge.save(state);
   const broadcastMessage: BroadcastMessage = {
     action: "broadcast",
-    sessionId: sessionId,
+    sessionId,
     state: toBase64(rawState),
     recreateState,
   };
-  // if disconnected, try to connect before sending the message
-  if (
-    socket.readyState == socket.CLOSED ||
-    socket.readyState == socket.CLOSING
-  ) {
-    console.log("Socket is closed. Try to reconnect...");
-    await wsInit();
-    joinSession(sessionId);
-  }
+  await checkConnection();
   socket.send(JSON.stringify(broadcastMessage));
 }
