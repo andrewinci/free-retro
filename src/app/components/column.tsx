@@ -7,6 +7,34 @@ import { Title } from "./textarea";
 
 const ColumnGroupContainer = styled.div`
   display: inline-flex;
+  // animations for add/remove columns
+  .horizontal-fade-in {
+    @keyframes horizontal-fade-in {
+      from {
+        transform: translateX(-50%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0%);
+        opacity: 1;
+      }
+    }
+    animation: horizontal-fade-in 0.1s linear;
+  }
+  .horizontal-fade-out {
+    @keyframes horizontal-fade-out {
+      from {
+        transform: translateX(0%);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(-50%);
+        opacity: 0;
+      }
+    }
+    opacity: 0;
+    animation: horizontal-fade-out 0.1s linear;
+  }
 `;
 
 export const ColumnGroup = (props: { children: React.ReactNode }) => {
@@ -40,10 +68,20 @@ export const Column = (props: ColumnProps) => {
     }),
   }));
   return (
-    <ColumnContainer ref={drop} style={style}>
+    <ColumnContainer ref={drop} style={style} className={"horizontal-fade-in"}>
       <TopCloseButton
         hidden={(children?.length ?? 0) > 0 || readOnly || !canClose}
-        onClick={() => (onCloseClick ? onCloseClick() : {})}
+        onClick={(e) => {
+          if (onCloseClick) {
+            const parent = (e.currentTarget as HTMLButtonElement)
+              .parentNode as HTMLDivElement;
+            // wait for the animation to complete before calling the on close
+            // click that can remove the element from the dom
+            parent.addEventListener("animationend", () => onCloseClick());
+            parent.classList.remove("horizontal-fade-in");
+            parent.classList.add("horizontal-fade-out");
+          }
+        }}
       />
       <div>
         <Title
