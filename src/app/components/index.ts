@@ -5,3 +5,4 @@ export * from "./index";
 export * from "./textarea";
 export * from "./vote-line";
 export * from "./action-item";
+export * from "./action-column";

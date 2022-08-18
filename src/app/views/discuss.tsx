@@ -3,11 +3,11 @@ import {
   CloseButton,
   LeftArrowButton,
   RightArrowButton,
-  ActionItem,
   CardGroup,
-  Column,
   VotesLine,
+  ActionColumn,
 } from "../components";
+
 import { ActionState, CardGroupState, Stage } from "../state";
 import * as State from "../state";
 import { StageText } from "./stage-text";
@@ -126,26 +126,7 @@ Click ok to go ahead.`);
             onClick={async () => await State.changeDiscussCard("increment")}
             disabled={cardIndex >= sortedCards.length - 1}></Next>
         </CardDiscussContainer>
-        <Column
-          title="Actions"
-          style={{ maxWidth: "25em" }}
-          canClose={false}
-          onAddClick={async () => await State.addAction()}>
-          {actions.map((a) => (
-            <ActionItem
-              key={a.id}
-              text={a.text}
-              done={a.done}
-              onCloseClicked={async () => await State.removeAction(a.id)}
-              onDoneChange={async (done) =>
-                await State.setActionDone(a.id, done)
-              }
-              onTextChange={async (text) =>
-                await State.setActionText(a.id, text)
-              }
-            />
-          ))}
-        </Column>
+        <ActionColumn style={{ maxWidth: "25em" }} actions={actions} />
       </Container>
     </>
   );
