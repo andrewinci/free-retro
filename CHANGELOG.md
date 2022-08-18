@@ -1,3 +1,11 @@
+## [1.9.1](https://github.com/andrewinci/free-retro/compare/v1.9.0...v1.9.1) (2022-08-18)
+
+
+### Bug Fixes
+
+* missing close button in column ([65c5c9e](https://github.com/andrewinci/free-retro/commit/65c5c9e273631fec043d6268bd84f2c2970fa2b5))
+* show date in actions ([e32a190](https://github.com/andrewinci/free-retro/commit/e32a1906af3d27e23ca7c1057e0c708c4918158b))
+
 # [1.9.0](https://github.com/andrewinci/free-retro/compare/v1.8.1...v1.9.0) (2022-08-18)
 
 
