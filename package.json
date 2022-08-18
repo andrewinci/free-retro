@@ -139,7 +139,7 @@
     "@types/styled-components": "^5.1.26",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
-    "@typescript-eslint/parser": "^5.32.0",
+    "@typescript-eslint/parser": "^5.33.1",
     "aws-cdk": "^2.38.0",
     "aws-cdk-lib": "^2.38.0",
     "aws-sdk-client-mock": "^1.0.0",
