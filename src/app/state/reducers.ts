@@ -4,6 +4,7 @@ import { getUser, setUserName } from "./user";
 import * as Automerge from "automerge";
 import { Id, ColumnState, Stage } from "./model";
 import { findCardPosition, findGroupPosition } from "../helper/position-finder";
+import moment from "moment";
 
 export const EMPTY_COLUMN_TITLE = "Empty column";
 
@@ -242,6 +243,7 @@ export const addAction = () =>
       id: randomId(),
       text: "",
       done: false,
+      date: moment().format("MMM Do YY"),
     });
   });
 

@@ -18,6 +18,7 @@ type ColumnProps = {
   title: string;
   children?: React.ReactNode[];
   readOnly?: boolean;
+  canClose?: boolean;
   onDrop?: (id: string) => void;
   onTitleChange?: (_: string) => void;
   onAddClick?: () => void;
@@ -25,7 +26,7 @@ type ColumnProps = {
 } & { style?: CSSProperties | undefined };
 
 export const Column = (props: ColumnProps) => {
-  const { title, children, readOnly, style } = props;
+  const { title, children, readOnly, canClose, style } = props;
   const { onDrop, onAddClick, onCloseClick, onTitleChange } = props;
   const [_, drop] = useDrop(() => ({
     accept: "card",
@@ -41,7 +42,7 @@ export const Column = (props: ColumnProps) => {
   return (
     <ColumnContainer ref={drop} style={style}>
       <TopCloseButton
-        hidden={(children?.length ?? 0) > 0 || readOnly}
+        hidden={(children?.length ?? 0) > 0 || readOnly || !canClose}
         onClick={() => (onCloseClick ? onCloseClick() : {})}
       />
       <div>

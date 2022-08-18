@@ -20,6 +20,7 @@ export const ActionColumn = (props: {
           key={a.id}
           text={a.text}
           done={a.done}
+          date={a.date}
           onCloseClicked={async () => await State.removeAction(a.id)}
           onDoneChange={async (done) => await State.setActionDone(a.id, done)}
           onTextChange={async (text) => await State.setActionText(a.id, text)}

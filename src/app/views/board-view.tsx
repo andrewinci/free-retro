@@ -70,6 +70,7 @@ function BoardColumn(props: {
   return (
     <Column
       title={column.title}
+      canClose={stage == Stage.AddTickets}
       onDrop={async (src) => await State.moveCardToColumn(src, columnIndex)}
       onTitleChange={async (t) => await State.setColumnTitle(columnIndex, t)}
       onAddClick={async () => await State.addEmptyCard(columnIndex)}

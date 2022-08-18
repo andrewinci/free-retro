@@ -45,6 +45,7 @@ const ActionItemContainer = styled.div`
 export type ActionItemProps = {
   text: string;
   done?: boolean;
+  date?: string;
   onTextChange?: (_: string) => void;
   onDoneChange?: (_: boolean) => void;
   onCloseClicked?: () => void;
@@ -54,11 +55,21 @@ const ActionItemText = styled(TextArea)`
   font-size: 1.2em;
 `;
 
+const ActionItemTime = styled.p`
+  font-size: 1em;
+  position: absolute;
+  font-style: italic;
+  left: 10px;
+  top: -10px;
+`;
+
 export const ActionItem = (props: ActionItemProps) => {
-  const { text, done, onTextChange, onDoneChange, onCloseClicked } = props;
+  const { text, done, date, onTextChange, onDoneChange, onCloseClicked } =
+    props;
   const id = useId();
   return (
     <ActionItemContainer>
+      <ActionItemTime>{date}</ActionItemTime>
       <TopCloseButton
         hidden={text.length > 0}
         onClick={() => (onCloseClicked ? onCloseClicked() : {})}

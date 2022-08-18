@@ -28,6 +28,7 @@ export const initAppState = (
           id: a.id,
           text: a.text,
           done: a.done,
+          date: a.date,
         }));
       }
     }

@@ -41,6 +41,7 @@ export type ActionState = {
   id: Id;
   text: string;
   done: boolean;
+  date: string;
 };
 
 export type AppState = {
