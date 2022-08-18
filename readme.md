@@ -37,7 +37,7 @@ Deploy to AWS: `yarn deploy`
 
 ## Todo
 
-- [ ] List of actions
+- [x] List of actions
 - [ ] Balance votes with number of tickets
 - [ ] Show votes in UI
 - [ ] Users management

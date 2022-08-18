@@ -11,7 +11,7 @@ export const ActionColumn = (props: {
   const { actions, style } = props;
   return (
     <Column
-      title="Actions"
+      title="Actions 🛠️"
       style={style}
       canClose={false}
       onAddClick={async () => await State.addAction()}>
