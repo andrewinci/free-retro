@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { CloseButton } from "./buttons";
-import { GroupTitle, TextArea } from "./textarea";
+import { TextArea, Title } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
-import { CardPosition } from "../state";
-import { CSSProperties } from "react";
+import { Id } from "../state";
 
 type CardContainerProps = {
   className?: string;
@@ -13,11 +12,11 @@ type CardContainerProps = {
   canDrag?: boolean;
   onCloseClicked?: () => void;
   onTextChange?: (_: string) => void;
-  onDrop?: (id: CardPosition) => void;
+  onDrop?: (id: Id) => void;
 };
 
 type CardProps = {
-  id?: CardPosition;
+  id: Id;
   text: string;
   cardType?: string;
   color?: string;
@@ -30,14 +29,44 @@ type CardGroupProps = {
   onTitleChange?: (_: string) => void;
 };
 
-const CardContent = (props: CardProps & CardContainerProps) => {
+export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
+  const cards = props.cards.map((c) => ({ ...props, ...c }));
+  const [_, drop] = useDrop(() => ({
+    accept: "card",
+    drop: (item: { id: Id }, _) => {
+      props?.onDrop ? props.onDrop(item.id) : {};
+    },
+    collect: (monitor) => ({
+      item: monitor.getItem(),
+    }),
+  }));
+  return (
+    <CardGroupContainer ref={drop} className={props.className}>
+      <CardGroupTitle
+        hidden={cards.length == 1}
+        text={props.title}
+        placeholder="Group title"
+        readOnly={props.readOnlyTitle}
+        onTextChange={(text) =>
+          props.onTitleChange ? props.onTitleChange(text) : {}
+        }
+      />
+      {cards.map((p) => (
+        <SingleCard {...p} key={p.id}></SingleCard>
+      ))}
+      {props.children}
+    </CardGroupContainer>
+  );
+};
+
+const SingleCard = (props: CardProps & CardContainerProps) => {
   const { text, readOnly, blur, color, onCloseClicked, onTextChange } = props;
   const { cardType, canDrag } = props;
   const [{ isDragging }, drag] = useDrag(
     () => ({
       canDrag: () => canDrag ?? false,
       type: "card",
-      item: props.id,
+      item: { id: props.id },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -45,7 +74,7 @@ const CardContent = (props: CardProps & CardContainerProps) => {
     [canDrag ?? false, text]
   );
   return (
-    <CardContentDiv
+    <SingleCardContainer
       ref={drag}
       style={{ opacity: isDragging ? 0.5 : 1 }}
       color={color}
@@ -55,7 +84,7 @@ const CardContent = (props: CardProps & CardContainerProps) => {
         hidden={text.length > 0 || readOnly || blur}
         onClick={() => (onCloseClicked ? onCloseClicked() : {})}
       />
-      <CardType hidden={!cardType}>{cardType}</CardType>
+      <CardTypeText hidden={!cardType}>{cardType}</CardTypeText>
       <TextArea
         // must be readonly if blurred
         readOnly={readOnly || blur}
@@ -65,53 +94,25 @@ const CardContent = (props: CardProps & CardContainerProps) => {
         reduceTextChangeUpdates={true}
         onTextChange={(newText) => (onTextChange ? onTextChange(newText) : {})}
       />
-    </CardContentDiv>
+    </SingleCardContainer>
   );
 };
 
-export const CardGroup = (
-  props: CardGroupProps &
-    CardContainerProps & { style?: CSSProperties | undefined }
-) => {
-  const cardProps = props.cards.map((c) => ({ ...props, ...c }));
-  const [_, drop] = useDrop(() => ({
-    accept: "card",
-    drop: (id: CardPosition, _) => {
-      props?.onDrop ? props.onDrop(id) : {};
-    },
-    collect: (monitor) => ({
-      item: monitor.getItem(),
-    }),
-  }));
-  return (
-    <Container ref={drop} style={props.style}>
-      <GroupTitle
-        hidden={cardProps.length == 1}
-        text={props.title}
-        placeholder="Group title"
-        readOnly={props.readOnlyTitle}
-        onTextChange={(text) =>
-          props.onTitleChange ? props.onTitleChange(text) : {}
-        }
-      />
-      {cardProps.map((p, i) => (
-        <CardContent {...p} key={i}></CardContent>
-      ))}
-      {props.children}
-    </Container>
-  );
-};
-
-const Container = styled.div`
+const CardGroupContainer = styled.div`
   margin: 0.5em;
   margin-bottom: 0.8em;
   position: relative;
   max-width: 20rem;
-  font-size: 1.2em;
+  min-width: 20rem;
+  font-size: 1rem;
 `;
 
-const CardContentDiv = styled.div<{ blur: boolean; showCardType: boolean }>`
+const SingleCardContainer = styled.div<{
+  blur: boolean;
+  showCardType: boolean;
+}>`
   padding: 0.6em;
+  min-height: 2.6rem;
   position: relative;
   ${(props) => props.showCardType && `padding-top: 1.2em;`}
   background-color: ${(props) => props.color};
@@ -137,7 +138,7 @@ const TopCloseButton = styled(CloseButton)`
   width: 15px;
 `;
 
-const CardType = styled.p`
+const CardTypeText = styled.p`
   text-align: right;
   position: absolute;
   top: 2px;
@@ -148,4 +149,8 @@ const CardType = styled.p`
   font-style: italic;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+const CardGroupTitle = styled(Title)`
+  font-size: 1.3rem;
 `;

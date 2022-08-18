@@ -6,6 +6,7 @@ const ActionItemContainer = styled.div`
   border: 1px solid #d4d4d4;
   padding: 1em;
   font-size: 1em;
+  min-height: 2em;
   margin: 0 0.5em 0.5em 0.5em;
   display: flex;
   border-radius: 0.4rem;

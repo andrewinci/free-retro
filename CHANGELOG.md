@@ -1,3 +1,45 @@
+# [1.8.0](https://github.com/andrewinci/free-retro/compare/v1.7.2...v1.8.0) (2022-08-18)
+
+
+### Features
+
+* websocket reconnect ([0d983b5](https://github.com/andrewinci/free-retro/commit/0d983b53a3aa18402381ca86c6fc0d2c0efb4698))
+
+## [1.7.2](https://github.com/andrewinci/free-retro/compare/v1.7.1...v1.7.2) (2022-08-18)
+
+
+### Bug Fixes
+
+* default text area to 1 row ([3b4c50c](https://github.com/andrewinci/free-retro/commit/3b4c50cfd7601aa24f820cfe7b15239599de75e8))
+
+## [1.7.1](https://github.com/andrewinci/free-retro/compare/v1.7.0...v1.7.1) (2022-08-18)
+
+
+### Bug Fixes
+
+* missing group title ([14dff2f](https://github.com/andrewinci/free-retro/commit/14dff2f0c20b4577e06f5b4f91fb2dc8978e58d3))
+
+# [1.7.0](https://github.com/andrewinci/free-retro/compare/v1.6.2...v1.7.0) (2022-08-16)
+
+
+### Features
+
+* autofocus text-area ([e0d2b33](https://github.com/andrewinci/free-retro/commit/e0d2b33b0ead640c959c3b1af1d9b3bf35114d43))
+
+## [1.6.2](https://github.com/andrewinci/free-retro/compare/v1.6.1...v1.6.2) (2022-08-15)
+
+
+### Bug Fixes
+
+* Cards grouping and ids ([#15](https://github.com/andrewinci/free-retro/issues/15)) ([9233ec4](https://github.com/andrewinci/free-retro/commit/9233ec47d19ab793d36bfddb44bcd5f5c6233a60))
+
+## [1.6.1](https://github.com/andrewinci/free-retro/compare/v1.6.0...v1.6.1) (2022-08-15)
+
+
+### Bug Fixes
+
+* Tweak monitor threshold ([a2319cd](https://github.com/andrewinci/free-retro/commit/a2319cda27084797b9057907958ad22d777239e3))
+
 # [1.6.0](https://github.com/andrewinci/free-retro/compare/v1.5.1...v1.6.0) (2022-08-14)
 
 

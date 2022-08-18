@@ -88,7 +88,6 @@ export async function handleJoin(request: WSRequest) {
   const state = await getDynamoAppState(request.body.sessionId);
   if (!state) {
     const message = `Session id ${request.body.sessionId} not found`;
-    console.error(message);
     // send an error to the client
     await sendToClient(
       { action: "error", message, errorType: "session-not-found" },

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { EmptyButton } from "../components/buttons";
+import { ButtonContainer } from "../components/buttons";
 import * as State from "../state";
 import { ActionState, Stage } from "../state";
 
@@ -15,7 +15,7 @@ const StyledP = styled.p`
   text-align: center;
 `;
 
-const RefreshPage = styled(EmptyButton)`
+const RefreshPage = styled(ButtonContainer)`
   background: #d9d9d9;
   width: 100%;
   height: 1.8em;

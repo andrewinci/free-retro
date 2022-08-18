@@ -1,20 +1,67 @@
 import { CSSProperties } from "react";
 import { useDrop } from "react-dnd";
 import styled from "styled-components";
-import { CardPosition } from "../state";
+import { Id } from "../state";
 import { AddButton, CloseButton } from "./buttons";
 import { Title } from "./textarea";
 
-const StyledColumnContainer = styled.div`
+const ColumnGroupContainer = styled.div`
   display: inline-flex;
 `;
 
-export const ColumnContainer = (props: { children: React.ReactNode }) => {
+export const ColumnGroup = (props: { children: React.ReactNode }) => {
   const { children } = props;
-  return <StyledColumnContainer>{children}</StyledColumnContainer>;
+  return <ColumnGroupContainer>{children}</ColumnGroupContainer>;
 };
 
-const StyledColumn = styled.div`
+type ColumnProps = {
+  title: string;
+  children?: React.ReactNode[];
+  readOnly?: boolean;
+  canClose?: boolean;
+  onDrop?: (id: string) => void;
+  onTitleChange?: (_: string) => void;
+  onAddClick?: () => void;
+  onCloseClick?: () => void;
+} & { style?: CSSProperties | undefined };
+
+export const Column = (props: ColumnProps) => {
+  const { title, children, readOnly, canClose, style } = props;
+  const { onDrop, onAddClick, onCloseClick, onTitleChange } = props;
+  const [_, drop] = useDrop(() => ({
+    accept: "card",
+    drop: (item: { id: Id }, monitor) => {
+      if (!monitor.didDrop() && onDrop) {
+        onDrop(item.id);
+      }
+    },
+    collect: (monitor) => ({
+      item: monitor.getItem(),
+    }),
+  }));
+  return (
+    <ColumnContainer ref={drop} style={style}>
+      <TopCloseButton
+        hidden={(children?.length ?? 0) > 0 || readOnly || !canClose}
+        onClick={() => (onCloseClick ? onCloseClick() : {})}
+      />
+      <div>
+        <Title
+          placeholder="Title"
+          readOnly={readOnly}
+          text={title}
+          onTextChange={(t) => (onTitleChange ? onTitleChange(t) : {})}
+        />
+      </div>
+      {!readOnly && (
+        <BottomAddButton onClick={() => (onAddClick ? onAddClick() : {})} />
+      )}
+      {children}
+    </ColumnContainer>
+  );
+};
+
+const ColumnContainer = styled.div`
   min-width: 20rem;
   height: 80vh;
   flex: 1;
@@ -36,50 +83,3 @@ const TopCloseButton = styled(CloseButton)`
   top: 0.5em;
   right: 0.5em;
 `;
-
-type ColumnProps = {
-  title: string;
-  children?: React.ReactNode[];
-  readOnly?: boolean;
-  canClose?: boolean;
-  onDrop?: (id: CardPosition) => void;
-  onTitleChange?: (_: string) => void;
-  onAddClick?: () => void;
-  onCloseClick?: () => void;
-} & { style?: CSSProperties | undefined };
-
-export const Column = (props: ColumnProps) => {
-  const { title, children, readOnly, canClose } = props;
-  const { onDrop, onAddClick, onCloseClick, onTitleChange } = props;
-  const [_, drop] = useDrop(() => ({
-    accept: "card",
-    drop: (id: CardPosition, monitor) => {
-      if (!monitor.didDrop() && onDrop) {
-        onDrop(id);
-      }
-    },
-    collect: (monitor) => ({
-      item: monitor.getItem(),
-    }),
-  }));
-  return (
-    <StyledColumn ref={drop} style={props.style}>
-      <TopCloseButton
-        hidden={(children?.length ?? 0) > 0 || readOnly || !canClose}
-        onClick={() => (onCloseClick ? onCloseClick() : {})}
-      />
-      <div>
-        <Title
-          placeholder="Title"
-          readOnly={readOnly}
-          text={title}
-          onTextChange={(t) => (onTitleChange ? onTitleChange(t) : {})}
-        />
-      </div>
-      {children}
-      {!readOnly && (
-        <BottomAddButton onClick={() => (onAddClick ? onAddClick() : {})} />
-      )}
-    </StyledColumn>
-  );
-};

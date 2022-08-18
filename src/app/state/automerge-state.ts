@@ -25,6 +25,7 @@ export const initAppState = (
       state.stage = stage;
       if (actions) {
         state.actions = actions.map((a) => ({
+          id: a.id,
           text: a.text,
           done: a.done,
         }));
@@ -35,11 +36,13 @@ export const initAppState = (
 };
 
 export function onStateChange(f: (newState: AppState) => void) {
-  observable.observe(appState, (a, b, newState) => f(newState));
+  observable.observe(appState, (a, b, newState) => {
+    f(newState);
+  });
 }
 
 export async function changeState(
-  f: (state: AppState) => void,
+  f: (mutableState: AppState) => void,
   recreateState = false
 ) {
   appState = Automerge.change(appState, (s) => f(s));

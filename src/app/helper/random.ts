@@ -13,4 +13,4 @@ const colors = [
 export const randomColor = () =>
   colors[Math.floor(Math.random() * colors.length)];
 
-export const randomId = () => uuidv4();
+export const randomId = () => uuidv4().replace("-", "");
