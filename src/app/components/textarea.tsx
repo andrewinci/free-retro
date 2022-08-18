@@ -8,9 +8,7 @@ const StyledTextArea = styled.textarea`
   border: none;
   background: transparent;
   width: 100%;
-  height: 100%;
   outline: none;
-  min-height: 1em;
   resize: none;
   overflow: hidden;
   font-size: 1em;
@@ -57,17 +55,16 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   const autosize = (textarea: HTMLTextAreaElement | null) => {
     if (!textarea) return;
     textarea.style.cssText = "height:auto; padding:0";
-    textarea.style.cssText = `height: ${
-      textarea.scrollHeight > 0 ? textarea.scrollHeight : 47
-    }px`;
+    textarea.style.cssText = `height: ${textarea.scrollHeight}px`;
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useMemo(() => setState({ ...state, current: text }), [text]);
+  // resize the text area on mount (without memoization)
+  useEffect(() => autosize(textInput.current));
   useEffect(() => {
-    // resize the text area on mount
-    autosize(textInput.current);
     // autofocus writable empty text
+    // use memoization so that this is only executed once.
     if (!readOnly && text == "") {
       textInput.current?.focus();
     }
@@ -87,6 +84,7 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
 
   return (
     <StyledTextArea
+      rows={1}
       ref={textInput}
       hidden={hidden}
       readOnly={readOnly}
@@ -118,10 +116,5 @@ TextArea.defaultProps = {
 
 export const Title = styled(TextArea)`
   font-size: 2em;
-  height: 60px;
   text-align: center;
-`;
-
-export const GroupTitle = styled(Title)`
-  font-size: 1.3em;
 `;

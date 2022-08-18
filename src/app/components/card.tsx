@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CloseButton } from "./buttons";
-import { GroupTitle, TextArea } from "./textarea";
+import { TextArea, Title } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
 import { Id } from "../state";
 
@@ -103,11 +103,12 @@ const Container = styled.div`
   margin-bottom: 0.8em;
   position: relative;
   max-width: 20rem;
-  font-size: 1.2em;
+  font-size: 1rem;
 `;
 
 const CardContentDiv = styled.div<{ blur: boolean; showCardType: boolean }>`
   padding: 0.6em;
+  min-height: 2.6rem;
   position: relative;
   ${(props) => props.showCardType && `padding-top: 1.2em;`}
   background-color: ${(props) => props.color};
@@ -144,4 +145,8 @@ const CardType = styled.p`
   font-style: italic;
   white-space: nowrap;
   overflow: hidden;
+`;
+
+const GroupTitle = styled(Title)`
+  font-size: 1.3rem;
 `;
