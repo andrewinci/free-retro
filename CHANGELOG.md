@@ -1,3 +1,19 @@
+# [1.10.0](https://github.com/andrewinci/free-retro/compare/v1.9.1...v1.10.0) (2022-08-19)
+
+
+### Bug Fixes
+
+* add column id if missing for retrocompatibility ([3cca430](https://github.com/andrewinci/free-retro/commit/3cca430387678aab3cd2c0d4d52b53e0cd5a205d))
+* card bigger than column ([084e7df](https://github.com/andrewinci/free-retro/commit/084e7df139560022256e746e9e9e63d7dd0be6a0))
+* missing id in columns creates issues with animation ([b5999d2](https://github.com/andrewinci/free-retro/commit/b5999d286ef2917ad22a55c0a38eb6f04a2edad1))
+* show date in actions ([dce3aac](https://github.com/andrewinci/free-retro/commit/dce3aac17a3fd2d5f1e6015171dee14234992e56))
+
+
+### Features
+
+* add animation to actions ([74ea747](https://github.com/andrewinci/free-retro/commit/74ea74729d4168b59aa527df02305f1aa8d36646))
+* card animations ([c474e77](https://github.com/andrewinci/free-retro/commit/c474e775ad5f166f1a6a86c4334117db808b8105))
+
 ## [1.9.1](https://github.com/andrewinci/free-retro/compare/v1.9.0...v1.9.1) (2022-08-18)
 
 
