@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { VotesLine } from "../components";
 import { Stage } from "../state";
 
 const StageTextContainer = styled.div`
@@ -28,12 +29,18 @@ export function stageToString(stage: Stage) {
   }
 }
 
-export const StageText = (props: { stage: Stage }) => {
-  const { stage } = props;
+export const StageText = (props: {
+  stage: Stage;
+  votes?: number | undefined;
+}) => {
+  const { stage, votes } = props;
+  const showVotes: boolean =
+    stage == Stage.Vote && votes && votes > 0 ? true : false;
   return (
     <StageTextContainer>
       <p>step:</p>
       <h2>{stageToString(stage)}</h2>
+      {showVotes && <VotesLine votes={votes} readonly={true}></VotesLine>}
     </StageTextContainer>
   );
 };

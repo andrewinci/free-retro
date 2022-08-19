@@ -38,8 +38,8 @@ Deploy to AWS: `yarn deploy`
 ## Todo
 
 - [x] List of actions
-- [ ] Balance votes with number of tickets
-- [ ] Show votes in UI
+- [x] Balance votes with number of tickets
+- [x] Show votes in UI
 - [ ] Users management
 - [ ] Improve code coverage tp 80%
 - [ ] TTL in dynamodb

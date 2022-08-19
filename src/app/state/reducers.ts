@@ -1,10 +1,11 @@
 import { randomColor, randomId } from "../helper/random";
 import { changeState, getAppState } from "./automerge-state";
-import { getUser, setUserName } from "./user";
+import { getUser } from "./user";
 import * as Automerge from "automerge";
 import { Id, ColumnState, Stage } from "./model";
 import { findCardPosition, findGroupPosition } from "../helper/position-finder";
 import moment from "moment";
+import { getRemainingUserVotes } from "./votes";
 
 export const EMPTY_COLUMN_TITLE = "Empty column";
 
@@ -175,20 +176,6 @@ export const updateFirstCardText = (groupId: Id, newText: string) =>
     card.cards[0].text = newText;
   });
 
-const canUserAddVotes = () => {
-  const { id } = getUser() ?? setUserName();
-  const { columns } = getAppState();
-  const total =
-    columns
-      ?.flatMap((c) => c.groups)
-      .map((c) => c.votes[id]?.value ?? 0)
-      .reduce((a, b) => a + b, 0) ?? 0;
-  // each user has 5 votes max
-  //todo: adapt depending on the number of users
-  // and cards
-  return total < 5;
-};
-
 export const updateGroupVotes = (
   groupId: Id,
   changeType: "increment" | "decrement"
@@ -208,7 +195,7 @@ export const updateGroupVotes = (
         card.votes[userId].decrement();
         break;
       case "increment":
-        if (canUserAddVotes()) card.votes[userId].increment();
+        if (getRemainingUserVotes() > 0) card.votes[userId].increment();
         break;
     }
   });

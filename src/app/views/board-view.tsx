@@ -104,7 +104,7 @@ const BoardView = (props: {
   const next = async () => await changeStage("next");
   return (
     <>
-      <StageText stage={stage} />
+      <StageText votes={State.getRemainingUserVotes()} stage={stage} />
       <NextButton onClick={next}>Next</NextButton>
       <ColumnGroup>
         {columnsData.map((column) => (
