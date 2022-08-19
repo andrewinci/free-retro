@@ -7,12 +7,13 @@ const ActionItemContainer = styled.div`
   border: 1px solid #d4d4d4;
   padding: 1em;
   font-size: 1em;
-  min-height: 3rem;
+  height: 3rem;
   margin: 0 0.5em 0.5em 0.5em;
   position: relative;
   display: flex;
   border-radius: 0.4rem;
   align-items: center;
+
   .checkbox-input {
     display: none;
   }
@@ -39,6 +40,34 @@ const ActionItemContainer = styled.div`
     content: "✅";
     border-radius: 3px;
     transition: 0.2s;
+  }
+  &.action-vertical-fade-in {
+    @keyframes action-vertical-fade-in {
+      from {
+        height: 0;
+        opacity: 0;
+      }
+      to {
+        height: 3rem;
+        opacity: 1;
+      }
+    }
+    animation: action-vertical-fade-in 0.1s linear;
+  }
+  &.action-vertical-fade-out {
+    @keyframes action-vertical-fade-out {
+      from {
+        height: 3rem;
+        opacity: 1;
+      }
+      to {
+        height: 0;
+        opacity: 0;
+      }
+    }
+    height: 0;
+    opacity: 0;
+    animation: action-vertical-fade-out 0.1s linear;
   }
 `;
 
@@ -68,11 +97,19 @@ export const ActionItem = (props: ActionItemProps) => {
     props;
   const id = useId();
   return (
-    <ActionItemContainer>
+    <ActionItemContainer className={"action-vertical-fade-in"}>
       <ActionItemTime>{date}</ActionItemTime>
       <TopCloseButton
         hidden={text.length > 0}
-        onClick={() => (onCloseClicked ? onCloseClicked() : {})}
+        onClick={(e) => {
+          if (onCloseClicked) {
+            const parent = e.currentTarget.parentElement;
+            if (!parent) throw new Error("Invalid parent");
+            parent.addEventListener("animationend", () => onCloseClicked());
+            parent.classList.remove("action-vertical-fade-in");
+            parent.classList.add("action-vertical-fade-out");
+          }
+        }}
       />
       <ActionItemText
         placeholder="Todo item...."
