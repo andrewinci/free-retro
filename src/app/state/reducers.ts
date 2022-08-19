@@ -50,7 +50,13 @@ export const changeStage = (change: "next" | "back") => {
     if (change == "back") {
       state.stage -= 1;
     } else if (change == "next") {
-      state.stage += 1;
+      // check if there are any ticket to discuss or we can go straight to the end.
+      const groupNumber = state.columns?.map((c) => c.groups.length) ?? 0;
+      if (groupNumber == 0) {
+        state.stage = Stage.End;
+      } else {
+        state.stage += 1;
+      }
     }
   });
 };
