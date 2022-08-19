@@ -114,8 +114,6 @@ const CardGroupContainer = styled.div`
   margin: 0.5em;
   margin-bottom: 0.8em;
   position: relative;
-  max-width: 20rem;
-  min-width: 20rem;
   font-size: 1rem;
   &.vertical-fade-in {
     @keyframes vertical-fade-in {

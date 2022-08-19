@@ -110,18 +110,20 @@ Click ok to go ahead.`);
           <Prev
             onClick={async () => await State.changeDiscussCard("decrement")}
             disabled={cardIndex <= 0}></Prev>
-          <CardGroup
-            title={card.title}
-            cards={card.cards.map((c) => ({
-              id: c.id,
-              text: c.text,
-              cardType: c.originColumn,
-              color: c.color,
-            }))}
-            readOnlyTitle={true}
-            readOnly={true}>
-            <VotesLine readonly={true} votes={votes}></VotesLine>
-          </CardGroup>
+          <div style={{ minWidth: "20rem" }}>
+            <CardGroup
+              title={card.title}
+              cards={card.cards.map((c) => ({
+                id: c.id,
+                text: c.text,
+                cardType: c.originColumn,
+                color: c.color,
+              }))}
+              readOnlyTitle={true}
+              readOnly={true}>
+              <VotesLine readonly={true} votes={votes}></VotesLine>
+            </CardGroup>
+          </div>
           <Next
             onClick={async () => await State.changeDiscussCard("increment")}
             disabled={cardIndex >= sortedCards.length - 1}></Next>

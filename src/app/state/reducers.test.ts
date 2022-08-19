@@ -21,6 +21,7 @@ describe("reducers", () => {
       mockAppState = Automerge.change(mockAppState, (s) => {
         s.columns = [
           {
+            id: "1",
             groups: [
               { id: "1", cards: [], votes: {} },
               { id: "2", cards: [], votes: {} },
@@ -44,6 +45,7 @@ describe("reducers", () => {
           {
             groups: [{ id: "1", cards: [], votes: {} }],
             title: "",
+            id: "1",
           },
         ];
       });
