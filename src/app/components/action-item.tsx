@@ -5,9 +5,8 @@ import { TopCloseButton } from "./buttons";
 
 const ActionItemContainer = styled.div`
   border: 1px solid #d4d4d4;
-  padding: 1em;
+  padding: 1.8em 0.6em 0.6em 0.6em;
   font-size: 1em;
-  height: 3rem;
   margin: 0 0.5em 0.5em 0.5em;
   position: relative;
   display: flex;
@@ -44,27 +43,31 @@ const ActionItemContainer = styled.div`
   &.action-vertical-fade-in {
     @keyframes action-vertical-fade-in {
       from {
-        height: 0;
+        min-height: 0rem;
         opacity: 0;
       }
       to {
-        height: 3rem;
+        min-height: 3rem;
         opacity: 1;
       }
     }
+    //height: auto;
+    min-height: 3rem;
     animation: action-vertical-fade-in 0.1s linear;
   }
   &.action-vertical-fade-out {
     @keyframes action-vertical-fade-out {
       from {
-        height: 3rem;
+        min-height: 3rem;
         opacity: 1;
       }
       to {
+        min-height: 0rem;
         height: 0;
         opacity: 0;
       }
     }
+    min-height: 0rem;
     height: 0;
     opacity: 0;
     animation: action-vertical-fade-out 0.1s linear;
