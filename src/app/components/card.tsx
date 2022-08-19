@@ -41,7 +41,9 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
     }),
   }));
   return (
-    <CardGroupContainer ref={drop} className={props.className}>
+    <CardGroupContainer
+      ref={drop}
+      className={`${props.className} vertical-fade-in`}>
       <CardGroupTitle
         hidden={cards.length == 1}
         text={props.title}
@@ -82,7 +84,17 @@ const SingleCard = (props: CardProps & CardContainerProps) => {
       showCardType={cardType != null}>
       <TopCloseButton
         hidden={text.length > 0 || readOnly || blur}
-        onClick={() => (onCloseClicked ? onCloseClicked() : {})}
+        onClick={(e) => {
+          if (onCloseClicked) {
+            const cardGroup = e.currentTarget.parentElement?.parentElement;
+            if (!cardGroup) throw new Error("Invalid parent");
+            // wait for the animation to finish before calling
+            // the on close event handler
+            cardGroup.addEventListener("animationend", () => onCloseClicked());
+            cardGroup.classList.remove("vertical-fade-in");
+            cardGroup.classList.add("vertical-fade-out");
+          }
+        }}
       />
       <CardTypeText hidden={!cardType}>{cardType}</CardTypeText>
       <TextArea
@@ -105,6 +117,34 @@ const CardGroupContainer = styled.div`
   max-width: 20rem;
   min-width: 20rem;
   font-size: 1rem;
+  &.vertical-fade-in {
+    @keyframes vertical-fade-in {
+      from {
+        height: 0;
+        opacity: 0;
+      }
+      to {
+        height: 2.6rem;
+        opacity: 1;
+      }
+    }
+    animation: vertical-fade-in 0.1s linear;
+  }
+  &.vertical-fade-out {
+    @keyframes vertical-fade-out {
+      from {
+        height: 2.6rem;
+        opacity: 1;
+      }
+      to {
+        height: 0;
+        opacity: 0;
+      }
+    }
+    height: 0;
+    opacity: 0;
+    animation: vertical-fade-out 0.1s linear;
+  }
 `;
 
 const SingleCardContainer = styled.div<{
