@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/andrewinci/free-retro/compare/v1.11.0...v1.11.1) (2022-08-19)
+
+
+### Bug Fixes
+
+* min action size ([001c517](https://github.com/andrewinci/free-retro/commit/001c517c7b0d0556ef1bd011a1c836598943bceb))
+
 # [1.11.0](https://github.com/andrewinci/free-retro/compare/v1.10.0...v1.11.0) (2022-08-19)
 
 
