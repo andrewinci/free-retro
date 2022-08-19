@@ -55,8 +55,24 @@ export function loadNewState(remoteRawState: string, recreateState: boolean) {
   const remoteState = Automerge.load<AppState>(
     toBinaryDocument(remoteRawState)
   );
+  // check if a new state need to be created
   if (recreateState) {
     initAppState(remoteState.sessionId, remoteState.stage, remoteState.actions);
   }
   appState = Automerge.merge(appState, remoteState);
+  // if the id of the first column is empty, set the id to all columns
+  // with the current index to maintain retro-compatibility with
+  // previous versions of the app
+  if (
+    appState.columns &&
+    appState.columns.length > 0 &&
+    !appState.columns[0].id
+  ) {
+    appState = Automerge.change(appState, (state) => {
+      if (!state.columns) return;
+      for (let i = 0; i < state.columns.length; i++) {
+        state.columns[i].id = i.toString();
+      }
+    });
+  }
 }
