@@ -7,34 +7,6 @@ import { Title } from "./textarea";
 
 const ColumnGroupContainer = styled.div`
   display: inline-flex;
-  // animations for add/remove columns
-  .horizontal-fade-in {
-    @keyframes horizontal-fade-in {
-      from {
-        transform: translateX(-50%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0%);
-        opacity: 1;
-      }
-    }
-    animation: horizontal-fade-in 0.1s linear;
-  }
-  .horizontal-fade-out {
-    @keyframes horizontal-fade-out {
-      from {
-        transform: translateX(0%);
-        opacity: 1;
-      }
-      to {
-        transform: translateX(-50%);
-        opacity: 0;
-      }
-    }
-    opacity: 0;
-    animation: horizontal-fade-out 0.1s linear;
-  }
 `;
 
 export const ColumnGroup = (props: { children: React.ReactNode }) => {
@@ -73,8 +45,8 @@ export const Column = (props: ColumnProps) => {
         hidden={(children?.length ?? 0) > 0 || readOnly || !canClose}
         onClick={(e) => {
           if (onCloseClick) {
-            const parent = (e.currentTarget as HTMLButtonElement)
-              .parentNode as HTMLDivElement;
+            const parent = e.currentTarget.parentElement;
+            if (!parent) throw new Error("Invalid parent");
             // wait for the animation to complete before calling the on close
             // click that can remove the element from the dom
             parent.addEventListener("animationend", () => onCloseClick());
@@ -110,6 +82,34 @@ const ColumnContainer = styled.div`
   padding: 0.5rem 0.3rem;
   position: relative;
   overflow-y: scroll;
+  // animations for add/remove columns
+  &.horizontal-fade-in {
+    @keyframes horizontal-fade-in {
+      from {
+        transform: translateX(-50%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0%);
+        opacity: 1;
+      }
+    }
+    animation: horizontal-fade-in 0.1s linear;
+  }
+  &.horizontal-fade-out {
+    @keyframes horizontal-fade-out {
+      from {
+        transform: translateX(0%);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(-50%);
+        opacity: 0;
+      }
+    }
+    opacity: 0;
+    animation: horizontal-fade-out 0.1s linear;
+  }
 `;
 
 const BottomAddButton = styled(AddButton)`

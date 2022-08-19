@@ -63,22 +63,28 @@ export const addColumn = () =>
       state.columns = [];
     }
     state.columns.push({
+      id: randomId(),
       title: "",
       groups: [],
     });
   });
 
-export const deleteColumn = (columnIndex: number) =>
+export const deleteColumn = (columnId: Id) =>
   changeState((state) => {
     if (!state.columns) state.columns = [];
+    const columnIndex = state.columns.findIndex((c) => c.id == columnId);
+    if (columnIndex < 0)
+      throw new Error("Invalid column id. Column not found.");
     state.columns.splice(columnIndex, 1);
   });
 
-export const setColumnTitle = (columnIndex: number, title: string) =>
+export const setColumnTitle = (columnId: Id, title: string) =>
   changeState((state) => {
     if (!state.columns) state.columns = [];
-    state.columns[columnIndex].title = title;
-    for (const c of state.columns[columnIndex].groups) {
+    const column = state.columns.find((c) => c.id == columnId);
+    if (!column) throw new Error("Invalid column id");
+    column.title = title;
+    for (const c of column.groups) {
       for (const c1 of c.cards) {
         c1.originColumn = title;
       }
@@ -125,10 +131,11 @@ export const moveCardToGroup = (srcCardId: Id, dstGroupId: Id) =>
     }
   });
 
-export const addEmptyCard = (columnIndex: number) =>
+export const addEmptyCard = (columnId: Id) =>
   changeState((state) => {
     if (!state.columns) return;
-    const column = state.columns[columnIndex];
+    const column = state.columns.find((c) => c.id == columnId);
+    if (!column) throw new Error("Invalid column id. Column not found.");
     column.groups.unshift({
       id: randomId(),
       votes: {},
@@ -200,7 +207,7 @@ export const updateGroupVotes = (
     }
   });
 
-export const moveCardToColumn = (srcCardId: Id, column: number) =>
+export const moveCardToColumn = (srcCardId: Id, columnId: Id) =>
   changeState((state) => {
     if (!state.columns) return;
     const srcCardPosition = findCardPosition(srcCardId, state);
@@ -208,8 +215,10 @@ export const moveCardToColumn = (srcCardId: Id, column: number) =>
     const srcGroup =
       state.columns[srcCardPosition.column].groups[srcCardPosition.group];
     const srcCard = srcGroup.cards[srcCardPosition.card];
-    let dstColumn: ColumnState | undefined = state.columns[column];
-    if (srcCard.originColumn != dstColumn.title) {
+    let dstColumn: ColumnState | undefined = state.columns.find(
+      (c) => c.id == columnId
+    );
+    if (srcCard.originColumn != dstColumn?.title) {
       dstColumn = state.columns.find((c) => c.title == srcCard.originColumn);
     }
     if (!dstColumn) return;

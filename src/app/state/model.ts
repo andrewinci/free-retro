@@ -23,6 +23,7 @@ export type CardGroupState = {
 };
 
 export type ColumnState = {
+  id: Id;
   title: string;
   groups: CardGroupState[];
 };

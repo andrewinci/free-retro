@@ -61,20 +61,19 @@ function BoardCard(props: {
 }
 
 function BoardColumn(props: {
-  columnIndex: number;
   column: ColumnState;
   readOnly: boolean;
   stage: Stage;
 }) {
-  const { columnIndex, column, readOnly, stage } = props;
+  const { column, readOnly, stage } = props;
   return (
     <Column
       title={column.title}
       canClose={stage == Stage.AddTickets}
-      onDrop={async (src) => await State.moveCardToColumn(src, columnIndex)}
-      onTitleChange={async (t) => await State.setColumnTitle(columnIndex, t)}
-      onAddClick={async () => await State.addEmptyCard(columnIndex)}
-      onCloseClick={async () => await State.deleteColumn(columnIndex)}
+      onDrop={async (src) => await State.moveCardToColumn(src, column.id)}
+      onTitleChange={async (t) => await State.setColumnTitle(column.id, t)}
+      onAddClick={async () => await State.addEmptyCard(column.id)}
+      onCloseClick={async () => await State.deleteColumn(column.id)}
       readOnly={readOnly}>
       {column.groups.map((group) => (
         <BoardCard
@@ -108,11 +107,10 @@ const BoardView = (props: {
       <StageText stage={stage} />
       <NextButton onClick={next}>Next</NextButton>
       <ColumnGroup>
-        {columnsData.map((column, i) => (
+        {columnsData.map((column) => (
           <BoardColumn
-            key={i}
+            key={column.id}
             column={column}
-            columnIndex={i}
             readOnly={readOnly ?? false}
             stage={stage}
           />
