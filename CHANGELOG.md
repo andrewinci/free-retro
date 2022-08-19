@@ -1,3 +1,11 @@
+# [1.11.0](https://github.com/andrewinci/free-retro/compare/v1.10.0...v1.11.0) (2022-08-19)
+
+
+### Features
+
+* jump to end if there are no tickets to discuss ([30b9be9](https://github.com/andrewinci/free-retro/commit/30b9be9c07439cee2d1b3a2b8653cef1ae17b24e))
+* set number of votes eq to 60% of groups ([90be527](https://github.com/andrewinci/free-retro/commit/90be527bdcfc753a67473490ea05cf3841d42987))
+
 # [1.10.0](https://github.com/andrewinci/free-retro/compare/v1.9.1...v1.10.0) (2022-08-19)
 
 
