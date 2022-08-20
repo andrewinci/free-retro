@@ -6,9 +6,11 @@ const StageTextContainer = styled.div`
   position: fixed;
   left: 2em;
   top: 2em;
+
   h2 {
     margin: 0;
   }
+
   p {
     margin: 0;
   }

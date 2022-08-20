@@ -5,9 +5,9 @@ import { TopCloseButton } from "./buttons";
 
 const ActionItemContainer = styled.div`
   border: 1px solid #d4d4d4;
-  padding: 1.8em 0.6em 0.6em 0.6em;
+  padding: 1.8em 0.6em 0.6em;
   font-size: 1em;
-  margin: 0 0.5em 0.5em 0.5em;
+  margin: 0 0.5em 0.5em;
   position: relative;
   display: flex;
   border-radius: 0.4rem;
@@ -15,9 +15,6 @@ const ActionItemContainer = styled.div`
 
   .checkbox-input {
     display: none;
-  }
-  .checkbox-input:checked + label .checkbox:after {
-    transform: translate(-50%, -50%) scale(1);
   }
 
   .checkbox {
@@ -29,7 +26,8 @@ const ActionItemContainer = styled.div`
     display: inline-block;
     position: relative;
   }
-  .checkbox:after {
+
+  .checkbox::after {
     display: block;
     position: absolute;
     top: 50%;
@@ -40,34 +38,43 @@ const ActionItemContainer = styled.div`
     border-radius: 3px;
     transition: 0.2s;
   }
+
+  .checkbox-input:checked + label .checkbox::after {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
   &.action-vertical-fade-in {
     @keyframes action-vertical-fade-in {
       from {
-        min-height: 0rem;
+        min-height: 0;
         opacity: 0;
       }
+
       to {
         min-height: 3rem;
         opacity: 1;
       }
     }
-    //height: auto;
+
     min-height: 3rem;
     animation: action-vertical-fade-in 0.1s linear;
   }
+
   &.action-vertical-fade-out {
     @keyframes action-vertical-fade-out {
       from {
         min-height: 3rem;
         opacity: 1;
       }
+
       to {
-        min-height: 0rem;
+        min-height: 0;
         height: 0;
         opacity: 0;
       }
     }
-    min-height: 0rem;
+
+    min-height: 0;
     height: 0;
     opacity: 0;
     animation: action-vertical-fade-out 0.1s linear;

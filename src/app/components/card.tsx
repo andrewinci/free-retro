@@ -64,13 +64,13 @@ export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
 const SingleCard = (props: CardProps & CardContainerProps) => {
   const { text, readOnly, blur, color, onCloseClicked, onTextChange } = props;
   const { cardType, canDrag } = props;
-  const [{ isDragging }, drag] = useDrag(
+  const [{ dragging }, drag] = useDrag(
     () => ({
       canDrag: () => canDrag ?? false,
       type: "card",
       item: { id: props.id },
       collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
+        dragging: monitor.isDragging(),
       }),
     }),
     [canDrag ?? false, text]
@@ -78,7 +78,7 @@ const SingleCard = (props: CardProps & CardContainerProps) => {
   return (
     <SingleCardContainer
       ref={drag}
-      style={{ opacity: isDragging ? 0.5 : 1 }}
+      style={{ opacity: dragging ? 0.5 : 1 }}
       color={color}
       blur={blur ?? false}
       showCardType={cardType != null}>
@@ -115,30 +115,36 @@ const CardGroupContainer = styled.div`
   margin-bottom: 0.8em;
   position: relative;
   font-size: 1rem;
+
   &.vertical-fade-in {
     @keyframes vertical-fade-in {
       from {
         height: 0;
         opacity: 0;
       }
+
       to {
         height: 2.6rem;
         opacity: 1;
       }
     }
+
     animation: vertical-fade-in 0.1s linear;
   }
+
   &.vertical-fade-out {
     @keyframes vertical-fade-out {
       from {
         height: 2.6rem;
         opacity: 1;
       }
+
       to {
         height: 0;
         opacity: 0;
       }
     }
+
     height: 0;
     opacity: 0;
     animation: vertical-fade-out 0.1s linear;
@@ -152,20 +158,9 @@ const SingleCardContainer = styled.div<{
   padding: 0.6em;
   min-height: 2.6rem;
   position: relative;
-  ${(props) => props.showCardType && `padding-top: 1.2em;`}
-  background-color: ${(props) => props.color};
-  ${(props) => {
-    if (props.blur) {
-      return `
-        -webkit-filter: blur(5px);
-        -moz-filter: blur(5px);
-        -o-filter: blur(5px);
-        -ms-filter: blur(5px);
-        filter: blur(5px);        
-      `;
-    }
-    return "";
-  }}
+  ${({ showCardType }) => showCardType && `padding-top: 1.2em;`}
+  ${({ blur }) => (blur ? `filter: blur(5px);` : `filter: none;`)}
+  ${({ color }) => `background-color: ${color};`}
 `;
 
 const CardTypeText = styled.p`

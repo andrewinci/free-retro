@@ -13,11 +13,13 @@ const Vote = styled.div`
   width: 15px;
   background-color: gray;
   border-radius: 100%;
+
   span {
     position: absolute;
     margin-top: -3px;
     margin-left: 3px;
     opacity: 0;
+
     &:hover {
       opacity: 100;
     }

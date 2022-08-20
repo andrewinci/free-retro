@@ -82,31 +82,36 @@ const ColumnContainer = styled.div`
   padding: 0.5rem 0.3rem;
   position: relative;
   overflow-y: scroll;
-  // animations for add/remove columns
+
   &.horizontal-fade-in {
     @keyframes horizontal-fade-in {
       from {
         transform: translateX(-50%);
         opacity: 0;
       }
+
       to {
         transform: translateX(0%);
         opacity: 1;
       }
     }
+
     animation: horizontal-fade-in 0.1s linear;
   }
+
   &.horizontal-fade-out {
     @keyframes horizontal-fade-out {
       from {
         transform: translateX(0%);
         opacity: 1;
       }
+
       to {
         transform: translateX(-50%);
         opacity: 0;
       }
     }
+
     opacity: 0;
     animation: horizontal-fade-out 0.1s linear;
   }

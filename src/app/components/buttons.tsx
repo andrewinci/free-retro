@@ -80,6 +80,7 @@ export const ButtonContainer = styled.button`
   outline: inherit;
   width: 25px;
   border-radius: 5px;
+
   :hover:active {
     background-color: #a8a8a8;
   }

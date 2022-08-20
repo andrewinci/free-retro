@@ -12,7 +12,6 @@ const EndViewContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-wrap: nowrap;
   align-content: space-between;
   justify-content: center;
 `;

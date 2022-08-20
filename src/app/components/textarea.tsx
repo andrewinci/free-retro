@@ -10,7 +10,6 @@ const StyledTextArea = styled.textarea`
   width: 100%;
   outline: none;
   resize: none;
-  overflow: hidden;
   font-size: 1em;
   ${(props) =>
     props.readOnly
@@ -24,14 +23,6 @@ const StyledTextArea = styled.textarea`
       : ``}
 
   appearance: none;
-  -webkit-appearance: none;
-  -moz-apperarance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  -ms-box-shadow: none;
-  -o-box-shadow: none;
   box-shadow: none;
 `;
 

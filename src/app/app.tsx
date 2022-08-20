@@ -12,6 +12,7 @@ import { DndProvider } from "react-dnd";
 
 const Container = styled.div`
   padding-left: 1rem;
+
   * {
     font-family: monospace;
   }
@@ -22,13 +23,16 @@ const Title = styled.div`
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+
   h1 {
     margin: 0;
+
     a {
       color: inherit; /* blue colors for links too */
       text-decoration: inherit; /* no underline */
     }
   }
+
   h2 {
     margin: 0;
   }

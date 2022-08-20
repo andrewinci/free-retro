@@ -28,7 +28,6 @@ const CardDiscussContainer = styled.div`
   flex-direction: row;
   align-items: center;
   align-content: space-between;
-  flex-wrap: nowrap;
   justify-content: space-evenly;
   margin-bottom: 10em;
 `;
@@ -38,6 +37,7 @@ const Prev = styled(LeftArrowButton)`
   flex-grow: 0;
   height: 3em;
   width: 3em;
+
   &:disabled {
     fill: #eaeaea;
   }
@@ -48,6 +48,7 @@ const Next = styled(RightArrowButton)`
   flex-grow: 0;
   height: 3em;
   width: 3em;
+
   &:disabled {
     fill: #eaeaea;
   }
@@ -55,7 +56,6 @@ const Next = styled(RightArrowButton)`
 
 const Container = styled.div`
   display: flex;
-  flex-wrap: nowrap;
   flex-direction: row;
   align-items: stretch;
   justify-content: space-around;
