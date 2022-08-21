@@ -105,7 +105,7 @@ export const App = () => {
       <AppContainer>
         <Title>
           <h1>
-            <a href="/">⚡ Free retro 🗣️</a>
+            <a href="/">⚡️ Free retro 🗣️</a>
           </h1>
           {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
         </Title>
