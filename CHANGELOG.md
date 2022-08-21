@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/andrewinci/free-retro/compare/v1.11.1...v1.12.0) (2022-08-21)
+
+
+### Features
+
+* Add templates to the start page ([9971ea8](https://github.com/andrewinci/free-retro/commit/9971ea84b5287e91fd366e42d3a93b38a7331c8a))
+
 ## [1.11.1](https://github.com/andrewinci/free-retro/compare/v1.11.0...v1.11.1) (2022-08-19)
 
 
