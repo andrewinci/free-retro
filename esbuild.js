@@ -4,6 +4,7 @@ import postcss from "postcss";
 import autoprefixer from "autoprefixer";
 import postcssPresetEnv from "postcss-preset-env";
 import process, { exit } from "process";
+import ip from "ip";
 
 const esbuildRun = (options) =>
   esbuild
@@ -17,7 +18,10 @@ const esbuildRun = (options) =>
     });
 
 const esbuildServe = (options) => {
-  console.log("Serving on http://localhost:8000");
+  console.log();
+  console.log(`Serving http://localhost:8000`);
+  console.log(`Serving http://${ip.address()}:8000`);
+
   return esbuild
     .serve(
       {
@@ -33,11 +37,12 @@ const esbuildServe = (options) => {
       }
     )
     .then(async (server) => {
-      await server.wait();
+      await server.wait;
       server.stop();
+      console.log("Server stop");
     })
     .catch((err) => {
-      process.stderr.write(err.stderr);
+      console.error(err);
       process.exit(1);
     });
 };
