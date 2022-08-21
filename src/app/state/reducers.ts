@@ -36,10 +36,19 @@ export const changeDiscussCard = (changeType: "increment" | "decrement") => {
   });
 };
 
-export const createRetro = (retroName: string) =>
+export const createRetro = (retroName: string, initialColumns: string[]) =>
   changeState((state) => {
     state.retroName = retroName;
     state.stage = Stage.AddTickets;
+    state.columns = [];
+    initialColumns.map((title) =>
+      // using push to make automerge happy
+      state.columns?.push({
+        id: randomId(),
+        title,
+        groups: [],
+      })
+    );
   }, true);
 
 export const changeStage = (change: "next" | "back") => {
@@ -52,8 +61,21 @@ export const changeStage = (change: "next" | "back") => {
       state.stage -= 1;
     } else if (change == "next") {
       // check if there are any ticket to discuss or we can go straight to the end.
-      const groupNumber = state.columns?.map((c) => c.groups.length) ?? 0;
-      if (groupNumber == 0) {
+      if (!state.columns) {
+        state.stage = Stage.End;
+        return;
+      }
+      // due to automerge, we need to use for loops to count the number of cards
+      // instead of using map + reduce
+      let totalCardsNumber = 0;
+      for (let c = 0; c < state.columns.length; c++) {
+        const column = state.columns[c];
+        for (let g = 0; g < column.groups.length; g++) {
+          totalCardsNumber += column.groups[g].cards.length;
+        }
+      }
+
+      if (totalCardsNumber == 0) {
         state.stage = Stage.End;
       } else {
         state.stage += 1;
