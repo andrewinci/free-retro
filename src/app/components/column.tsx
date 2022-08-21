@@ -73,7 +73,7 @@ export const Column = (props: ColumnProps) => {
 
 const ColumnContainer = styled.div`
   min-width: 18rem;
-  height: calc(100vh - 9.5em);
+  height: calc(100vh - 10.5em);
   flex: 1;
   flex-grow: 0 1;
   border-radius: 0.4rem;

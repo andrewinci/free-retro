@@ -1,19 +1,31 @@
 import styled from "styled-components";
-import { VotesLine } from "../components";
+import { VotesLine } from ".";
 import { Stage } from "../state";
 
 const StageTextContainer = styled.div`
   position: fixed;
-  left: 2em;
-  top: 2em;
+  left: 1em;
+  top: 2.5em;
+
+  @media only screen and (min-width: 734px) {
+    left: 2em;
+    top: 2.5em;
+  }
+
   z-index: 2;
 
   h2 {
     margin: 0;
+    font-size: 1em;
+
+    @media only screen and (min-width: 734px) {
+      font-size: 1.5em;
+    }
   }
 
   p {
     margin: 0;
+    font-size: 1em;
   }
 `;
 

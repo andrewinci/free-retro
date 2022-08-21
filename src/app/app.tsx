@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { ColumnState, Stage, ActionState } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
@@ -11,8 +11,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 
 const AppContainer = styled.div`
-  overflow: none;
-
   * {
     font-family: monospace;
   }
@@ -31,6 +29,11 @@ const Title = styled.div`
 
   h1 {
     margin: 0;
+    font-size: 1.4em;
+
+    @media only screen and (min-width: 734px) {
+      font-size: 2em;
+    }
 
     a {
       color: inherit; /* blue colors for links too */
@@ -40,11 +43,19 @@ const Title = styled.div`
 
   h2 {
     margin: 0;
+    font-size: 1em;
+
+    @media only screen and (min-width: 734px) {
+      font-size: 1.5em;
+    }
   }
 `;
 
 const Space = styled.div`
   height: 6em;
+  @media only screen and (min-width: 734px) {
+    height: 7em;
+  }
 `;
 
 const CurrentView = (props: {
@@ -90,25 +101,23 @@ export const App = () => {
   useMemo(() => onStateChange((newState) => setState(newState)), []);
   // view selector depending on the app stage
   return (
-    <React.StrictMode>
-      <DndProvider backend={HTML5Backend}>
-        <AppContainer>
-          <Title>
-            <h1>
-              <a href="/">⚡ Free retro 🗣️</a>
-            </h1>
-            {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
-          </Title>
-          <Space />
-          <CurrentView
-            sessionId={appState.sessionId}
-            columns={appState.columns ?? []}
-            discussCardIndex={appState.discussCardIndex?.value ?? 0}
-            stage={appState.stage}
-            actions={appState.actions ?? []}
-          />
-        </AppContainer>
-      </DndProvider>
-    </React.StrictMode>
+    <DndProvider backend={HTML5Backend}>
+      <AppContainer>
+        <Title>
+          <h1>
+            <a href="/">⚡ Free retro 🗣️</a>
+          </h1>
+          {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
+        </Title>
+        <Space />
+        <CurrentView
+          sessionId={appState.sessionId}
+          columns={appState.columns ?? []}
+          discussCardIndex={appState.discussCardIndex?.value ?? 0}
+          stage={appState.stage}
+          actions={appState.actions ?? []}
+        />
+      </AppContainer>
+    </DndProvider>
   );
 };

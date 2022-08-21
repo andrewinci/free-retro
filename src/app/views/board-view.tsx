@@ -9,10 +9,12 @@ import * as State from "../state";
 
 const NextButton = styled(RightArrowButton)`
   position: fixed;
-  right: 1em;
-  top: 1em;
-  height: 5em;
-  width: 5em;
+  right: 2em;
+  top: 1.5em;
+
+  @media only screen and (min-width: 734px) {
+    top: 2em;
+  }
   z-index: 2;
 `;
 

@@ -10,7 +10,6 @@ const StyledTextArea = styled.textarea`
   width: 100%;
   outline: none;
   resize: none;
-  font-size: 1em;
   ${(props) =>
     props.readOnly
       ? `
@@ -21,7 +20,10 @@ const StyledTextArea = styled.textarea`
     }
   `
       : ``}
-
+  font-size: 0.8em;
+  @media only screen and (min-width: 734px) {
+    font-size: 0.9em;
+  }
   appearance: none;
   box-shadow: none;
 `;
@@ -112,6 +114,9 @@ TextArea.defaultProps = {
 };
 
 export const Title = styled(TextArea)`
-  font-size: 2em;
+  font-size: 1.5em;
   text-align: center;
+  @media only screen and (min-width: 734px) {
+    font-size: 2em;
+  }
 `;
