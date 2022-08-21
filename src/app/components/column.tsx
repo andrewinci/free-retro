@@ -64,7 +64,7 @@ export const Column = (props: ColumnProps) => {
         />
       </div>
       {!readOnly && (
-        <BottomAddButton onClick={() => (onAddClick ? onAddClick() : {})} />
+        <AddColumnButton onClick={() => (onAddClick ? onAddClick() : {})} />
       )}
       {children}
     </ColumnContainer>
@@ -72,12 +72,12 @@ export const Column = (props: ColumnProps) => {
 };
 
 const ColumnContainer = styled.div`
-  min-width: 20rem;
-  height: 80vh;
+  min-width: 18rem;
+  height: calc(100vh - 10.5em);
   flex: 1;
   flex-grow: 0 1;
   border-radius: 0.4rem;
-  margin-right: 1em;
+  margin: 0 1em;
   border: 2px solid #d4d4d4;
   padding: 0.5rem 0.3rem;
   position: relative;
@@ -117,7 +117,7 @@ const ColumnContainer = styled.div`
   }
 `;
 
-const BottomAddButton = styled(AddButton)`
+const AddColumnButton = styled(AddButton)`
   bottom: 0.5em;
 `;
 

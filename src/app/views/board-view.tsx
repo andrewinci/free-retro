@@ -3,16 +3,20 @@ import { AddButton, RightArrowButton } from "../components/buttons";
 import { CardGroup } from "../components/card";
 import { Column, ColumnGroup } from "../components/column";
 import { VotesLine } from "../components/vote-line";
+import { StageText } from "../components/stage-text";
 import { Stage, ColumnState, getUser, setUserName } from "../state";
 import * as State from "../state";
-import { StageText } from "./stage-text";
 
 const NextButton = styled(RightArrowButton)`
   position: fixed;
-  right: 1em;
-  top: 1em;
-  height: 5em;
-  width: 5em;
+  right: 2em;
+  top: 1.5em;
+
+  @media only screen and (min-width: 734px) {
+    top: 2em;
+  }
+
+  z-index: 2;
 `;
 
 function BoardCard(props: {

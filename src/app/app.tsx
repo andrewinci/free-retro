@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { ColumnState, Stage, ActionState } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
@@ -10,22 +10,30 @@ import JoinRetroView from "./views/join-retro";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 
-const Container = styled.div`
-  padding-left: 1rem;
-
+const AppContainer = styled.div`
   * {
     font-family: monospace;
   }
 `;
 
 const Title = styled.div`
+  width: 100%;
+  min-width: 240px;
+  height: 4.5em;
+  background: white;
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  z-index: 1;
+  top: 0;
+  padding-top: 1em;
   text-align: center;
 
   h1 {
     margin: 0;
+    font-size: 1.4em;
+
+    @media only screen and (min-width: 734px) {
+      font-size: 2em;
+    }
 
     a {
       color: inherit; /* blue colors for links too */
@@ -35,11 +43,20 @@ const Title = styled.div`
 
   h2 {
     margin: 0;
+    font-size: 1em;
+
+    @media only screen and (min-width: 734px) {
+      font-size: 1.5em;
+    }
   }
 `;
 
 const Space = styled.div`
-  height: 7em;
+  height: 6em;
+
+  @media only screen and (min-width: 734px) {
+    height: 7em;
+  }
 `;
 
 const CurrentView = (props: {
@@ -85,25 +102,23 @@ export const App = () => {
   useMemo(() => onStateChange((newState) => setState(newState)), []);
   // view selector depending on the app stage
   return (
-    <React.StrictMode>
-      <DndProvider backend={HTML5Backend}>
-        <Container>
-          <Title>
-            <h1>
-              <a href="/">⚡ Free retro 🗣️</a>
-            </h1>
-            {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
-          </Title>
-          <Space />
-          <CurrentView
-            sessionId={appState.sessionId}
-            columns={appState.columns ?? []}
-            discussCardIndex={appState.discussCardIndex?.value ?? 0}
-            stage={appState.stage}
-            actions={appState.actions ?? []}
-          />
-        </Container>
-      </DndProvider>
-    </React.StrictMode>
+    <DndProvider backend={HTML5Backend}>
+      <AppContainer>
+        <Title>
+          <h1>
+            <a href="/">⚡️ Free retro 🗣️</a>
+          </h1>
+          {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
+        </Title>
+        <Space />
+        <CurrentView
+          sessionId={appState.sessionId}
+          columns={appState.columns ?? []}
+          discussCardIndex={appState.discussCardIndex?.value ?? 0}
+          stage={appState.stage}
+          actions={appState.actions ?? []}
+        />
+      </AppContainer>
+    </DndProvider>
   );
 };

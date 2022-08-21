@@ -169,13 +169,17 @@ const CardTypeText = styled.p`
   top: 2px;
   right: 5px;
   width: 200px;
-  font-size: 0.8em;
-  margin: 0;
+  font-size: 0.7em;
   font-style: italic;
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
 `;
 
 const CardGroupTitle = styled(Title)`
-  font-size: 1.3rem;
+  font-size: 1em;
+
+  @media only screen and (min-width: 734px) {
+    font-size: 1.3em;
+  }
 `;

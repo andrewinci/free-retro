@@ -5,10 +5,6 @@ import * as State from "../state";
 import { ActionState, Stage } from "../state";
 
 const EndViewContainer = styled.div`
-  position: absolute;
-  width: 40%;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,7 +50,7 @@ const EndRetroView = (props: {
         🚀 Start a new retro
       </RefreshPageButton>
       <ActionColumn
-        style={{ width: "40em", marginBottom: "2em" }}
+        style={{ width: "100%", maxWidth: "40em", marginBottom: "2em" }}
         actions={actions ?? []}
       />
     </EndViewContainer>
