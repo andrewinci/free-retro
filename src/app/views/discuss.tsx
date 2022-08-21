@@ -6,11 +6,11 @@ import {
   CardGroup,
   VotesLine,
   ActionColumn,
+  StageText,
 } from "../components";
 
 import { ActionState, CardGroupState, Stage } from "../state";
 import * as State from "../state";
-import { StageText } from "./stage-text";
 
 const CloseRetro = styled(CloseButton)`
   position: fixed;

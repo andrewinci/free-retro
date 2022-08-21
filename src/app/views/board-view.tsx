@@ -3,9 +3,9 @@ import { AddButton, RightArrowButton } from "../components/buttons";
 import { CardGroup } from "../components/card";
 import { Column, ColumnGroup } from "../components/column";
 import { VotesLine } from "../components/vote-line";
+import { StageText } from "../components/stage-text";
 import { Stage, ColumnState, getUser, setUserName } from "../state";
 import * as State from "../state";
-import { StageText } from "./stage-text";
 
 const NextButton = styled(RightArrowButton)`
   position: fixed;
