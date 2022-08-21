@@ -10,8 +10,8 @@ import JoinRetroView from "./views/join-retro";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 
-const Container = styled.div`
-  padding-left: 1rem;
+const AppContainer = styled.div`
+  overflow: none;
 
   * {
     font-family: monospace;
@@ -19,10 +19,14 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+  width: 100%;
   min-width: 240px;
+  height: 4.5em;
+  background: white;
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  z-index: 1;
+  top: 0;
+  padding-top: 1em;
   text-align: center;
 
   h1 {
@@ -40,7 +44,7 @@ const Title = styled.div`
 `;
 
 const Space = styled.div`
-  height: 7em;
+  height: 6em;
 `;
 
 const CurrentView = (props: {
@@ -88,7 +92,7 @@ export const App = () => {
   return (
     <React.StrictMode>
       <DndProvider backend={HTML5Backend}>
-        <Container>
+        <AppContainer>
           <Title>
             <h1>
               <a href="/">⚡ Free retro 🗣️</a>
@@ -103,7 +107,7 @@ export const App = () => {
             stage={appState.stage}
             actions={appState.actions ?? []}
           />
-        </Container>
+        </AppContainer>
       </DndProvider>
     </React.StrictMode>
   );

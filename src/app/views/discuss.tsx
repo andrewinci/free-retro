@@ -18,6 +18,7 @@ const CloseRetro = styled(CloseButton)`
   top: 1em;
   height: 5em;
   width: 5em;
+  z-index: 2;
 `;
 
 const CardDiscussContainer = styled.div`

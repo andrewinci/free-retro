@@ -13,6 +13,7 @@ const NextButton = styled(RightArrowButton)`
   top: 1em;
   height: 5em;
   width: 5em;
+  z-index: 2;
 `;
 
 function BoardCard(props: {
