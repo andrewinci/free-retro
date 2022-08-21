@@ -19,6 +19,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+  min-width: 240px;
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
