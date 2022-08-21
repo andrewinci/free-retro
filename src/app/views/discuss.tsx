@@ -30,7 +30,11 @@ const CardDiscussContainer = styled.div`
   align-items: center;
   align-content: space-between;
   justify-content: space-evenly;
-  margin-bottom: 10em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  @media only screen and (min-width: 734px) {
+    margin-bottom: 10em;
+  }
 `;
 
 const Prev = styled(LeftArrowButton)`
@@ -57,9 +61,22 @@ const Next = styled(RightArrowButton)`
 
 const Container = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-around;
+
+  @media only screen and (min-width: 734px) {
+    align-items: stretch;
+    flex-direction: row;
+  }
+`;
+
+const CardGroupContainer = styled.div`
+  min-width: 10rem;
+
+  @media only screen and (min-width: 734px) {
+    min-width: 20rem;
+  }
 `;
 
 type DiscussViewProps = {
@@ -111,7 +128,7 @@ Click ok to go ahead.`);
           <Prev
             onClick={async () => await State.changeDiscussCard("decrement")}
             disabled={cardIndex <= 0}></Prev>
-          <div style={{ minWidth: "20rem" }}>
+          <CardGroupContainer>
             <CardGroup
               title={card.title}
               cards={card.cards.map((c) => ({
@@ -124,7 +141,7 @@ Click ok to go ahead.`);
               readOnly={true}>
               <VotesLine readonly={true} votes={votes}></VotesLine>
             </CardGroup>
-          </div>
+          </CardGroupContainer>
           <Next
             onClick={async () => await State.changeDiscussCard("increment")}
             disabled={cardIndex >= sortedCards.length - 1}></Next>
