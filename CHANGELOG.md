@@ -1,3 +1,23 @@
+# [1.13.0](https://github.com/andrewinci/free-retro/compare/v1.12.0...v1.13.0) (2022-08-21)
+
+
+### Bug Fixes
+
+* avoid overflow content on title ([6f8c710](https://github.com/andrewinci/free-retro/commit/6f8c7103dabd24a6294c7927f8d91d25f9bb7298))
+* column style to adapt to different screen sizes ([419b486](https://github.com/andrewinci/free-retro/commit/419b48615f9f30d539558c38453d1ef9618a81ba))
+* end view to adapt to different screen sizes ([1973c80](https://github.com/andrewinci/free-retro/commit/1973c801400684368dc9d3b186365a098c764c3d))
+* lightning bolt emoji ([08d83db](https://github.com/andrewinci/free-retro/commit/08d83dbfe74886f6f93354c238070fdd6c624dad))
+* scrolling ribbon ([5d417ac](https://github.com/andrewinci/free-retro/commit/5d417aca48c995f2e19fb517f9bd0c9ee3cea44a))
+* set min template container width to avoid icons overflowing ([67e6adf](https://github.com/andrewinci/free-retro/commit/67e6adf814f0408776df10ce02c451db5654269c))
+* set min title width to avoid text overflowing ([343e437](https://github.com/andrewinci/free-retro/commit/343e437ef4c494b7a406ac190d29896760060f97))
+* text support smaller screens ([18fe8c6](https://github.com/andrewinci/free-retro/commit/18fe8c642553e5e0ea9d3dc02adf92ef165cc025))
+
+
+### Features
+
+* improve experience in small screen ([f00c21e](https://github.com/andrewinci/free-retro/commit/f00c21ecf799b30b625873e7ae05d10c25b526a5))
+* support small screens in discuss view ([d485fe9](https://github.com/andrewinci/free-retro/commit/d485fe94a31d8c688860770da57d57cceee01e87))
+
 # [1.12.0](https://github.com/andrewinci/free-retro/compare/v1.11.1...v1.12.0) (2022-08-21)
 
 
