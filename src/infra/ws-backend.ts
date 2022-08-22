@@ -35,8 +35,7 @@ export class WSBackend extends Construct {
       tableName: `${name}-sessions`,
       partitionKey: { name: "sessionId", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "connectionId", type: dynamodb.AttributeType.STRING },
-      readCapacity: 10,
-      writeCapacity: 10,
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.RETAIN,
       encryption: dynamodb.TableEncryption.AWS_MANAGED,
     });
