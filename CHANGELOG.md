@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/andrewinci/free-retro/compare/v1.13.0...v1.14.0) (2022-08-22)
+
+
+### Features
+
+* switch dynamo to pay per request ([f68a6cd](https://github.com/andrewinci/free-retro/commit/f68a6cd2feb534fecffee6bc271fe6d4b3060509))
+
 # [1.13.0](https://github.com/andrewinci/free-retro/compare/v1.12.0...v1.13.0) (2022-08-21)
 
 
