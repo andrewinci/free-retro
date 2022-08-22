@@ -182,7 +182,7 @@
     "react-dnd-test-backend": "^16.0.1",
     "react-test-renderer": "^18.2.0",
     "semantic-release": "^19.0.3",
-    "stylelint": "^14.10.0",
+    "stylelint": "^14.11.0",
     "stylelint-config-standard": "^27.0.0",
     "ts-jest": "^28.0.8",
     "ts-node": "^10.9.1",
