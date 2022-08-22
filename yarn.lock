@@ -2563,10 +2563,10 @@ autoprefixer@^10.4.8:
     picocolors "^1.0.0"
     postcss-value-parser "^4.2.0"
 
-aws-cdk-lib@^2.38.0:
-  version "2.38.0"
-  resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.38.0.tgz#afbe5472aebee95f9b50e57470a1f6e8757a19ab"
-  integrity sha512-OV2F4tcPgQH7P9wWYtS5m8hfO9Bup1FSkHUCzinW42oKTNk717CelkCIZ+aEzf3jdMjyeeNYEIEb++QTU4jdFQ==
+aws-cdk-lib@^2.38.1:
+  version "2.38.1"
+  resolved "https://registry.yarnpkg.com/aws-cdk-lib/-/aws-cdk-lib-2.38.1.tgz#e96ee1362c86260786b3d808f593ca5edd813b29"
+  integrity sha512-vEgJBUzL1yqlSMYGjipl+eRwy900x3RmbVzTcxKdCZvhtBMQ1hqJAMgVswvoyA5EnvfELLlz9ufm+qdKGs9DxQ==
   dependencies:
     "@balena/dockerignore" "^1.0.2"
     case "1.6.3"
