@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/andrewinci/free-retro/compare/v1.14.0...v1.15.0) (2022-08-29)
+
+
+### Features
+
+* review monitor threshold ([8a24c54](https://github.com/andrewinci/free-retro/commit/8a24c546b221adbe8af12316fdcc905b41ed18d0))
+
 # [1.14.0](https://github.com/andrewinci/free-retro/compare/v1.13.0...v1.14.0) (2022-08-22)
 
 
