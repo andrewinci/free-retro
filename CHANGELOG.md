@@ -1,3 +1,15 @@
+# [1.16.0](https://github.com/andrewinci/free-retro/compare/v1.15.0...v1.16.0) (2022-08-30)
+
+
+### Bug Fixes
+
+* Split dynamo request batch into chunks ([4768b97](https://github.com/andrewinci/free-retro/commit/4768b976669b8948a44dd3c15c10ed2e1e0af71a))
+
+
+### Features
+
+* tweak lambda parameters ([a72f603](https://github.com/andrewinci/free-retro/commit/a72f603a0bceb99ce8a8d50b34b3f38a075a5090))
+
 # [1.15.0](https://github.com/andrewinci/free-retro/compare/v1.14.0...v1.15.0) (2022-08-29)
 
 
