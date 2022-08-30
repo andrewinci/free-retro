@@ -9,6 +9,7 @@ import * as sqs from "aws-cdk-lib/aws-sqs";
 import { Duration, RemovalPolicy } from "aws-cdk-lib";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { SecurityPolicy } from "aws-cdk-lib/aws-apigateway";
+import { Architecture } from "aws-cdk-lib/aws-lambda";
 
 export type WSBackendProps = {
   name: string;
@@ -55,6 +56,8 @@ export class WSBackend extends Construct {
       code: lambda.Code.fromAsset("dist/lambda"),
       handler: "dist/lambda/handler.lambdaHandler",
       timeout: Duration.seconds(lambdaTimeout),
+      memorySize: 256,
+      architecture: Architecture.ARM_64,
       logRetention: 30,
       environment: {
         DYNAMO_TABLE_NAME: this.dynamoTable.tableName,

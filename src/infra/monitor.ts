@@ -1,6 +1,6 @@
 import { Construct } from "constructs";
 import * as cw from "aws-cdk-lib/aws-cloudwatch";
-import { IFunction } from "aws-cdk-lib/aws-lambda";
+import { Architecture, IFunction } from "aws-cdk-lib/aws-lambda";
 import { TreatMissingData } from "aws-cdk-lib/aws-cloudwatch";
 import { SnsAction } from "aws-cdk-lib/aws-cloudwatch-actions";
 import * as sns from "aws-cdk-lib/aws-sns";
@@ -49,6 +49,7 @@ export class Monitoring extends Construct {
     const monitorLambda = new lambda.Function(this, `${name}-lambda`, {
       functionName: `${name}-lambda`,
       runtime: lambda.Runtime.NODEJS_14_X,
+      architecture: Architecture.ARM_64,
       code: lambda.Code.fromAsset("dist/tg-forwarder"),
       handler: "dist/tg-forwarder/handler.lambdaHandler",
       logRetention: 5,

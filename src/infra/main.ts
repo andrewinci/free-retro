@@ -11,7 +11,7 @@ import {
 } from "./monitor";
 
 export class FreeRetroService extends Stack {
-  LAMBDA_TIMEOUT_SEC = 3;
+  LAMBDA_TIMEOUT_SEC = 6;
   constructor(scope: Construct, id: string, props: StackProps | undefined) {
     super(scope, id, props);
     const baseProps = {
