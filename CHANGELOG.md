@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/andrewinci/free-retro/compare/v1.16.1...v1.16.2) (2022-08-30)
+
+
+### Bug Fixes
+
+* Set correct cursor in cards and text area ([9f98374](https://github.com/andrewinci/free-retro/commit/9f9837438bd754f50e6ef2a55b2cb9c60fec70ff))
+
 ## [1.16.1](https://github.com/andrewinci/free-retro/compare/v1.16.0...v1.16.1) (2022-08-30)
 
 
