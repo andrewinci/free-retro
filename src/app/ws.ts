@@ -46,6 +46,8 @@ export const wsInit = () =>
           alert("Retro not found, try to create a new one.");
           location.href = "/";
           break;
+        default:
+          console.error(`Invalid server message received`, serverMessage);
       }
     });
 
