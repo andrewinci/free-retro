@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/andrewinci/free-retro/compare/v1.16.0...v1.16.1) (2022-08-30)
+
+
+### Bug Fixes
+
+* Delete a dynamo record after 3 months ([4b42941](https://github.com/andrewinci/free-retro/commit/4b42941dc44647956bbacc1ed3c8db3d41004784))
+
 # [1.16.0](https://github.com/andrewinci/free-retro/compare/v1.15.0...v1.16.0) (2022-08-30)
 
 
