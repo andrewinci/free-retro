@@ -13,7 +13,7 @@ const StyledTextArea = styled.textarea`
   ${(props) =>
     props.readOnly
       ? `
-    cursor: pointer !important;
+    cursor: default;
     user-select: none;
     &::selection {
       background-color: transparent;

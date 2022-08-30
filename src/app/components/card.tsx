@@ -80,6 +80,7 @@ const SingleCard = (props: CardProps & CardContainerProps) => {
       ref={drag}
       style={{ opacity: dragging ? 0.5 : 1 }}
       color={color}
+      draggable={canDrag}
       blur={blur ?? false}
       showCardType={cardType != null}>
       <TopCloseButton
@@ -110,7 +111,7 @@ const SingleCard = (props: CardProps & CardContainerProps) => {
   );
 };
 
-const CardGroupContainer = styled.div`
+const CardGroupContainer = styled.div<{ canDrag?: boolean }>`
   margin: 0.5em;
   margin-bottom: 0.8em;
   position: relative;
@@ -154,6 +155,7 @@ const CardGroupContainer = styled.div`
 const SingleCardContainer = styled.div<{
   blur: boolean;
   showCardType: boolean;
+  draggable?: boolean;
 }>`
   padding: 0.6em;
   min-height: 2.6rem;
@@ -161,6 +163,19 @@ const SingleCardContainer = styled.div<{
   ${({ showCardType }) => showCardType && `padding-top: 1.2em;`}
   ${({ blur }) => (blur ? `filter: blur(5px);` : `filter: none;`)}
   ${({ color }) => `background-color: ${color};`}
+
+  ${({ draggable }) => {
+    if (draggable) {
+      return `
+        cursor: move;
+        textarea{
+          cursor: move !important;
+        }
+      `;
+    } else {
+      return "cursor: default;";
+    }
+  }}
 `;
 
 const CardTypeText = styled.p`
@@ -179,7 +194,7 @@ const CardTypeText = styled.p`
 const CardGroupTitle = styled(Title)`
   font-size: 1em;
 
-  @media only screen and (min-width: 734px) {
+  @media only screen and(min-width: 734px) {
     font-size: 1.3em;
   }
 `;
