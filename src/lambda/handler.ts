@@ -77,7 +77,8 @@ export async function handleBroadcast(request: WSRequest) {
   const clientConnectionsToDelete = sendResult
     .filter((c) => !c.sendResult)
     .map((c) => ({ connectionId: c.connectionId, sessionId }));
-  console.log(clientConnectionsToDelete);
+
+  console.log("Deleting un-active connections", clientConnectionsToDelete);
   await deleteDynamoItems(clientConnectionsToDelete);
   // wait for the last state to be stored
   await storeToDynamoPromise;

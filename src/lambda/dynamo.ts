@@ -26,6 +26,15 @@ export type DynamoAppState = {
 
 const client = new DynamoDBClient({ region: AWS_REGION });
 
+export function chunk<T>(seq: T[], chunkSize: number): T[][] {
+  if (chunkSize <= 0) throw new Error("The chunk size should be > 0");
+  const chunks = [];
+  for (let i = 0; i < seq.length; i += chunkSize) {
+    chunks.push(seq.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
+
 export const deleteDynamoItems = async (
   connections: {
     sessionId: string;
@@ -36,19 +45,29 @@ export const deleteDynamoItems = async (
     // nothing to do
     return;
   }
-  const command = new BatchWriteItemCommand({
-    RequestItems: {
-      [TABLE_NAME]: connections.map((c) => ({
-        DeleteRequest: {
-          Key: {
-            sessionId: { S: c.sessionId },
-            connectionId: { S: c.connectionId },
-          },
+  // split items into chunks. Dynamo supports a max of 25 records
+  // in a batch.
+  const chunks = chunk(connections, 25);
+
+  const commandChunks = chunks.map(
+    (chunk) =>
+      new BatchWriteItemCommand({
+        RequestItems: {
+          [TABLE_NAME]: chunk.map((c) => ({
+            DeleteRequest: {
+              Key: {
+                sessionId: { S: c.sessionId },
+                connectionId: { S: c.connectionId },
+              },
+            },
+          })),
         },
-      })),
-    },
-  });
-  await client.send(command);
+      })
+  );
+
+  await Promise.all(
+    commandChunks.map(async (command) => await client.send(command))
+  );
 };
 
 export const storeToDynamo = async (record: DynamoRecord) => {
