@@ -39,6 +39,7 @@ export class WSBackend extends Construct {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.RETAIN,
       encryption: dynamodb.TableEncryption.AWS_MANAGED,
+      timeToLiveAttribute: "expires",
     });
 
     // dead letter queue for the lambda

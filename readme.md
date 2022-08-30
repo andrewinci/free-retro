@@ -40,6 +40,6 @@ Deploy to AWS: `yarn deploy`
 - [x] List of actions
 - [x] Balance votes with number of tickets
 - [x] Show votes in UI
+- [x] TTL in dynamodb
+- [ ] Timer tool
 - [ ] Users management
-- [ ] Improve code coverage tp 80%
-- [ ] TTL in dynamodb
