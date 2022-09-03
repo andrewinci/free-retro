@@ -80,6 +80,7 @@ export const storeToDynamo = async (record: DynamoRecord) => {
       appState: { S: record.appState },
       lastUpdate: { N: Date.now().toString() },
       // any record expires after 3 months
+      stateVersion: { N: "1" },
       expires: { N: dayjs().add(3, "months").unix().toString() },
     },
   });

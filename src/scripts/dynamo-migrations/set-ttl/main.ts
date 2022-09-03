@@ -7,27 +7,12 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import dayjs from "dayjs";
-
-const TABLE_NAME = "free-retro-app-backend-sessions";
-
-const AWS_REGION = "eu-west-1";
-
-export type DynamoRecord = {
-  //hash key
-  sessionId: string;
-  // range key
-  connectionId: string;
-  appState: string;
-};
-
-export type DynamoAppState = {
-  sessionId: string;
-  connections: string[];
-  lastState: string;
-};
+import { DynamoRecord } from "../../../lambda/dynamo";
+import { AWS_REGION, TABLE_NAME } from "../common";
 
 const client = new DynamoDBClient({ region: AWS_REGION });
 let total = 0;
+
 export async function updateDynamoAppState(
   startKey?: Record<string, AttributeValue> | undefined
 ) {
