@@ -14,6 +14,7 @@ export const ActionColumn = (props: {
       title="Actions 🛠️"
       style={style}
       canClose={false}
+      reverse={true}
       onAddClick={async () => await State.addAction()}>
       {Object.entries(actions ?? {}).map(([id, { text, done, date }]) => (
         <ActionItem

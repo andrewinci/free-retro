@@ -83,6 +83,7 @@ function BoardColumn(props: {
     <Column
       title={column.title}
       canClose={stage == Stage.AddTickets}
+      reverse={true}
       onDrop={async (src) => await State.moveCardToColumn(src, columnId)}
       onTitleChange={async (t) => await State.setColumnTitle(columnId, t)}
       onAddClick={async () => await State.addEmptyCard(columnId)}
