@@ -1,7 +1,7 @@
-import moment from "moment";
 import { randomId } from "../helper/random";
 import { changeState } from "../automerge-state";
 import { Id } from "../model";
+import dayjs from "dayjs";
 
 export const addAction = () =>
   changeState((state) => {
@@ -10,7 +10,7 @@ export const addAction = () =>
       id: randomId(),
       text: "",
       done: false,
-      date: moment().format("MMM Do YY"),
+      date: dayjs().format("MMM Do YY"),
     });
   });
 

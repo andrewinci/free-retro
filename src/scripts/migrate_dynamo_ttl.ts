@@ -6,7 +6,7 @@ import {
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import moment from "moment";
+import dayjs from "dayjs";
 
 const TABLE_NAME = "free-retro-app-backend-sessions";
 
@@ -44,7 +44,7 @@ export async function updateDynamoAppState(
   );
 
   const ttl = (timestamp: number) => ({
-    N: moment.unix(timestamp).add(3, "months").unix().toString(),
+    N: dayjs.unix(timestamp).add(3, "months").unix().toString(),
   });
 
   const commands = items
