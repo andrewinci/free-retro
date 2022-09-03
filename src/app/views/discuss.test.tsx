@@ -9,9 +9,9 @@ describe("Test discuss view", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
         <DiscussView
-          cards={[{ id: "123", cards: [], votes: { a: new Counter(1) } }]}
+          cards={[{ cards: {}, votes: { a: new Counter(1) } }]}
           cardIndex={0}
-          actions={[]}
+          actions={{}}
         />
       </DndProvider>
     );

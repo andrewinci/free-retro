@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import styled from "styled-components";
-import { ColumnState, Stage, ActionState } from "./state";
+import { ColumnState, Stage, ActionState, Id } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
 import BoardView from "./views/board-view";
 import CreateRetroView from "./views/create-retro";
@@ -9,6 +9,7 @@ import EndRetroView from "./views/end-view";
 import JoinRetroView from "./views/join-retro";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
+import { getAllGroups } from "./state/state";
 
 const AppContainer = styled.div`
   * {
@@ -61,12 +62,12 @@ const Space = styled.div`
 
 const CurrentView = (props: {
   stage: Stage;
-  columns: ColumnState[];
+  columnsData: Record<Id, ColumnState>;
   discussCardIndex: number;
   sessionId: string;
-  actions: ActionState[];
+  actions: Record<Id, ActionState>;
 }) => {
-  const { stage, columns, discussCardIndex, sessionId, actions } = props;
+  const { stage, columnsData, discussCardIndex, sessionId, actions } = props;
   switch (stage) {
     case Stage.Join:
       return <JoinRetroView />;
@@ -74,20 +75,20 @@ const CurrentView = (props: {
       return <CreateRetroView />;
     case Stage.AddTickets:
       return (
-        <BoardView columnsData={columns ?? []} stage={stage} readOnly={false} />
+        <BoardView columnsData={columnsData} stage={stage} readOnly={false} />
       );
     case Stage.Group:
       return (
-        <BoardView columnsData={columns ?? []} stage={stage} readOnly={true} />
+        <BoardView columnsData={columnsData} stage={stage} readOnly={true} />
       );
     case Stage.Vote:
       return (
-        <BoardView columnsData={columns ?? []} stage={stage} readOnly={true} />
+        <BoardView columnsData={columnsData} stage={stage} readOnly={true} />
       );
     case Stage.Discuss:
       return (
         <DiscussView
-          cards={columns?.flatMap((c) => c.groups) ?? []}
+          cards={getAllGroups()}
           cardIndex={discussCardIndex}
           actions={actions}
         />
@@ -113,10 +114,10 @@ export const App = () => {
         <Space />
         <CurrentView
           sessionId={appState.sessionId}
-          columns={appState.columns ?? []}
+          columnsData={appState.columns ?? {}}
           discussCardIndex={appState.discussCardIndex?.value ?? 0}
           stage={appState.stage}
-          actions={appState.actions ?? []}
+          actions={appState.actions ?? {}}
         />
       </AppContainer>
     </DndProvider>

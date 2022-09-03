@@ -9,7 +9,7 @@ describe("Test board view", () => {
     const getAppStateMock = jest.spyOn(AutomergeState, "getAppState");
     getAppStateMock.mockImplementation(() => ({} as AppState));
     const component = renderer.create(
-      <BoardView columnsData={[]} stage={Stage.AddTickets} />
+      <BoardView columnsData={{}} stage={Stage.AddTickets} />
     );
     expect(component).toBeDefined();
   });

@@ -1,50 +1,47 @@
-import { AppState, Id } from "..";
+import { AppState, CardGroupState, CardState, ColumnState, Id } from "..";
 
 type GroupPosition = {
-  column: number;
-  group: number;
+  column: ColumnState;
+  columnId: Id;
+  group: CardGroupState;
+  groupId: Id;
 };
 
 type CardPosition = {
-  card: number;
+  card: CardState;
+  cardId: Id;
 } & GroupPosition;
 
-export function findCardPosition(
-  cardId: Id,
-  state: AppState
-): CardPosition | undefined {
-  if (!state.columns) return undefined;
-  for (let c = 0; c < state.columns.length; c++) {
-    const column = state.columns[c];
-    for (let g = 0; g < column.groups.length; g++) {
-      const group = column.groups[g];
-      for (let i = 0; i < group.cards.length; i++) {
-        if (group.cards[i].id == cardId)
-          return {
-            column: c,
-            group: g,
-            card: i,
-          };
+export function findGroup(groupId: Id, state: AppState): GroupPosition {
+  if (!state.columns) throw new Error(`Group ${groupId} not found`);
+  for (const [columnId, column] of Object.entries(state.columns)) {
+    if (groupId in column.groups) {
+      return {
+        columnId,
+        column,
+        groupId,
+        group: column.groups[groupId],
+      };
+    }
+  }
+  throw new Error(`Group ${groupId} not found`);
+}
+
+export function findCard(cardId: Id, state: AppState): CardPosition {
+  if (!state.columns) throw new Error(`Card ${cardId} not found`);
+  for (const [columnId, column] of Object.entries(state.columns)) {
+    for (const [groupId, group] of Object.entries(column.groups)) {
+      if (cardId in group.cards) {
+        return {
+          columnId,
+          column,
+          groupId,
+          group,
+          cardId,
+          card: group.cards[cardId],
+        };
       }
     }
   }
-  return undefined;
-}
-
-export function findGroupPosition(
-  groupId: Id,
-  state: AppState
-): GroupPosition | undefined {
-  if (!state.columns) return undefined;
-  for (let c = 0; c < state.columns.length; c++) {
-    const column = state.columns[c];
-    for (let g = 0; g < column.groups.length; g++) {
-      if (column.groups[g].id == groupId)
-        return {
-          column: c,
-          group: g,
-        };
-    }
-  }
-  return undefined;
+  throw new Error(`Card ${cardId} not found`);
 }

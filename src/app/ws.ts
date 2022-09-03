@@ -76,7 +76,6 @@ export async function broadcast<T>(
   recreateState: boolean
 ) {
   lastSessionId = sessionId;
-  console.log("Broadcast", state);
   const rawState = Automerge.save(state);
   const broadcastMessage: BroadcastMessage = {
     action: "broadcast",

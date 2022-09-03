@@ -7,8 +7,7 @@ export type User = {
   username: string;
 };
 
-type Card = {
-  id: Id;
+export type CardState = {
   originColumn: string;
   ownerId: string;
   text: string;
@@ -16,16 +15,14 @@ type Card = {
 };
 
 export type CardGroupState = {
-  id: Id;
   title?: string;
-  cards: Card[];
+  cards: Record<Id, CardState>;
   votes: Record<string, Automerge.Counter>;
 };
 
 export type ColumnState = {
-  id: Id;
   title: string;
-  groups: CardGroupState[];
+  groups: Record<Id, CardGroupState>;
 };
 
 export enum Stage {
@@ -39,7 +36,6 @@ export enum Stage {
 }
 
 export type ActionState = {
-  id: Id;
   text: string;
   done: boolean;
   date: string;
@@ -50,6 +46,6 @@ export type AppState = {
   retroName?: string;
   stage: Stage;
   discussCardIndex?: Automerge.Counter;
-  columns?: ColumnState[];
-  actions?: ActionState[];
+  columns?: Record<Id, ColumnState>;
+  actions?: Record<Id, ActionState>;
 };

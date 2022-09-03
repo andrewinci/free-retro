@@ -6,53 +6,48 @@ import { getUser } from "../user";
 export const addColumn = () =>
   changeState((state) => {
     if (!state.columns) {
-      state.columns = [];
+      state.columns = {};
     }
-    state.columns.push({
-      id: randomId(),
+    state.columns[randomId()] = {
       title: "",
-      groups: [],
-    });
+      groups: {},
+    };
   });
 
 export const deleteColumn = (columnId: Id) =>
   changeState((state) => {
-    if (!state.columns) state.columns = [];
-    const columnIndex = state.columns.findIndex((c) => c.id == columnId);
-    if (columnIndex < 0)
+    if (!state.columns || !(columnId in state.columns))
       throw new Error("Invalid column id. Column not found.");
-    state.columns.splice(columnIndex, 1);
+    delete state.columns[columnId];
   });
 
 export const setColumnTitle = (columnId: Id, title: string) =>
   changeState((state) => {
-    if (!state.columns) state.columns = [];
-    const column = state.columns.find((c) => c.id == columnId);
-    if (!column) throw new Error("Invalid column id");
-    column.title = title;
-    for (const c of column.groups) {
-      for (const c1 of c.cards) {
-        c1.originColumn = title;
+    if (!state.columns || !(columnId in state.columns))
+      throw new Error("Invalid column id. Column not found.");
+    // update column title
+    state.columns[columnId].title = title;
+    // update all cards under the column
+    for (const group of Object.values(state.columns[columnId].groups)) {
+      for (const card of Object.values(group.cards)) {
+        card.originColumn = title;
       }
     }
   });
 
 export const addEmptyCard = (columnId: Id) =>
   changeState((state) => {
-    if (!state.columns) return;
-    const column = state.columns.find((c) => c.id == columnId);
-    if (!column) throw new Error("Invalid column id. Column not found.");
-    column.groups.unshift({
-      id: randomId(),
+    if (!state.columns || !(columnId in state.columns))
+      throw new Error("Invalid column id. Column not found.");
+    state.columns[columnId].groups[randomId()] = {
       votes: {},
-      cards: [
-        {
-          id: randomId(),
-          originColumn: column.title,
+      cards: {
+        [randomId()]: {
+          originColumn: state.columns[columnId].title,
           ownerId: getUser()?.id ?? "",
           text: "",
           color: randomColor(),
         },
-      ],
-    });
+      },
+    };
   });

@@ -4,7 +4,14 @@ import { CardGroup } from "../components/card";
 import { Column, ColumnGroup } from "../components/column";
 import { VotesLine } from "../components/vote-line";
 import { StageText } from "../components/stage-text";
-import { Stage, ColumnState, getUser, setUserName } from "../state";
+import {
+  Stage,
+  ColumnState,
+  getUser,
+  setUserName,
+  CardGroupState,
+  Id,
+} from "../state";
 import * as State from "../state";
 
 const NextButton = styled(RightArrowButton)`
@@ -19,36 +26,37 @@ const NextButton = styled(RightArrowButton)`
   z-index: 2;
 `;
 
-function BoardCard(props: {
-  cardGroup: State.CardGroupState;
+function BoardCardGroup(props: {
+  cardGroup: CardGroupState;
+  cardGroupId: Id;
   stage: Stage;
   readOnly: boolean;
 }): JSX.Element {
-  const { cardGroup, stage, readOnly } = props;
-  const cards = cardGroup.cards.map((c) => ({
-    ...c,
-    cardType: stage == Stage.AddTickets ? undefined : c.originColumn,
-    id: c.id,
+  const { cardGroup, cardGroupId, stage, readOnly } = props;
+  const cards = Object.entries(cardGroup.cards).map(([id, card]) => ({
+    ...card,
+    cardType: stage == Stage.AddTickets ? undefined : card.originColumn,
+    id,
   }));
   // event handlers
-  const deleteCardGroup = async () => await State.deleteCardGroup(cardGroup.id);
+  const deleteCardGroup = async () => await State.deleteCardGroup(cardGroupId);
   const changeCardText = async (text: string) =>
-    await State.updateFirstCardText(cardGroup.id, text);
+    await State.updateFirstCardText(cardGroupId, text);
   const addVotes = async () =>
-    await State.updateGroupVotes(cardGroup.id, "increment");
+    await State.updateGroupVotes(cardGroupId, "increment");
   const removeVotes = async () =>
-    await State.updateGroupVotes(cardGroup.id, "decrement");
+    await State.updateGroupVotes(cardGroupId, "decrement");
   const { id: userId } = getUser() ?? setUserName();
   return (
     <CardGroup
-      onDrop={async (src) => await State.moveCardToGroup(src, cardGroup.id)}
+      onDrop={async (src) => await State.moveCardToGroup(src, cardGroupId)}
       cards={cards}
       canDrag={stage == Stage.Group}
       onCloseClicked={deleteCardGroup}
       onTextChange={changeCardText}
       title={cardGroup.title}
       onTitleChange={async (title) =>
-        await State.setGroupTitle(cardGroup.id, title)
+        await State.setGroupTitle(cardGroupId, title)
       }
       readOnlyTitle={stage != Stage.Group}
       blur={stage == Stage.AddTickets && cards[0].ownerId != getUser()?.id}
@@ -66,32 +74,34 @@ function BoardCard(props: {
 
 function BoardColumn(props: {
   column: ColumnState;
+  columnId: Id;
   readOnly: boolean;
   stage: Stage;
 }) {
-  const { column, readOnly, stage } = props;
+  const { column, columnId, readOnly, stage } = props;
   return (
     <Column
       title={column.title}
       canClose={stage == Stage.AddTickets}
-      onDrop={async (src) => await State.moveCardToColumn(src, column.id)}
-      onTitleChange={async (t) => await State.setColumnTitle(column.id, t)}
-      onAddClick={async () => await State.addEmptyCard(column.id)}
-      onCloseClick={async () => await State.deleteColumn(column.id)}
+      onDrop={async (src) => await State.moveCardToColumn(src, columnId)}
+      onTitleChange={async (t) => await State.setColumnTitle(columnId, t)}
+      onAddClick={async () => await State.addEmptyCard(columnId)}
+      onCloseClick={async () => await State.deleteColumn(columnId)}
       readOnly={readOnly}>
-      {column.groups.map((group) => (
-        <BoardCard
-          key={group.id}
+      {Object.entries(column.groups ?? {}).map(([groupId, group]) => (
+        <BoardCardGroup
+          key={groupId}
+          cardGroupId={groupId}
           cardGroup={group}
           stage={stage}
-          readOnly={readOnly}></BoardCard>
+          readOnly={readOnly}></BoardCardGroup>
       ))}
     </Column>
   );
 }
 
 const BoardView = (props: {
-  columnsData: ColumnState[];
+  columnsData?: Record<Id, ColumnState>;
   stage: Stage;
   readOnly?: boolean;
 }) => {
@@ -111,9 +121,10 @@ const BoardView = (props: {
       <StageText votes={State.getRemainingUserVotes()} stage={stage} />
       <NextButton onClick={next}>Next</NextButton>
       <ColumnGroup>
-        {columnsData.map((column) => (
+        {Object.entries(columnsData ?? {}).map(([columnId, column]) => (
           <BoardColumn
-            key={column.id}
+            key={columnId}
+            columnId={columnId}
             column={column}
             readOnly={readOnly ?? false}
             stage={stage}

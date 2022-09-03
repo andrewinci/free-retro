@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ActionColumn } from "../components";
 import { ButtonContainer } from "../components/buttons";
 import * as State from "../state";
-import { ActionState, Stage } from "../state";
+import { ActionState, Id, Stage } from "../state";
 
 const EndViewContainer = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const RefreshPageButton = styled(ButtonContainer)`
 
 const EndRetroView = (props: {
   sessionId: string;
-  actions?: ActionState[];
+  actions?: Record<Id, ActionState>;
 }) => {
   const { sessionId, actions } = props;
   return (
@@ -51,7 +51,7 @@ const EndRetroView = (props: {
       </RefreshPageButton>
       <ActionColumn
         style={{ width: "100%", maxWidth: "40em", marginBottom: "2em" }}
-        actions={actions ?? []}
+        actions={actions ?? {}}
       />
     </EndViewContainer>
   );

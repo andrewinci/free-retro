@@ -5,38 +5,31 @@ import dayjs from "dayjs";
 
 export const addAction = () =>
   changeState((state) => {
-    if (!state.actions) state.actions = [];
-    state.actions.unshift({
-      id: randomId(),
+    if (!state.actions) state.actions = {};
+    state.actions[randomId()] = {
       text: "",
       done: false,
       date: dayjs().format("MMM Do YY"),
-    });
+    };
   });
 
 export const setActionText = (actionId: Id, text: string) =>
   changeState((state) => {
-    if (!state.actions) return;
-    const actionIndex = state.actions.findIndex((s) => s.id == actionId);
-    if (actionIndex < 0)
+    if (!state.actions || !(actionId in state.actions))
       throw new Error(`Unable to find the actionId ${actionId}`);
-    state.actions[actionIndex].text = text;
+    state.actions[actionId].text = text;
   });
 
 export const setActionDone = (actionId: Id, done: boolean) =>
   changeState((state) => {
-    if (!state.actions) return;
-    const actionIndex = state.actions.findIndex((s) => s.id == actionId);
-    if (actionIndex < 0)
+    if (!state.actions || !(actionId in state.actions))
       throw new Error(`Unable to find the actionId ${actionId}`);
-    state.actions[actionIndex].done = done;
+    state.actions[actionId].done = done;
   });
 
 export const removeAction = (actionId: Id) =>
   changeState((state) => {
-    if (!state.actions) return;
-    const actionIndex = state.actions.findIndex((s) => s.id == actionId);
-    if (actionIndex < 0)
+    if (!state.actions || !(actionId in state.actions))
       throw new Error(`Unable to find the actionId ${actionId}`);
-    state.actions.splice(actionIndex, 1);
+    delete state.actions[actionId];
   });
