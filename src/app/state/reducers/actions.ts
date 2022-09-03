@@ -9,7 +9,7 @@ export const addAction = () =>
     state.actions[randomId()] = {
       text: "",
       done: false,
-      date: dayjs().format("MMM Do YY"),
+      date: dayjs().format("MMM DD YY"),
     };
   });
 
