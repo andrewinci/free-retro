@@ -1,5 +1,5 @@
 import moment from "moment";
-import { randomId } from "../../helper/random";
+import { randomId } from "../helper/random";
 import { changeState } from "../automerge-state";
 import { Id } from "../model";
 

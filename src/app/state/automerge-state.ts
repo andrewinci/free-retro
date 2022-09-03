@@ -1,6 +1,6 @@
 import * as Automerge from "automerge";
-import { toBinaryDocument } from "../helper/binary-document";
-import { randomId } from "../helper/random";
+import { toBinaryDocument } from "./helper";
+import { randomId } from "./helper/random";
 import { broadcast } from "../ws";
 import { ActionState, AppState, Stage } from "./model";
 

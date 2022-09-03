@@ -1,4 +1,4 @@
-import { randomColor, randomId } from "../../helper/random";
+import { randomColor, randomId } from "../helper/random";
 import { changeState } from "../automerge-state";
 import { Id } from "../model";
 import { getUser } from "../user";

@@ -4,8 +4,8 @@ import {
   JoinMessage,
   WSServerMessage,
 } from "../lambda/model";
-import { toBase64 } from "./helper/binary-document";
 import { loadNewState } from "./state/automerge-state";
+import { toBase64 } from "./state/helper";
 
 const ENDPOINT = "wss:///ws.retroapp.amaker.xyz";
 let socket = new WebSocket(ENDPOINT);
@@ -76,6 +76,7 @@ export async function broadcast<T>(
   recreateState: boolean
 ) {
   lastSessionId = sessionId;
+  console.log("Broadcast", state);
   const rawState = Automerge.save(state);
   const broadcastMessage: BroadcastMessage = {
     action: "broadcast",

@@ -1,4 +1,4 @@
-import { AppState, Id } from "../state";
+import { AppState, Id } from "..";
 
 type GroupPosition = {
   column: number;

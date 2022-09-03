@@ -1,6 +1,6 @@
 import { changeState, getAppState } from "../automerge-state";
 import * as Automerge from "automerge";
-import { randomId } from "../../helper/random";
+import { randomId } from "../helper/random";
 import { Stage } from "../model";
 
 // app state reducers

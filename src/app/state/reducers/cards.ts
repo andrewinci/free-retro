@@ -1,12 +1,8 @@
-import { randomId } from "../../helper/random";
 import { changeState } from "../automerge-state";
 import { getUser } from "../user";
 import * as Automerge from "automerge";
 import { Id, ColumnState } from "../model";
-import {
-  findCardPosition,
-  findGroupPosition,
-} from "../../helper/position-finder";
+import { randomId, findCardPosition, findGroupPosition } from "../helper";
 import { getRemainingUserVotes } from "../votes";
 
 export const EMPTY_COLUMN_TITLE = "Empty column";
