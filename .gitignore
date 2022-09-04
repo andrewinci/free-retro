@@ -5,3 +5,4 @@ coverage
 yarn-error.log
 cdk.out
 cdk.context.json
+.storybook

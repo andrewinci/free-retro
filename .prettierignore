@@ -3,6 +3,7 @@ coverage/*
 .gitignore
 .serverless
 .prettierignore
+.storybook
 yarn.lock
 CHANGELOG.md
 cdk.out

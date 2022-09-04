@@ -38,6 +38,17 @@ Run locally: `yarn serve`
 
 Deploy to AWS: `yarn deploy`
 
+### Project structure
+
+- `artifacts`: media used in the frontend app
+- `src`: the code is here
+  - `app`: frontend application
+  - `infra`: cdk infra configuration
+  - `lambda`: aws lambda code
+  - `scripts`: mostly migration script for dynamodb
+  - `stories`: storybook stories to test components
+  - `tg-forwarder`: aws lambda to forward alerts to telegram
+
 ## Todo
 
 - [x] List of actions
