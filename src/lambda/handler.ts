@@ -52,11 +52,13 @@ async function handle(request: WSRequest) {
 export async function handleBroadcast(request: WSRequest) {
   console.log("Handle broadcast");
   const dynamoState = await getDynamoAppState(request.body.sessionId);
-  const { sessionId, state, recreateState } = request.body as BroadcastMessage;
+  const { sessionId, state, recreateState, devMode } =
+    request.body as BroadcastMessage;
   const storeToDynamoPromise = storeToDynamo({
     appState: state,
     connectionId: request.connectionId,
     sessionId,
+    devMode: devMode ?? false,
   });
 
   const broadcastMessage: WSServerMessage = {
@@ -107,6 +109,7 @@ export async function handleJoin(request: WSRequest) {
     appState: state.lastState,
     connectionId: request.connectionId,
     sessionId: request.body.sessionId,
+    devMode: request.body.devMode ?? false,
   });
 
   await sendToClient(updateMessage, request.endpoint, request.connectionId);

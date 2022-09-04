@@ -35,6 +35,7 @@ describe("lambda integration tests", () => {
         appState: "last server state",
         connectionId: "connectionId",
         sessionId: "sessionId",
+        devMode: false,
       });
     });
   });

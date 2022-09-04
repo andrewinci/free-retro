@@ -7,6 +7,7 @@ import {
 import { loadNewState } from "./state/automerge-state";
 import { toBase64 } from "./state/helper";
 
+const IS_DEV_MODE = localStorage.getItem("DEV_MODE") ? true : false;
 const ENDPOINT = "wss:///ws.retroapp.amaker.xyz";
 let socket = new WebSocket(ENDPOINT);
 let lastSessionId = "";
@@ -63,6 +64,7 @@ export function joinSession(sessionId: string) {
   const joinMessage: JoinMessage = {
     action: "join",
     sessionId,
+    devMode: IS_DEV_MODE,
   };
   socket.send(JSON.stringify(joinMessage));
 }
@@ -82,6 +84,7 @@ export async function broadcast<T>(
     sessionId,
     state: toBase64(rawState),
     recreateState,
+    devMode: IS_DEV_MODE,
   };
   await checkConnection();
   socket.send(JSON.stringify(broadcastMessage));

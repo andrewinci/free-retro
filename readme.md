@@ -27,6 +27,9 @@ Try it [here](https://retroapp.amaker.xyz/)
 
 ## Development
 
+Set `DEV_MODE=true` in the browser local storage to then be able to clean up
+dynamo from development states.
+
 Download dependencies: `yarn install`
 
 Run tests: `yarn test`
