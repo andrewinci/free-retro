@@ -37,7 +37,7 @@ export async function updateDynamoAppState(
           },
           UpdateExpression: "set stateVersion = :v",
           ExpressionAttributeValues: {
-            ":v": { N: "0" },
+            ":v": { N: "1" },
           },
         })
     )
