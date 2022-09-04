@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/andrewinci/free-retro/compare/v1.16.2...v2.0.0) (2022-09-04)
+
+
+### Bug Fixes
+
+* Avoid duplicates using Records instead of arrays ([#49](https://github.com/andrewinci/free-retro/issues/49)) ([33c69f5](https://github.com/andrewinci/free-retro/commit/33c69f52cf9f9ba5a9720a8d8280de1f79f713af))
+
+
+### BREAKING CHANGES
+
+* state structure changed from array to object. The previous state has been migrated
+
 ## [1.16.2](https://github.com/andrewinci/free-retro/compare/v1.16.1...v1.16.2) (2022-08-30)
 
 
