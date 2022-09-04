@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/andrewinci/free-retro/compare/v2.0.0...v2.1.0) (2022-09-04)
+
+
+### Features
+
+* Add dev mode ([#54](https://github.com/andrewinci/free-retro/issues/54)) ([8512e19](https://github.com/andrewinci/free-retro/commit/8512e190588a4cf7daf3473a9dd809b5f13eec93))
+
 # [2.0.0](https://github.com/andrewinci/free-retro/compare/v1.16.2...v2.0.0) (2022-09-04)
 
 
