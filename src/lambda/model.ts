@@ -4,12 +4,14 @@ export type BroadcastMessage = {
   sessionId: string;
   state: string;
   recreateState: boolean;
+  devMode?: boolean;
 };
 
 // message sent by the client to the server
 export type JoinMessage = {
   action: "join";
   sessionId: string;
+  devMode?: boolean;
 };
 
 export type WSClientMessage = BroadcastMessage | JoinMessage;

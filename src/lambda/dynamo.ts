@@ -10,6 +10,8 @@ import dayjs from "dayjs";
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const TABLE_NAME = process.env.DYNAMO_TABLE_NAME!;
 const AWS_REGION = "eu-west-1";
+const APP_STATE_VERSION = "1";
+const DEV_MODE_VERSION = "0";
 
 export type DynamoRecord = {
   //hash key
@@ -17,6 +19,7 @@ export type DynamoRecord = {
   // range key
   connectionId: string;
   appState: string;
+  devMode: boolean;
 };
 
 export type DynamoAppState = {
@@ -79,8 +82,10 @@ export const storeToDynamo = async (record: DynamoRecord) => {
       connectionId: { S: record.connectionId },
       appState: { S: record.appState },
       lastUpdate: { N: Date.now().toString() },
+      stateVersion: {
+        N: record.devMode ? DEV_MODE_VERSION : APP_STATE_VERSION,
+      },
       // any record expires after 3 months
-      stateVersion: { N: "1" },
       expires: { N: dayjs().add(3, "months").unix().toString() },
     },
   });
