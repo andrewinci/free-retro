@@ -1,6 +1,6 @@
-import * as AutomergeState from "./automerge-state";
-import { AppState, Stage } from "./model";
-import { changeDiscussCard, changeStage } from "./reducers";
+import * as AutomergeState from "../automerge-state";
+import { AppState, Stage } from "../model";
+import { changeDiscussCard, changeStage } from ".";
 import * as Automerge from "automerge";
 
 describe("reducers", () => {
@@ -19,17 +19,16 @@ describe("reducers", () => {
   describe("change discuss card", () => {
     it("should increase the index up to the max number of cards", async () => {
       mockAppState = Automerge.change(mockAppState, (s) => {
-        s.columns = [
-          {
-            id: "1",
-            groups: [
-              { id: "1", cards: [], votes: {} },
-              { id: "2", cards: [], votes: {} },
-              { id: "3", cards: [], votes: {} },
-            ],
+        s.columns = {
+          "1": {
+            groups: {
+              "1": { cards: {}, votes: {} },
+              "2": { cards: {}, votes: {} },
+              "3": { cards: {}, votes: {} },
+            },
             title: "",
           },
-        ];
+        };
       });
       // act
       for (let i = 0; i < 10; i++) {
@@ -41,13 +40,12 @@ describe("reducers", () => {
     it("should not decrease below zero", async () => {
       mockAppState = Automerge.change(mockAppState, (s) => {
         s.discussCardIndex = new Automerge.Counter(2);
-        s.columns = [
-          {
-            groups: [{ id: "1", cards: [], votes: {} }],
+        s.columns = {
+          "1": {
+            groups: { "1": { cards: {}, votes: {} } },
             title: "",
-            id: "1",
           },
-        ];
+        };
       });
       // act
       for (let i = 0; i < 10; i++) {

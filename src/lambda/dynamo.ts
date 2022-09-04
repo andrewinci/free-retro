@@ -5,7 +5,7 @@ import {
   BatchWriteItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import moment from "moment";
+import dayjs from "dayjs";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const TABLE_NAME = process.env.DYNAMO_TABLE_NAME!;
@@ -80,7 +80,8 @@ export const storeToDynamo = async (record: DynamoRecord) => {
       appState: { S: record.appState },
       lastUpdate: { N: Date.now().toString() },
       // any record expires after 3 months
-      expires: { N: moment().add(3, "months").unix().toString() },
+      stateVersion: { N: "1" },
+      expires: { N: dayjs().add(3, "months").unix().toString() },
     },
   });
   await client.send(command);

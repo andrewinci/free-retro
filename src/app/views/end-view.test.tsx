@@ -7,7 +7,7 @@ describe("Test end retro view", () => {
   it("should render", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
-        <EndRetroView sessionId="123" />
+        <EndRetroView actions={{}} sessionId="123" />
       </DndProvider>
     );
     expect(component).toBeDefined();

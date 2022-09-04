@@ -1,6 +1,7 @@
 import { mockClient } from "aws-sdk-client-mock";
 import { DynamoDBClient, QueryCommandOutput } from "@aws-sdk/client-dynamodb";
 import { storeToDynamo, getDynamoAppState, chunk } from "./dynamo";
+import dayjs from "dayjs";
 
 describe("dynamo helper", () => {
   describe("chunk", () => {
@@ -33,6 +34,22 @@ describe("dynamo helper", () => {
       // assert
       await expect(res).resolves;
       expect(ddbMock.send.callCount).toBe(1);
+    });
+    it("set ttl to 3 months after now", async () => {
+      // arrange
+      const ddbMock = mockClient(DynamoDBClient);
+      // act
+      const res = await storeToDynamo({
+        appState: "",
+        connectionId: "",
+        sessionId: "",
+      });
+      // assert
+      await expect(res).resolves;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(
+        parseInt((ddbMock.send.args[0][0].input as any).Item.expires.N)
+      ).toBeGreaterThan(dayjs().add(3, "months").add(-1, "day").unix());
     });
   });
   describe("get app state", () => {

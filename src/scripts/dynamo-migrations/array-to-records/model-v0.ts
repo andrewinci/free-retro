@@ -7,22 +7,25 @@ export type User = {
   username: string;
 };
 
-export type CardState = {
+export type CardStateV0 = {
+  id: Id;
   originColumn: string;
   ownerId: string;
   text: string;
   color?: string;
 };
 
-export type CardGroupState = {
+export type CardGroupStateV0 = {
+  id: Id;
   title?: string;
-  cards: Record<Id, CardState>;
+  cards: CardStateV0[];
   votes: Record<string, Automerge.Counter>;
 };
 
-export type ColumnState = {
+export type ColumnStateV0 = {
+  id: Id;
   title: string;
-  groups: Record<Id, CardGroupState>;
+  groups: CardGroupStateV0[];
 };
 
 export enum Stage {
@@ -36,16 +39,17 @@ export enum Stage {
 }
 
 export type ActionState = {
+  id: Id;
   text: string;
   done: boolean;
   date: string;
 };
 
-export type AppState = {
+export type AppStateV0 = {
   sessionId: string;
   retroName?: string;
   stage: Stage;
   discussCardIndex?: Automerge.Counter;
-  columns?: Record<Id, ColumnState>;
-  actions?: Record<Id, ActionState>;
+  columns?: ColumnStateV0[];
+  actions?: ActionState[];
 };

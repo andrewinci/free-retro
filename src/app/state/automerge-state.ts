@@ -1,8 +1,8 @@
 import * as Automerge from "automerge";
-import { toBinaryDocument } from "../helper/binary-document";
-import { randomId } from "../helper/random";
+import { toBinaryDocument } from "./helper";
+import { randomId } from "./helper/random";
 import { broadcast } from "../ws";
-import { ActionState, AppState, Stage } from "./model";
+import { ActionState, AppState, Id, Stage } from "./model";
 
 const observable = new Automerge.Observable();
 let appState: AppState;
@@ -15,7 +15,7 @@ export const getAppState = () => {
 export const initAppState = (
   sessionId: string | null,
   stage: Stage,
-  actions: ActionState[] | undefined = undefined
+  actions: Record<Id, ActionState> | undefined = undefined
 ) => {
   appState = Automerge.change(
     Automerge.init<AppState>({ observable }),
@@ -24,12 +24,9 @@ export const initAppState = (
       state.sessionId = sessionId ?? randomId();
       state.stage = stage;
       if (actions) {
-        state.actions = actions.map((a) => ({
-          id: a.id,
-          text: a.text,
-          done: a.done,
-          date: a.date,
-        }));
+        state.actions = Object.entries(actions)
+          .map(([id, { text, done, date }]) => ({ id, text, done, date }))
+          .reduce((prev, current) => ({ ...prev, [current.id]: current }), {});
       }
     }
   );
@@ -60,19 +57,4 @@ export function loadNewState(remoteRawState: string, recreateState: boolean) {
     initAppState(remoteState.sessionId, remoteState.stage, remoteState.actions);
   }
   appState = Automerge.merge(appState, remoteState);
-  // if the id of the first column is empty, set the id to all columns
-  // with the current index to maintain retro-compatibility with
-  // previous versions of the app
-  if (
-    appState.columns &&
-    appState.columns.length > 0 &&
-    !appState.columns[0].id
-  ) {
-    appState = Automerge.change(appState, (state) => {
-      if (!state.columns) return;
-      for (let i = 0; i < state.columns.length; i++) {
-        state.columns[i].id = i.toString();
-      }
-    });
-  }
 }

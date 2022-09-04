@@ -1,5 +1,5 @@
 import { User } from ".";
-import { randomId } from "../helper/random";
+import { randomId } from "./helper/random";
 
 const USER_KEY = "free-retro:user";
 const DEFAULT_USERNAME = "user";

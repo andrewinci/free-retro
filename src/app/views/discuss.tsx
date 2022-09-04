@@ -9,7 +9,7 @@ import {
   StageText,
 } from "../components";
 
-import { ActionState, CardGroupState, Stage } from "../state";
+import { ActionState, CardGroupState, Id, Stage } from "../state";
 import * as State from "../state";
 
 const CloseRetro = styled(CloseButton)`
@@ -83,7 +83,7 @@ const CardGroupContainer = styled.div`
 type DiscussViewProps = {
   cards: CardGroupState[];
   cardIndex: number;
-  actions: ActionState[];
+  actions?: Record<Id, ActionState>;
 };
 
 const DiscussView = (props: DiscussViewProps) => {
@@ -132,12 +132,14 @@ Click ok to go ahead.`);
           <CardGroupContainer>
             <CardGroup
               title={card.title}
-              cards={card.cards.map((c) => ({
-                id: c.id,
-                text: c.text,
-                cardType: c.originColumn,
-                color: c.color,
-              }))}
+              cards={Object.entries(card.cards).map(
+                ([id, { text, color, originColumn }]) => ({
+                  id,
+                  text,
+                  cardType: originColumn,
+                  color,
+                })
+              )}
               readOnlyTitle={true}
               readOnly={true}>
               <VotesLine readonly={true} votes={votes}></VotesLine>

@@ -6,29 +6,14 @@ import {
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import moment from "moment";
-
-const TABLE_NAME = "free-retro-app-backend-sessions";
-
-const AWS_REGION = "eu-west-1";
-
-export type DynamoRecord = {
-  //hash key
-  sessionId: string;
-  // range key
-  connectionId: string;
-  appState: string;
-};
-
-export type DynamoAppState = {
-  sessionId: string;
-  connections: string[];
-  lastState: string;
-};
+import { DynamoRecord } from "../../../lambda/dynamo";
+import { AWS_REGION, TABLE_NAME } from "../common";
+import { migrateState } from "./mapper";
 
 const client = new DynamoDBClient({ region: AWS_REGION });
 let total = 0;
-export async function updateDynamoAppState(
+
+export async function migrateDynamoAppState(
   startKey?: Record<string, AttributeValue> | undefined
 ) {
   const scan = new ScanCommand({
@@ -40,28 +25,41 @@ export async function updateDynamoAppState(
   if (!scanResult || !scanResult.Items || scanResult.Items.length == 0)
     return null;
   const items = scanResult.Items.map(
-    (i) => unmarshall(i) as DynamoRecord & { lastUpdate: number }
+    (i) =>
+      unmarshall(i) as DynamoRecord & {
+        lastUpdate: number;
+        stateVersion: number | undefined;
+      }
   );
 
-  const ttl = (timestamp: number) => ({
-    N: moment.unix(timestamp).add(3, "months").unix().toString(),
-  });
-
   const commands = items
-    .map(
-      (item) =>
-        new UpdateItemCommand({
-          TableName: TABLE_NAME,
-          Key: {
-            sessionId: { S: item.sessionId },
-            connectionId: { S: item.connectionId },
-          },
-          UpdateExpression: "set expires = :t",
-          ExpressionAttributeValues: {
-            ":t": ttl(Math.ceil(item.lastUpdate / 1000)),
-          },
-        })
-    )
+    .filter((i) => i.stateVersion != 1)
+    .map((item) => {
+      const key = {
+        sessionId: { S: item.sessionId },
+        connectionId: { S: item.connectionId },
+      };
+      let migratedState: string;
+
+      try {
+        migratedState = migrateState(item.appState);
+      } catch (e) {
+        console.log(item.appState);
+        console.log(key);
+        console.error(e);
+        throw e;
+      }
+
+      return new UpdateItemCommand({
+        TableName: TABLE_NAME,
+        Key: key,
+        UpdateExpression: "set appState = :s, stateVersion = :v",
+        ExpressionAttributeValues: {
+          ":s": { S: migratedState },
+          ":v": { N: "1" },
+        },
+      });
+    })
     .map(async (updateCommand) => await client.send(updateCommand))
     .map(() => (total += 1));
 
@@ -72,13 +70,13 @@ export async function updateDynamoAppState(
   console.log("TOTAL", total);
   console.log("LastEvaluatedKey", scanResult.LastEvaluatedKey);
   if (scanResult.LastEvaluatedKey)
-    await updateDynamoAppState(scanResult.LastEvaluatedKey);
+    await migrateDynamoAppState(scanResult.LastEvaluatedKey);
 }
 
 // set following props for re-run
 total = 0;
 const lastKey = undefined;
 
-updateDynamoAppState(lastKey)
+migrateDynamoAppState(lastKey)
   .then(() => console.log("Completed"))
   .catch((e) => console.error(e));
