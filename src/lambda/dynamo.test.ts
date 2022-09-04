@@ -30,10 +30,29 @@ describe("dynamo helper", () => {
         appState: "",
         connectionId: "",
         sessionId: "",
+        devMode: false,
       });
       // assert
       await expect(res).resolves;
       expect(ddbMock.send.callCount).toBe(1);
+    });
+
+    it("set dev mode version", async () => {
+      // arrange
+      const ddbMock = mockClient(DynamoDBClient);
+      // act
+      const res = await storeToDynamo({
+        appState: "",
+        connectionId: "",
+        sessionId: "",
+        devMode: true,
+      });
+      // assert
+      await expect(res).resolves;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(
+        parseInt((ddbMock.send.args[0][0].input as any).Item.stateVersion.N)
+      ).toBe(0);
     });
     it("set ttl to 3 months after now", async () => {
       // arrange
@@ -43,6 +62,7 @@ describe("dynamo helper", () => {
         appState: "",
         connectionId: "",
         sessionId: "",
+        devMode: false,
       });
       // assert
       await expect(res).resolves;

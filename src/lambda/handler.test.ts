@@ -91,6 +91,7 @@ describe("integration test", () => {
         appState: "client state",
         connectionId: validWsRequest.connectionId,
         sessionId: validWsRequest.body.sessionId,
+        devMode: false,
       });
     });
   });
