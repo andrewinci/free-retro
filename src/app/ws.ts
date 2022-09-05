@@ -72,7 +72,7 @@ export function joinSession(sessionId: string) {
 // broadcast the state to other clients in the same session
 // if recreateState is true, force the other client to drop the
 // current state and set the broadcasted one
-export async function broadcast<T>(
+export async function broadcast<T extends Automerge.FreezeObject<unknown>>(
   sessionId: string,
   state: T,
   recreateState: boolean
