@@ -86,7 +86,7 @@ type DiscussViewProps = {
   actions?: Record<Id, ActionState>;
 };
 
-const DiscussView = (props: DiscussViewProps) => {
+export const DiscussPage = (props: DiscussViewProps) => {
   const { cards, cardIndex, actions } = props;
 
   const closeRetro = async () => {
@@ -154,5 +154,3 @@ Click ok to go ahead.`);
     </>
   );
 };
-
-export default DiscussView;

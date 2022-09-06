@@ -101,7 +101,7 @@ function BoardColumn(props: {
   );
 }
 
-const BoardView = (props: {
+export const BoardPage = (props: {
   columnsData?: Record<Id, ColumnState>;
   stage: Stage;
   readOnly?: boolean;
@@ -138,5 +138,3 @@ const BoardView = (props: {
     </>
   );
 };
-
-export default BoardView;

@@ -28,7 +28,7 @@ const RefreshPageButton = styled(ButtonContainer)`
   margin-bottom: 2em;
 `;
 
-const EndRetroView = (props: {
+export const EndRetroPage = (props: {
   sessionId: string;
   actions?: Record<Id, ActionState>;
 }) => {
@@ -56,5 +56,3 @@ const EndRetroView = (props: {
     </EndViewContainer>
   );
 };
-
-export default EndRetroView;

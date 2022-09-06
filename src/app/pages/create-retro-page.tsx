@@ -93,7 +93,7 @@ const RetroTemplates = (props: {
   );
 };
 
-const CreateRetroView = () => {
+export const CreateRetroPage = () => {
   const [state, setState] = useState({
     retroName: "Let's chat",
     selectedIndex: 0,
@@ -145,5 +145,3 @@ const CreateRetroView = () => {
     </CreateRetroContainer>
   );
 };
-
-export default CreateRetroView;

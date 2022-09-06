@@ -20,7 +20,7 @@ const JoinRetro = styled(ButtonContainer)`
   margin-top: 0.5em;
 `;
 
-const JoinRetroView = () => {
+export const JoinRetroPage = () => {
   return (
     <Container>
       <JoinRetro
@@ -33,5 +33,3 @@ const JoinRetroView = () => {
     </Container>
   );
 };
-
-export default JoinRetroView;

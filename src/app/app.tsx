@@ -2,11 +2,13 @@ import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { ColumnState, Stage, ActionState, Id } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
-import BoardView from "./views/board-view";
-import CreateRetroView from "./views/create-retro";
-import DiscussView from "./views/discuss";
-import EndRetroView from "./views/end-view";
-import JoinRetroView from "./views/join-retro";
+import {
+  BoardPage,
+  CreateRetroPage,
+  DiscussPage,
+  EndRetroPage,
+  JoinRetroPage,
+} from "./pages";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { getAllGroups } from "./state/state";
@@ -70,31 +72,31 @@ const CurrentView = (props: {
   const { stage, columnsData, discussCardIndex, sessionId, actions } = props;
   switch (stage) {
     case Stage.Join:
-      return <JoinRetroView />;
+      return <JoinRetroPage />;
     case Stage.Create:
-      return <CreateRetroView />;
+      return <CreateRetroPage />;
     case Stage.AddTickets:
       return (
-        <BoardView columnsData={columnsData} stage={stage} readOnly={false} />
+        <BoardPage columnsData={columnsData} stage={stage} readOnly={false} />
       );
     case Stage.Group:
       return (
-        <BoardView columnsData={columnsData} stage={stage} readOnly={true} />
+        <BoardPage columnsData={columnsData} stage={stage} readOnly={true} />
       );
     case Stage.Vote:
       return (
-        <BoardView columnsData={columnsData} stage={stage} readOnly={true} />
+        <BoardPage columnsData={columnsData} stage={stage} readOnly={true} />
       );
     case Stage.Discuss:
       return (
-        <DiscussView
+        <DiscussPage
           cards={getAllGroups()}
           cardIndex={discussCardIndex}
           actions={actions}
         />
       );
     case Stage.End:
-      return <EndRetroView sessionId={sessionId} actions={actions} />;
+      return <EndRetroPage sessionId={sessionId} actions={actions} />;
   }
 };
 

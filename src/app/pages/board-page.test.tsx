@@ -1,6 +1,6 @@
 import renderer from "react-test-renderer";
 import { Stage } from "../state";
-import BoardView from "./board-view";
+import { BoardPage } from "./board-page";
 import { AppState } from "../state";
 import * as AutomergeState from "../state/automerge-state";
 
@@ -9,7 +9,7 @@ describe("Test board view", () => {
     const getAppStateMock = jest.spyOn(AutomergeState, "getAppState");
     getAppStateMock.mockImplementation(() => ({} as AppState));
     const component = renderer.create(
-      <BoardView columnsData={{}} stage={Stage.AddTickets} />
+      <BoardPage columnsData={{}} stage={Stage.AddTickets} />
     );
     expect(component).toBeDefined();
   });

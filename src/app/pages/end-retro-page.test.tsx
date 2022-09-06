@@ -1,5 +1,5 @@
 import renderer from "react-test-renderer";
-import EndRetroView from "./end-view";
+import { EndRetroPage } from "./end-retro-page";
 import { DndProvider } from "react-dnd";
 import { TestBackend } from "react-dnd-test-backend";
 
@@ -7,7 +7,7 @@ describe("Test end retro view", () => {
   it("should render", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
-        <EndRetroView actions={{}} sessionId="123" />
+        <EndRetroPage actions={{}} sessionId="123" />
       </DndProvider>
     );
     expect(component).toBeDefined();
