@@ -122,9 +122,6 @@
     "yarn": "1.22.19"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@mantine/core": "^5.2.5",
-    "@mantine/hooks": "^5.2.5",
     "automerge": "^1.0.1-preview.7",
     "axios": "^0.27.2",
     "buffer": "^6.0.3",
