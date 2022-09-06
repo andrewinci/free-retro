@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/andrewinci/free-retro/compare/v2.1.0...v2.2.0) (2022-09-06)
+
+
+### Features
+
+* use vite to deal with frontend HMR and build ([#70](https://github.com/andrewinci/free-retro/issues/70)) ([6423e7a](https://github.com/andrewinci/free-retro/commit/6423e7ace2134d23a4a91b6a69a26c4e0ffe240d))
+
 # [2.1.0](https://github.com/andrewinci/free-retro/compare/v2.0.0...v2.1.0) (2022-09-04)
 
 
