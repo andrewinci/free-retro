@@ -1,6 +1,6 @@
+import { Button } from "@mantine/core";
 import { useState } from "react";
 import styled from "styled-components";
-import { ButtonContainer } from "../components/buttons";
 import * as State from "../state";
 
 const CreateRetroContainer = styled.div`
@@ -20,17 +20,6 @@ const Input = styled.input`
   width: 100%;
   box-sizing: border-box;
   text-align: center;
-`;
-
-const CreateRetroButton = styled(ButtonContainer)`
-  background: #d9d9d9;
-  width: 100%;
-  height: 1.8em;
-  font-size: 1.2em;
-  font-weight: bold;
-  margin: auto;
-  margin-top: 0.5em;
-  margin-bottom: 2em;
 `;
 
 const RetroTemplatesContainer = styled.div`
@@ -133,7 +122,8 @@ export const CreateRetroPage = () => {
         onSelectedIndexChanged={(selectedIndex) =>
           setState({ ...state, selectedIndex })
         }></RetroTemplates>
-      <CreateRetroButton
+      <Button
+        fullWidth={true}
         onClick={async () =>
           await State.createRetro(
             state.retroName,
@@ -141,7 +131,7 @@ export const CreateRetroPage = () => {
           )
         }>
         🚀 Create retro
-      </CreateRetroButton>
+      </Button>
     </CreateRetroContainer>
   );
 };
