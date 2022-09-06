@@ -2,22 +2,12 @@ import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { ColumnState, Stage, ActionState, Id } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
-import {
-  BoardPage,
-  CreateRetroPage,
-  DiscussPage,
-  EndRetroPage,
-  JoinRetroPage,
-} from "./pages";
+import { BoardPage, DiscussPage, EndRetroPage, JoinRetroPage } from "./pages";
+import { CreateRetroPage } from "./pagesv2";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { getAllGroups } from "./state/state";
-
-const AppContainer = styled.div`
-  * {
-    font-family: monospace;
-  }
-`;
+import { MantineProvider } from "@mantine/core";
 
 const Title = styled.div`
   width: 100%;
@@ -106,7 +96,7 @@ export const App = () => {
   // view selector depending on the app stage
   return (
     <DndProvider backend={HTML5Backend}>
-      <AppContainer>
+      <MantineProvider withGlobalStyles withNormalizeCSS>
         <Title className="example">
           <h1>
             <a href="/">⚡️ Free retro 🗣️</a>
@@ -121,7 +111,7 @@ export const App = () => {
           stage={appState.stage}
           actions={appState.actions ?? {}}
         />
-      </AppContainer>
+      </MantineProvider>
     </DndProvider>
   );
 };

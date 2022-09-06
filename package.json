@@ -123,6 +123,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@mantine/core": "^5.2.5",
     "@mantine/hooks": "^5.2.5",
     "@tabler/icons": "^1.92.0",
