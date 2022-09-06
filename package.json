@@ -118,6 +118,10 @@
       "stylelint-config-standard"
     ]
   },
+  "volta": {
+    "node": "16.17.0",
+    "yarn": "1.22.19"
+  },
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@mantine/core": "^5.2.5",
