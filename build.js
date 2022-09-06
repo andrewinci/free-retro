@@ -30,17 +30,22 @@ if (process.argv.length < 3) {
   exit(1);
 }
 
+const buildApp = async () =>
+  await build({
+    build: {
+      outDir: "./dist/app",
+    },
+    esbuild: {
+      jsxInject: `import * as React from 'react'`,
+    },
+  });
+
 const main = async () => {
   const parameter = process.argv[2];
 
   switch (parameter) {
     case "app":
-      await build({
-        build: {
-          plugins: [react()],
-          outDir: "./dist/app",
-        },
-      });
+      await buildApp();
       break;
     case "lambda":
       esbuildRun(buildLambdaOptions("src/lambda/handler.ts", "dist/lambda"));
@@ -49,12 +54,7 @@ const main = async () => {
       );
       break;
     case "all":
-      await build({
-        build: {
-          outDir: "./dist/app",
-          plugins: [react()],
-        },
-      });
+      await buildApp();
       esbuildRun(buildLambdaOptions("src/lambda/handler.ts", "dist/lambda"));
       esbuildRun(
         buildLambdaOptions("src/tg-forwarder/handler.ts", "dist/tg-forwarder")

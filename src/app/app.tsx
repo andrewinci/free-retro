@@ -105,7 +105,7 @@ export const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <AppContainer>
-        <Title>
+        <Title className="example">
           <h1>
             <a href="/">⚡️ Free retro 🗣️</a>
           </h1>
