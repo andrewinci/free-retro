@@ -37,6 +37,7 @@ const main = async () => {
     case "app":
       await build({
         build: {
+          plugins: [react()],
           outDir: "./dist/app",
         },
       });
@@ -51,6 +52,7 @@ const main = async () => {
       await build({
         build: {
           outDir: "./dist/app",
+          plugins: [react()],
         },
       });
       esbuildRun(buildLambdaOptions("src/lambda/handler.ts", "dist/lambda"));

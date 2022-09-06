@@ -10,13 +10,12 @@
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "coverage": "jest --coverage",
     "test": "jest --silent",
-    "copy_artifacts": "mkdir -p dist/app/ && cp ./index.html dist/app/index.html && cp artifacts/* dist/app/",
-    "build:app": "yarn copy_artifacts && yarn ts-node build.js app",
+    "build:app": "yarn ts-node build.js app",
     "build:lambda": "yarn ts-node build.js lambda",
-    "build": "yarn copy_artifacts && yarn ts-node build.js all",
+    "build": "yarn ts-node build.js all",
     "lint:css": "stylelint './src/app/**/*.tsx'",
     "lint": "prettier --write . '!dist' '!coverage' && yarn eslint src/ && yarn tsc --noemit && yarn lint:css",
-    "serve": "yarn copy_artifacts && yarn ts-node build.js serve",
+    "serve": "yarn ts-node build.js serve",
     "deploy": "AWS_DEFAULT_REGION=eu-west-1 yarn build && yarn cdk bootstrap && yarn cdk deploy --require-approval never"
   },
   "lint-staged": {
