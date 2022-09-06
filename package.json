@@ -3,20 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "browserslist": "> 0.5%, last 2 versions, Firefox ESR, not dead",
+  "browserslist": "last 4 version",
   "scripts": {
     "release": "semantic-release --repositoryUrl=\"https://github.com/andrewinci/free-retro.git\"",
     "postinstall": "husky install",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "coverage": "jest --coverage",
     "test": "jest --silent",
-    "copy_artifacts": "mkdir -p dist/app/ && cp src/app/index.html dist/app/index.html && cp artifacts/* dist/app/",
-    "build:app": "yarn copy_artifacts && yarn ts-node esbuild.js app",
-    "build:lambda": "yarn ts-node esbuild.js lambda",
-    "build": "yarn copy_artifacts && yarn ts-node esbuild.js all",
+    "build:app": "yarn ts-node build.js app",
+    "build:lambda": "yarn ts-node build.js lambda",
+    "build": "yarn ts-node build.js all",
     "lint:css": "stylelint './src/app/**/*.tsx'",
     "lint": "prettier --write . '!dist' '!coverage' && yarn eslint src/ && yarn tsc --noemit && yarn lint:css",
-    "serve": "yarn copy_artifacts && yarn ts-node esbuild.js serve",
+    "serve": "yarn ts-node build.js serve",
     "deploy": "AWS_DEFAULT_REGION=eu-west-1 yarn build && yarn cdk bootstrap && yarn cdk deploy --require-approval never"
   },
   "lint-staged": {
@@ -118,11 +117,16 @@
       "stylelint-config-standard"
     ]
   },
+  "volta": {
+    "node": "16.17.0",
+    "yarn": "1.22.19"
+  },
   "dependencies": {
     "automerge": "^1.0.1-preview.7",
     "axios": "^0.27.2",
     "buffer": "^6.0.3",
     "dayjs": "^1.11.5",
+    "postcss-syntax": "^0.36.2",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -153,7 +157,7 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
-    "autoprefixer": "^10.4.8",
+    "@vitejs/plugin-react": "^2.1.0",
     "aws-cdk": "^2.40.0",
     "aws-cdk-lib": "^2.40.0",
     "aws-sdk-client-mock": "^2.0.0",
@@ -173,10 +177,7 @@
     "jest-location-mock": "^1.0.9",
     "lint-staged": "^13.0.3",
     "mock-socket": "^9.1.5",
-    "postcss": "^8.4.16",
     "postcss-jsx": "^0.36.4",
-    "postcss-preset-env": "^7.8.0",
-    "postcss-syntax": "^0.36.2",
     "prettier": "^2.7.1",
     "react-dnd-test-backend": "^16.0.1",
     "react-test-renderer": "^18.2.0",
@@ -186,6 +187,7 @@
     "ts-jest": "^28.0.8",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.2",
+    "vite": "^3.1.0",
     "yarn-upgrade-all": "^0.7.1"
   }
 }
