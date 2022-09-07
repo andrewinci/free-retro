@@ -1,33 +1,6 @@
-import styled from "styled-components";
+import { Container, Group, Text } from "@mantine/core";
 import { VotesLine } from ".";
 import { Stage } from "../state";
-
-const StageTextContainer = styled.div`
-  position: fixed;
-  left: 1em;
-  top: 2.5em;
-
-  @media only screen and (min-width: 734px) {
-    left: 2em;
-    top: 2.5em;
-  }
-
-  z-index: 2;
-
-  h2 {
-    margin: 0;
-    font-size: 1em;
-
-    @media only screen and (min-width: 734px) {
-      font-size: 1.5em;
-    }
-  }
-
-  p {
-    margin: 0;
-    font-size: 1em;
-  }
-`;
 
 export function stageToString(stage: Stage) {
   switch (stage) {
@@ -40,7 +13,9 @@ export function stageToString(stage: Stage) {
     case Stage.Discuss:
       return "Discuss";
     case Stage.End:
-      return "End";
+      return "Review Actions";
+    default:
+      return null;
   }
 }
 
@@ -51,11 +26,16 @@ export const StageText = (props: {
   const { stage, votes } = props;
   const showVotes: boolean =
     stage == Stage.Vote && votes && votes > 0 ? true : false;
+  const stepText = stageToString(stage);
   return (
-    <StageTextContainer>
-      <p>step:</p>
-      <h2>{stageToString(stage)}</h2>
+    <Container hidden={!stepText}>
+      <Group spacing={5}>
+        <Text size={"sm"}>step:</Text>
+        <Text weight={"bold"} size={"lg"}>
+          {stepText}
+        </Text>
+      </Group>
       {showVotes && <VotesLine votes={votes} readonly={true}></VotesLine>}
-    </StageTextContainer>
+    </Container>
   );
 };

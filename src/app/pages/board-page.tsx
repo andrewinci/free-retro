@@ -1,9 +1,7 @@
-import styled from "styled-components";
-import { AddButton, RightArrowButton } from "../components/buttons";
+import { AddButton } from "../components/buttons";
 import { CardGroup } from "../components/card";
 import { Column, ColumnGroup } from "../components/column";
 import { VotesLine } from "../components/vote-line";
-import { StageText } from "../components/stage-text";
 import {
   Stage,
   ColumnState,
@@ -13,18 +11,6 @@ import {
   Id,
 } from "../state";
 import * as State from "../state";
-
-const NextButton = styled(RightArrowButton)`
-  position: fixed;
-  right: 2em;
-  top: 1.5em;
-
-  @media only screen and (min-width: 734px) {
-    top: 2em;
-  }
-
-  z-index: 2;
-`;
 
 function BoardCardGroup(props: {
   cardGroup: CardGroupState;
@@ -63,6 +49,7 @@ function BoardCardGroup(props: {
       readOnly={readOnly}>
       {stage != Stage.AddTickets && stage != Stage.Group && (
         <VotesLine
+          mt={5}
           readonly={false}
           votes={cardGroup.votes[userId]?.value ?? 0}
           onAddVoteClicked={addVotes}
@@ -108,19 +95,8 @@ export const BoardPage = (props: {
 }) => {
   const { columnsData, stage, readOnly } = props;
 
-  const changeStage = async (change: "next" | "back") => {
-    const res = confirm(
-      `Before moving to the next stage, make sure that everyone is ready to go ahead.\nClick ok to go to the next stage`
-    );
-    if (res) {
-      await State.changeStage(change);
-    }
-  };
-  const next = async () => await changeStage("next");
   return (
     <>
-      <StageText votes={State.getRemainingUserVotes()} stage={stage} />
-      <NextButton onClick={next}>Next</NextButton>
       <ColumnGroup>
         {Object.entries(columnsData ?? {}).map(([columnId, column]) => (
           <BoardColumn

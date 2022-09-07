@@ -1,56 +1,24 @@
 import { useMemo, useState } from "react";
-import styled from "styled-components";
 import { ColumnState, Stage, ActionState, Id } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
 import { BoardPage, DiscussPage, EndRetroPage } from "./pages";
 import { CreateRetroPage, JoinRetroPage } from "./pagesv2";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { getAllGroups } from "./state/state";
-import { MantineProvider } from "@mantine/core";
-
-const Title = styled.div`
-  width: 100%;
-  min-width: 240px;
-  height: 4.5em;
-  background: white;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  padding-top: 1em;
-  text-align: center;
-
-  h1 {
-    margin: 0;
-    font-size: 1.4em;
-
-    @media only screen and (min-width: 734px) {
-      font-size: 2em;
-    }
-
-    a {
-      color: inherit; /* blue colors for links too */
-      text-decoration: inherit; /* no underline */
-    }
-  }
-
-  h2 {
-    margin: 0;
-    font-size: 1em;
-
-    @media only screen and (min-width: 734px) {
-      font-size: 1.5em;
-    }
-  }
-`;
-
-const Space = styled.div`
-  height: 6em;
-
-  @media only screen and (min-width: 734px) {
-    height: 7em;
-  }
-`;
+import * as State from "./state";
+import {
+  ActionIcon,
+  AppShell,
+  Grid,
+  Group,
+  Header,
+  MantineProvider,
+  Stack,
+  Title,
+} from "@mantine/core";
+import styled from "@emotion/styled";
+import { StageText } from "./components";
+import { IconArrowRight } from "@tabler/icons";
 
 const CurrentView = (props: {
   stage: Stage;
@@ -80,7 +48,7 @@ const CurrentView = (props: {
     case Stage.Discuss:
       return (
         <DiscussPage
-          cards={getAllGroups()}
+          cards={State.getAllGroups()}
           cardIndex={discussCardIndex}
           actions={actions}
         />
@@ -93,25 +61,75 @@ const CurrentView = (props: {
 export const App = () => {
   const [appState, setState] = useState(getAppState());
   useMemo(() => onStateChange((newState) => setState(newState)), []);
+  const { stage, retroName, sessionId, columns, discussCardIndex, actions } =
+    appState;
+
   // view selector depending on the app stage
+  const changeStage = async (change: "next" | "back") => {
+    const res = confirm(
+      `Before moving to the next stage, make sure that everyone is ready to go ahead.\nClick ok to go to the next stage`
+    );
+    if (res) {
+      await State.changeStage(change);
+    }
+  };
+  const showNextButton =
+    stage != Stage.End && stage != Stage.Join && stage != Stage.Create;
   return (
     <DndProvider backend={HTML5Backend}>
       <MantineProvider withGlobalStyles withNormalizeCSS>
-        <Title className="example">
-          <h1>
-            <a href="/">⚡️ Free retro 🗣️</a>
-          </h1>
-          {appState.retroName ? <h2>{`"${appState.retroName}"`}</h2> : <></>}
-        </Title>
-        <Space />
-        <CurrentView
-          sessionId={appState.sessionId}
-          columnsData={appState.columns ?? {}}
-          discussCardIndex={appState.discussCardIndex?.value ?? 0}
-          stage={appState.stage}
-          actions={appState.actions ?? {}}
-        />
+        <AppShell
+          padding="md"
+          header={
+            <Header height={80}>
+              <Grid m={0} style={{ height: "100%" }} align={"center"}>
+                <Grid.Col span={4}>
+                  <StageText
+                    votes={State.getRemainingUserVotes()}
+                    stage={stage}
+                  />
+                </Grid.Col>
+                <Grid.Col span={4}>
+                  <Stack
+                    spacing={0}
+                    align={"center"}
+                    style={{ minWidth: "185px" }}>
+                    <UnstyledLink href="/">
+                      <Title order={2}>⚡️ Free retro 🗣️</Title>
+                    </UnstyledLink>
+                    {retroName && <Title order={4}>{`"${retroName}"`}</Title>}
+                  </Stack>
+                </Grid.Col>
+                <Grid.Col span={4}>
+                  {showNextButton && (
+                    <Group mr={8} position="right">
+                      <ActionIcon
+                        title="next step"
+                        onClick={async () => await changeStage("next")}
+                        size="xl">
+                        <IconArrowRight size={100} />
+                      </ActionIcon>
+                    </Group>
+                  )}
+                </Grid.Col>
+              </Grid>
+            </Header>
+          }>
+          <CurrentView
+            sessionId={sessionId}
+            columnsData={columns ?? {}}
+            discussCardIndex={discussCardIndex?.value ?? 0}
+            stage={stage}
+            actions={actions ?? {}}
+          />
+        </AppShell>
       </MantineProvider>
     </DndProvider>
   );
 };
+
+const UnstyledLink = styled.a`
+  padding-top: 4px;
+  color: inherit;
+  text-decoration: inherit;
+`;

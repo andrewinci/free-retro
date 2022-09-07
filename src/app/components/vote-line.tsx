@@ -1,23 +1,50 @@
-import styled from "styled-components";
-import { AddButton } from "./buttons";
+import { Center, DefaultProps, Group } from "@mantine/core";
+import styled from "@emotion/styled";
+import { IconMinus, IconPlus } from "@tabler/icons";
 
-const VotesContainer = styled.div`
-  display: flex;
-  margin-top: 0.1em;
-`;
+type VotesLineProps = {
+  readonly?: boolean;
+  votes?: number;
+  onAddVoteClicked?: () => void;
+  onRemoveVoteClicked?: () => void;
+} & DefaultProps;
+
+export const VotesLine = (props: VotesLineProps) => {
+  const { votes, readonly, onAddVoteClicked, onRemoveVoteClicked } = props;
+  return (
+    <Group position={"left"} spacing={0} {...props}>
+      {!readonly && (
+        <AddVoteButton
+          onClick={(_) => (onAddVoteClicked ? onAddVoteClicked() : {})}>
+          <Center className="icon-container">
+            <IconPlus style={{ marginTop: 1 }} size={13} />
+          </Center>
+        </AddVoteButton>
+      )}
+      {[...Array(votes)].map((e, i) => (
+        <Vote
+          key={i}
+          onClick={(_) => (onRemoveVoteClicked ? onRemoveVoteClicked() : {})}>
+          {!readonly && (
+            <Center className="icon-container">
+              <IconMinus style={{ marginTop: 1 }} color="white" size={13} />
+            </Center>
+          )}
+        </Vote>
+      ))}
+    </Group>
+  );
+};
 
 const Vote = styled.div`
   cursor: pointer !important;
-  margin-left: 2px;
+  margin-right: 2px;
   height: 15px;
   width: 15px;
   background-color: gray;
   border-radius: 100%;
 
-  span {
-    position: absolute;
-    margin-top: -3px;
-    margin-left: 3px;
+  .icon-container {
     opacity: 0;
 
     &:hover {
@@ -26,37 +53,6 @@ const Vote = styled.div`
   }
 `;
 
-const AddVote = styled(AddButton)`
-  border-radius: 100%;
-  height: 15px;
-  width: 15px;
+const AddVoteButton = styled(Vote)`
   background-color: #d8d8d8;
-  margin-left: 0;
 `;
-
-type VotesLineProps = {
-  readonly?: boolean;
-  votes?: number;
-  onAddVoteClicked?: () => void;
-  onRemoveVoteClicked?: () => void;
-};
-
-export const VotesLine = (props: VotesLineProps) => {
-  const { votes, readonly, onAddVoteClicked, onRemoveVoteClicked } = props;
-  return (
-    <VotesContainer>
-      {!readonly && (
-        <AddVote
-          onClick={(_) => (onAddVoteClicked ? onAddVoteClicked() : {})}
-        />
-      )}
-      {[...Array(votes)].map((e, i) => (
-        <Vote
-          key={i}
-          onClick={(_) => (onRemoveVoteClicked ? onRemoveVoteClicked() : {})}>
-          {!readonly && <span>-</span>}
-        </Vote>
-      ))}
-    </VotesContainer>
-  );
-};

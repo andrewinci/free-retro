@@ -6,10 +6,9 @@ import {
   CardGroup,
   VotesLine,
   ActionColumn,
-  StageText,
 } from "../components";
 
-import { ActionState, CardGroupState, Id, Stage } from "../state";
+import { ActionState, CardGroupState, Id } from "../state";
 import * as State from "../state";
 
 const CloseRetro = styled(CloseButton)`
@@ -122,7 +121,6 @@ Click ok to go ahead.`);
 
   return (
     <>
-      <StageText stage={Stage.Discuss} />
       <CloseRetro onClick={async () => await closeRetro()} />
       <Container>
         <CardDiscussContainer>
