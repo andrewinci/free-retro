@@ -1,15 +1,11 @@
-import { AddButton } from "../components/buttons";
-import { CardGroup } from "../components/card";
-import { Column, ColumnGroup } from "../components/column";
-import { VotesLine } from "../components/vote-line";
 import {
-  Stage,
-  ColumnState,
-  getUser,
-  setUserName,
-  CardGroupState,
-  Id,
-} from "../state";
+  AddButton,
+  Column,
+  ColumnGroup,
+  CardGroup,
+  VotesLine,
+} from "../components";
+import { Stage, ColumnState, CardGroupState, Id } from "../state";
 import * as State from "../state";
 
 function BoardCardGroup(props: {
@@ -32,7 +28,7 @@ function BoardCardGroup(props: {
     await State.updateGroupVotes(cardGroupId, "increment");
   const removeVotes = async () =>
     await State.updateGroupVotes(cardGroupId, "decrement");
-  const { id: userId } = getUser() ?? setUserName();
+  const { id: userId } = State.getUser() ?? State.setUserName();
   return (
     <CardGroup
       onDrop={async (src) => await State.moveCardToGroup(src, cardGroupId)}
@@ -45,11 +41,13 @@ function BoardCardGroup(props: {
         await State.setGroupTitle(cardGroupId, title)
       }
       readOnlyTitle={stage != Stage.Group}
-      blur={stage == Stage.AddTickets && cards[0].ownerId != getUser()?.id}
+      blur={
+        stage == Stage.AddTickets && cards[0].ownerId != State.getUser()?.id
+      }
       readOnly={readOnly}>
       {stage != Stage.AddTickets && stage != Stage.Group && (
         <VotesLine
-          mt={5}
+          mt={3}
           readonly={false}
           votes={cardGroup.votes[userId]?.value ?? 0}
           onAddVoteClicked={addVotes}

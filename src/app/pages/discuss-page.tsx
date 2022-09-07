@@ -140,7 +140,7 @@ Click ok to go ahead.`);
               )}
               readOnlyTitle={true}
               readOnly={true}>
-              <VotesLine readonly={true} votes={votes}></VotesLine>
+              <VotesLine mt={3} readonly={true} votes={votes}></VotesLine>
             </CardGroup>
           </CardGroupContainer>
           <Next

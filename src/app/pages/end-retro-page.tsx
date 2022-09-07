@@ -1,32 +1,7 @@
-import styled from "styled-components";
+import { Button, Text, Stack } from "@mantine/core";
 import { ActionColumn } from "../components";
-import { ButtonContainer } from "../components/buttons";
 import * as State from "../state";
 import { ActionState, Id, Stage } from "../state";
-
-const EndViewContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: space-between;
-  justify-content: center;
-`;
-const StyledP = styled.p`
-  font-size: 1em;
-  text-align: center;
-`;
-
-const RefreshPageButton = styled(ButtonContainer)`
-  background: #d9d9d9;
-  max-width: 18em;
-  width: 100%;
-  height: 1.8em;
-  font-size: 1.2em;
-  font-weight: bold;
-  margin: auto;
-  margin-top: 0.5em;
-  margin-bottom: 2em;
-`;
 
 export const EndRetroPage = (props: {
   sessionId: string;
@@ -34,25 +9,27 @@ export const EndRetroPage = (props: {
 }) => {
   const { sessionId, actions } = props;
   return (
-    <EndViewContainer>
-      <StyledP>
-        This retro is now concluded. 🎉
-        <br />
-        Review the actions or start a new one. ✅ <br />
-        <br />
-        <strong>Note:</strong> these actions will be still available in
-        <br /> the new retro as long as the same retro id is used 💾
-      </StyledP>
-      <RefreshPageButton
+    // <Center>
+    <Stack align="center" justify="flex-start" spacing={30}>
+      <Text>🎉 Congratulation, the retro is now concluded</Text>
+      <Button
+        fullWidth={true}
+        style={{ maxWidth: 350 }}
         onClick={() => {
           State.initAppState(sessionId, Stage.Create, actions);
         }}>
         🚀 Start a new retro
-      </RefreshPageButton>
+      </Button>
+      <Text>✅ Review the actions before starting a new one</Text>
       <ActionColumn
-        style={{ width: "100%", maxWidth: "40em", marginBottom: "2em" }}
+        style={{ width: "100%", maxWidth: "500px", marginBottom: "2em" }}
         actions={actions ?? {}}
       />
-    </EndViewContainer>
+      <Text mt={-30} style={{ textAlign: "center" }}>
+        <strong>💾 Note:</strong> these actions will be still available in
+        <br /> the new retro as long as the same retro id is used.
+      </Text>
+    </Stack>
+    // </Center>
   );
 };
