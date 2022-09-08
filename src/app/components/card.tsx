@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { TopCloseButton } from "./buttons";
 import { TextArea, Title } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
 import { Id } from "../state";
+import { CloseButton, Group, Paper } from "@mantine/core";
 
 type CardContainerProps = {
   className?: string;
@@ -82,22 +82,31 @@ const SingleCard = (props: CardProps & CardContainerProps) => {
       color={color}
       draggable={canDrag}
       blur={blur ?? false}
-      showCardType={cardType != null}>
-      <TopCloseButton
-        hidden={text.length > 0 || readOnly || blur}
-        onClick={(e) => {
-          if (onCloseClicked) {
-            const cardGroup = e.currentTarget.parentElement?.parentElement;
-            if (!cardGroup) throw new Error("Invalid parent");
-            // wait for the animation to finish before calling
-            // the on close event handler
-            cardGroup.addEventListener("animationend", () => onCloseClicked());
-            cardGroup.classList.remove("vertical-fade-in");
-            cardGroup.classList.add("vertical-fade-out");
-          }
-        }}
-      />
-      <CardTypeText hidden={!cardType}>{cardType}</CardTypeText>
+      showCardType={cardType != null}
+      shadow="sm"
+      radius="xs"
+      p="md">
+      <Group position={"right"} mb={-5} style={{ minHeight: "12px" }}>
+        <CardTypeText hidden={!cardType}>{cardType}</CardTypeText>
+        <CloseButton
+          size={12}
+          hidden={text.length > 0 || readOnly || blur}
+          onClick={(e) => {
+            if (onCloseClicked) {
+              const cardGroup =
+                e.currentTarget.parentElement?.parentElement?.parentElement;
+              if (!cardGroup) throw new Error("Invalid parent");
+              // wait for the animation to finish before calling
+              // the on close event handler
+              cardGroup.addEventListener("animationend", () =>
+                onCloseClicked()
+              );
+              cardGroup.classList.remove("vertical-fade-in");
+              cardGroup.classList.add("vertical-fade-out");
+            }
+          }}
+        />
+      </Group>
       <TextArea
         // must be readonly if blurred
         readOnly={readOnly || blur}
@@ -152,13 +161,14 @@ const CardGroupContainer = styled.div<{ canDrag?: boolean }>`
   }
 `;
 
-const SingleCardContainer = styled.div<{
+const SingleCardContainer = styled(Paper)<{
   blur: boolean;
   showCardType: boolean;
   draggable?: boolean;
+  color?: string;
 }>`
-  padding: 0.6em;
-  min-height: 2.6rem;
+  padding: 8px;
+  min-height: 60px;
   position: relative;
   ${({ showCardType }) => showCardType && `padding-top: 1.2em;`}
   ${({ blur }) => (blur ? `filter: blur(5px);` : `filter: none;`)}

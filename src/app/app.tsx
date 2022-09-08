@@ -79,10 +79,10 @@ const AppHeader = ({
   return (
     <Header height={80}>
       <Grid m={0} style={{ height: "100%" }} align={"center"}>
-        <Grid.Col span={2}>
+        <Grid.Col span={3}>
           <StageText votes={State.getRemainingUserVotes()} stage={stage} />
         </Grid.Col>
-        <Grid.Col span={8}>
+        <Grid.Col span={6}>
           <Stack spacing={0} align={"center"} style={{ minWidth: "185px" }}>
             <UnstyledLink href="/">
               <Title order={2}>⚡️ Free retro 🗣️</Title>
@@ -90,7 +90,7 @@ const AppHeader = ({
             {retroName && <Title order={4}>{`"${retroName}"`}</Title>}
           </Stack>
         </Grid.Col>
-        <Grid.Col span={2}>
+        <Grid.Col span={3}>
           {showNextButton && (
             <Group mr={8} position="right">
               <ActionIcon
