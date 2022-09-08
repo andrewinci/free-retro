@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { ColumnState, Stage, ActionState, Id } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
-import { BoardPage, DiscussPage, EndRetroPage } from "./pages";
-import { CreateRetroPage, JoinRetroPage } from "./pagesv2";
+import { BoardPage, DiscussPage } from "./pages";
+import { CreateRetroPage, JoinRetroPage, EndRetroPage } from "./pagesv2";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import * as State from "./state";
