@@ -22,7 +22,7 @@ const RetroTemplates = (props: {
 }) => {
   const { templates, selectedIndex, onSelectedIndexChanged } = props;
   return (
-    <Group align={"center"} position={"center"} spacing={"xs"}>
+    <Group align={"center"} position={"center"} spacing={2}>
       {templates.map((template, index) => (
         <Template
           onClick={() => onSelectedIndexChanged(index)}
@@ -103,7 +103,6 @@ const Template = styled.div<{ selected: boolean }>`
   text-align: center;
   font-size: 1.2em;
   border-radius: 4px;
-
   display: flex;
   flex-direction: column;
   align-items: center;

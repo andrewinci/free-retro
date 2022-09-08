@@ -1,12 +1,8 @@
-import {
-  AddButton,
-  Column,
-  ColumnGroup,
-  CardGroup,
-  VotesLine,
-} from "../components";
+import { Column, CardGroup, VotesLine } from "../components";
 import { Stage, ColumnState, CardGroupState, Id } from "../state";
 import * as State from "../state";
+import { ActionIcon, Group } from "@mantine/core";
+import { IconPlus } from "@tabler/icons";
 
 function BoardCardGroup(props: {
   cardGroup: CardGroupState;
@@ -94,21 +90,26 @@ export const BoardPage = (props: {
   const { columnsData, stage, readOnly } = props;
 
   return (
-    <>
-      <ColumnGroup>
-        {Object.entries(columnsData ?? {}).map(([columnId, column]) => (
-          <BoardColumn
-            key={columnId}
-            columnId={columnId}
-            column={column}
-            readOnly={readOnly ?? false}
-            stage={stage}
-          />
-        ))}
-        {!readOnly && (
-          <AddButton onClick={async () => await State.addColumn()} />
-        )}
-      </ColumnGroup>
-    </>
+    <Group
+      noWrap={true}
+      position={"center"}
+      style={{
+        display: "inline-flex",
+      }}>
+      {Object.entries(columnsData ?? {}).map(([columnId, column]) => (
+        <BoardColumn
+          key={columnId}
+          columnId={columnId}
+          column={column}
+          readOnly={readOnly ?? false}
+          stage={stage}
+        />
+      ))}
+      {!readOnly && (
+        <ActionIcon size={20} onClick={async () => await State.addColumn()}>
+          <IconPlus />
+        </ActionIcon>
+      )}
+    </Group>
   );
 };

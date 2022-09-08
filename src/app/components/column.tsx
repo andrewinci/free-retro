@@ -1,18 +1,10 @@
+import { Container, CloseButton, Group, ActionIcon } from "@mantine/core";
 import { CSSProperties } from "react";
 import { useDrop } from "react-dnd";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { Id } from "../state";
-import { AddButton, CloseButton } from "./buttons";
 import { Title } from "./textarea";
-
-const ColumnGroupContainer = styled.div`
-  display: inline-flex;
-`;
-
-export const ColumnGroup = (props: { children: React.ReactNode }) => {
-  const { children } = props;
-  return <ColumnGroupContainer>{children}</ColumnGroupContainer>;
-};
+import { IconPlus } from "@tabler/icons";
 
 type ColumnProps = {
   title: string;
@@ -40,49 +32,51 @@ export const Column = (props: ColumnProps) => {
       item: monitor.getItem(),
     }),
   }));
+  const closeButtonClick = (e: React.MouseEvent) => {
+    if (onCloseClick) {
+      const columnContainer = e.currentTarget.parentElement?.parentElement;
+      if (!columnContainer) throw new Error("Invalid parent");
+      // wait for the animation to complete before calling the on close
+      // click that can remove the element from the dom
+      columnContainer.addEventListener("animationend", () => onCloseClick());
+      columnContainer.classList.remove("horizontal-fade-in");
+      columnContainer.classList.add("horizontal-fade-out");
+    }
+  };
   return (
     <ColumnContainer ref={drop} style={style} className={"horizontal-fade-in"}>
-      <TopCloseButton
-        hidden={(children?.length ?? 0) > 0 || readOnly || !canClose}
-        onClick={(e) => {
-          if (onCloseClick) {
-            const parent = e.currentTarget.parentElement;
-            if (!parent) throw new Error("Invalid parent");
-            // wait for the animation to complete before calling the on close
-            // click that can remove the element from the dom
-            parent.addEventListener("animationend", () => onCloseClick());
-            parent.classList.remove("horizontal-fade-in");
-            parent.classList.add("horizontal-fade-out");
-          }
-        }}
-      />
-      <div>
-        <Title
-          placeholder="Title"
-          readOnly={readOnly}
-          text={title}
-          onTextChange={(t) => (onTitleChange ? onTitleChange(t) : {})}
+      <Group position={"right"} mb={-5} style={{ minHeight: "28px" }}>
+        <CloseButton
+          hidden={(children?.length ?? 0) > 0 || readOnly || !canClose}
+          onClick={(e) => closeButtonClick(e)}
         />
-      </div>
+      </Group>
+      <Title
+        placeholder="Title"
+        readOnly={readOnly}
+        text={title}
+        onTextChange={(t) => (onTitleChange ? onTitleChange(t) : {})}
+      />
       {!readOnly && (
-        <AddColumnButton onClick={() => (onAddClick ? onAddClick() : {})} />
+        <ActionIcon
+          ml={8}
+          size={20}
+          onClick={() => (onAddClick ? onAddClick() : {})}>
+          <IconPlus />
+        </ActionIcon>
       )}
       {reverse ? children?.reverse() : children}
     </ColumnContainer>
   );
 };
 
-const ColumnContainer = styled.div`
-  min-width: 18rem;
-  height: calc(100vh - 10.5em);
-  flex: 1;
-  flex-grow: 0 1;
-  border-radius: 0.4rem;
-  margin: 0 1em;
-  border: 2px solid #d4d4d4;
-  padding: 0.5rem 0.3rem;
-  position: relative;
-  overflow-y: scroll;
+const ColumnContainer = styled(Container)`
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  min-width: 300px;
+  margin: 4px;
+  height: calc(100vh - 125px);
+  padding: 2px;
 
   &.horizontal-fade-in {
     @keyframes horizontal-fade-in {
@@ -116,14 +110,4 @@ const ColumnContainer = styled.div`
     opacity: 0;
     animation: horizontal-fade-out 0.1s linear;
   }
-`;
-
-const AddColumnButton = styled(AddButton)`
-  bottom: 0.5em;
-`;
-
-const TopCloseButton = styled(CloseButton)`
-  position: absolute;
-  top: 0.5em;
-  right: 0.5em;
 `;

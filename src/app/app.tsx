@@ -58,12 +58,13 @@ const CurrentView = (props: {
   }
 };
 
-export const App = () => {
-  const [appState, setState] = useState(getAppState());
-  useMemo(() => onStateChange((newState) => setState(newState)), []);
-  const { stage, retroName, sessionId, columns, discussCardIndex, actions } =
-    appState;
-
+const AppHeader = ({
+  stage,
+  retroName,
+}: {
+  stage: Stage;
+  retroName: string;
+}) => {
   // view selector depending on the app stage
   const changeStage = async (change: "next" | "back") => {
     const res = confirm(
@@ -76,45 +77,56 @@ export const App = () => {
   const showNextButton =
     stage != Stage.End && stage != Stage.Join && stage != Stage.Create;
   return (
+    <Header height={80}>
+      <Grid m={0} style={{ height: "100%" }} align={"center"}>
+        <Grid.Col span={2}>
+          <StageText votes={State.getRemainingUserVotes()} stage={stage} />
+        </Grid.Col>
+        <Grid.Col span={8}>
+          <Stack spacing={0} align={"center"} style={{ minWidth: "185px" }}>
+            <UnstyledLink href="/">
+              <Title order={2}>⚡️ Free retro 🗣️</Title>
+            </UnstyledLink>
+            {retroName && <Title order={4}>{`"${retroName}"`}</Title>}
+          </Stack>
+        </Grid.Col>
+        <Grid.Col span={2}>
+          {showNextButton && (
+            <Group mr={8} position="right">
+              <ActionIcon
+                title="next step"
+                onClick={async () => await changeStage("next")}
+                size="xl">
+                <IconArrowRight size={100} />
+              </ActionIcon>
+            </Group>
+          )}
+        </Grid.Col>
+      </Grid>
+    </Header>
+  );
+};
+
+export const App = () => {
+  const [appState, setState] = useState(getAppState());
+  useMemo(() => onStateChange((newState) => setState(newState)), []);
+  const { stage, retroName, sessionId, columns, discussCardIndex, actions } =
+    appState;
+
+  return (
     <DndProvider backend={HTML5Backend}>
       <MantineProvider withGlobalStyles withNormalizeCSS>
         <AppShell
           padding="md"
-          header={
-            <Header height={80}>
-              <Grid m={0} style={{ height: "100%" }} align={"center"}>
-                <Grid.Col span={4}>
-                  <StageText
-                    votes={State.getRemainingUserVotes()}
-                    stage={stage}
-                  />
-                </Grid.Col>
-                <Grid.Col span={4}>
-                  <Stack
-                    spacing={0}
-                    align={"center"}
-                    style={{ minWidth: "185px" }}>
-                    <UnstyledLink href="/">
-                      <Title order={2}>⚡️ Free retro 🗣️</Title>
-                    </UnstyledLink>
-                    {retroName && <Title order={4}>{`"${retroName}"`}</Title>}
-                  </Stack>
-                </Grid.Col>
-                <Grid.Col span={4}>
-                  {showNextButton && (
-                    <Group mr={8} position="right">
-                      <ActionIcon
-                        title="next step"
-                        onClick={async () => await changeStage("next")}
-                        size="xl">
-                        <IconArrowRight size={100} />
-                      </ActionIcon>
-                    </Group>
-                  )}
-                </Grid.Col>
-              </Grid>
-            </Header>
-          }>
+          header={<AppHeader retroName={retroName ?? ""} stage={stage} />}
+          styles={(theme) => ({
+            main: {
+              backgroundColor:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[8]
+                  : theme.colors.gray[0],
+            },
+          })}>
           <CurrentView
             sessionId={sessionId}
             columnsData={columns ?? {}}
