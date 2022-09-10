@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import { TextArea, Title } from "./textarea";
 import { useDrag, useDrop } from "react-dnd";
 import { Id } from "../state";
 import { CloseButton, Group, Paper } from "@mantine/core";
+import styled from "@emotion/styled";
 
 type CardContainerProps = {
   className?: string;
@@ -82,7 +82,7 @@ const SingleCard = (props: CardProps & CardContainerProps) => {
       color={color}
       draggable={canDrag}
       blur={blur ?? false}
-      showCardType={cardType != null}
+      show-card-type={cardType != null}
       shadow="sm"
       radius="xs"
       p="md">
@@ -163,14 +163,15 @@ const CardGroupContainer = styled.div<{ canDrag?: boolean }>`
 
 const SingleCardContainer = styled(Paper)<{
   blur: boolean;
-  showCardType: boolean;
+  ["show-card-type"]: boolean;
   draggable?: boolean;
   color?: string;
 }>`
   padding: 8px;
   min-height: 60px;
   position: relative;
-  ${({ showCardType }) => showCardType && `padding-top: 1.2em;`}
+  ${({ ["show-card-type"]: showCardType }) =>
+    showCardType && `padding-top: 1.2em;`}
   ${({ blur }) => (blur ? `filter: blur(5px);` : `filter: none;`)}
   ${({ color }) => `background-color: ${color};`}
 
@@ -189,22 +190,22 @@ const SingleCardContainer = styled(Paper)<{
 `;
 
 const CardTypeText = styled.p`
-  text-align: right;
-  position: absolute;
-  top: 2px;
-  right: 5px;
-  width: 200px;
-  font-size: 0.7em;
-  font-style: italic;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
+text - align: right;
+position: absolute;
+top: 2px;
+right: 5px;
+width: 200px;
+font - size: 0.7em;
+font - style: italic;
+margin: 0;
+white - space: nowrap;
+overflow: hidden;
 `;
 
 const CardGroupTitle = styled(Title)`
-  font-size: 1em;
+font - size: 1em;
 
-  @media only screen and(min-width: 734px) {
-    font-size: 1.3em;
-  }
+@media only screen and(min - width: 734px) {
+  font - size: 1.3em;
+}
 `;

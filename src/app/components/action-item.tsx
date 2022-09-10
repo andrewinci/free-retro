@@ -1,5 +1,5 @@
 import { useId } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { TextArea } from "./textarea";
 import { TopCloseButton } from "./buttons";
 
