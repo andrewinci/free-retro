@@ -6,10 +6,86 @@ import {
   CardGroup,
   VotesLine,
   ActionColumn,
+  Card,
 } from "../components";
 
 import { ActionState, CardGroupState, Id } from "../state";
 import * as State from "../state";
+
+type DiscussViewProps = {
+  cards: CardGroupState[];
+  cardIndex: number;
+  actions?: Record<Id, ActionState>;
+};
+
+export const DiscussPage = (props: DiscussViewProps) => {
+  const { cards, cardIndex, actions } = props;
+
+  const closeRetro = async () => {
+    const res = confirm(`This action will close the retro session.
+Click ok to go ahead.`);
+    if (res) {
+      await State.changeStage("next");
+    }
+  };
+
+  if (cards.length == 0) {
+    console.log("No cards -> nothing to discuss");
+    return (
+      <>
+        <CloseRetro onClick={async () => await closeRetro()} />
+      </>
+    );
+  }
+
+  const totalVotes = (c: CardGroupState) =>
+    Object.values(c.votes)
+      .map((v) => v.value)
+      .reduce((a, b) => a + b, 0);
+
+  const sortedCards = cards
+    .map((c) => ({ votes: totalVotes(c), card: c }))
+    .sort((a, b) => b.votes - a.votes);
+
+  const { card, votes } =
+    cardIndex >= sortedCards.length
+      ? sortedCards[sortedCards.length - 1]
+      : sortedCards[cardIndex];
+
+  return (
+    <>
+      <CloseRetro onClick={async () => await closeRetro()} />
+      <Container>
+        <CardDiscussContainer>
+          <Prev
+            onClick={async () => await State.changeDiscussCard("decrement")}
+            disabled={cardIndex <= 0}></Prev>
+          <CardGroupContainer>
+            <CardGroup title={card.title} readOnlyTitle={true}>
+              {Object.entries(card.cards).map(
+                ([id, { text, color, originColumn }]) => (
+                  <Card
+                    id={id}
+                    key={id}
+                    text={text}
+                    cardType={originColumn}
+                    readOnly={true}
+                    color={color}
+                  />
+                )
+              )}
+              <VotesLine mt={3} readOnly={true} votes={votes}></VotesLine>
+            </CardGroup>
+          </CardGroupContainer>
+          <Next
+            onClick={async () => await State.changeDiscussCard("increment")}
+            disabled={cardIndex >= sortedCards.length - 1}></Next>
+        </CardDiscussContainer>
+        <ActionColumn style={{ maxWidth: "25em" }} actions={actions} />
+      </Container>
+    </>
+  );
+};
 
 const CloseRetro = styled(CloseButton)`
   position: fixed;
@@ -78,77 +154,3 @@ const CardGroupContainer = styled.div`
     min-width: 20rem;
   }
 `;
-
-type DiscussViewProps = {
-  cards: CardGroupState[];
-  cardIndex: number;
-  actions?: Record<Id, ActionState>;
-};
-
-export const DiscussPage = (props: DiscussViewProps) => {
-  const { cards, cardIndex, actions } = props;
-
-  const closeRetro = async () => {
-    const res = confirm(`This action will close the retro session.
-Click ok to go ahead.`);
-    if (res) {
-      await State.changeStage("next");
-    }
-  };
-
-  if (cards.length == 0) {
-    console.log("No cards -> nothing to discuss");
-    return (
-      <>
-        <CloseRetro onClick={async () => await closeRetro()} />
-      </>
-    );
-  }
-
-  const totalVotes = (c: CardGroupState) =>
-    Object.values(c.votes)
-      .map((v) => v.value)
-      .reduce((a, b) => a + b, 0);
-
-  const sortedCards = cards
-    .map((c) => ({ votes: totalVotes(c), card: c }))
-    .sort((a, b) => b.votes - a.votes);
-
-  const { card, votes } =
-    cardIndex >= sortedCards.length
-      ? sortedCards[sortedCards.length - 1]
-      : sortedCards[cardIndex];
-
-  return (
-    <>
-      <CloseRetro onClick={async () => await closeRetro()} />
-      <Container>
-        <CardDiscussContainer>
-          <Prev
-            onClick={async () => await State.changeDiscussCard("decrement")}
-            disabled={cardIndex <= 0}></Prev>
-          <CardGroupContainer>
-            <CardGroup
-              title={card.title}
-              cards={Object.entries(card.cards).map(
-                ([id, { text, color, originColumn }]) => ({
-                  id,
-                  text,
-                  cardType: originColumn,
-                  color,
-                })
-              )}
-              readOnlyTitle={true}
-              readOnly={true}>
-              <VotesLine mt={3} readonly={true} votes={votes}></VotesLine>
-            </CardGroup>
-          </CardGroupContainer>
-          <Next
-            onClick={async () => await State.changeDiscussCard("increment")}
-            disabled={cardIndex >= sortedCards.length - 1}></Next>
-        </CardDiscussContainer>
-        <ActionColumn style={{ maxWidth: "25em" }} actions={actions} />
-      </Container>
-    </>
-  );
-};

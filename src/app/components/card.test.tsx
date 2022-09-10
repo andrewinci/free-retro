@@ -1,13 +1,13 @@
 import { DndProvider } from "react-dnd";
 import { TestBackend } from "react-dnd-test-backend";
 import renderer from "react-test-renderer";
-import { CardGroup } from "./card";
+import { CardGroup, Card } from ".";
 
 describe("Test card component", () => {
   test("CardGroup should render with no cards", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
-        <CardGroup cards={[]}></CardGroup>
+        <CardGroup></CardGroup>
       </DndProvider>
     );
     expect(component).toBeDefined();
@@ -16,11 +16,10 @@ describe("Test card component", () => {
   test("CardGroup should render", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
-        <CardGroup
-          cards={[
-            { id: "1", text: "test1" },
-            { id: "2", text: "test2" },
-          ]}></CardGroup>
+        <CardGroup>
+          <Card id="1" text="test 1" />
+          <Card id="2" text="test 2" />
+        </CardGroup>
       </DndProvider>
     );
     expect(component).toBeDefined();

@@ -1,5 +1,5 @@
-import { Column, CardGroup, VotesLine } from "../components";
-import { Stage, ColumnState, CardGroupState, Id } from "../state";
+import { Column, CardGroup, VotesLine, Card } from "../components";
+import { Stage, ColumnState, CardGroupState, Id, getUser } from "../state";
 import * as State from "../state";
 import { ActionIcon, Group } from "@mantine/core";
 import { IconPlus } from "@tabler/icons";
@@ -27,24 +27,31 @@ function BoardCardGroup(props: {
   const { id: userId } = State.getUser() ?? State.setUserName();
   return (
     <CardGroup
-      onDrop={async (src) => await State.moveCardToGroup(src, cardGroupId)}
-      cards={cards}
-      canDrag={stage == Stage.Group}
-      onCloseClicked={deleteCardGroup}
-      onTextChange={changeCardText}
       title={cardGroup.title}
       onTitleChange={async (title) =>
         await State.setGroupTitle(cardGroupId, title)
       }
       readOnlyTitle={stage != Stage.Group}
-      blur={
-        stage == Stage.AddTickets && cards[0].ownerId != State.getUser()?.id
-      }
-      readOnly={readOnly}>
+      hiddenTitle={cards.length == 1}
+      onDrop={async (src) => await State.moveCardToGroup(src, cardGroupId)}>
+      {cards.map((c) => (
+        <Card
+          id={c.id}
+          key={c.id}
+          text={c.text}
+          color={c.color}
+          cardType={c.cardType}
+          blur={stage == Stage.AddTickets && c.ownerId != getUser()?.id}
+          onCloseClicked={deleteCardGroup}
+          onTextChange={changeCardText}
+          canDrag={stage == Stage.Group}
+          readOnly={readOnly}
+        />
+      ))}
       {stage != Stage.AddTickets && stage != Stage.Group && (
         <VotesLine
           mt={3}
-          readonly={false}
+          readOnly={false}
           votes={cardGroup.votes[userId]?.value ?? 0}
           onAddVoteClicked={addVotes}
           onRemoveVoteClicked={removeVotes}></VotesLine>

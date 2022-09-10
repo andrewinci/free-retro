@@ -35,7 +35,7 @@ export const StageText = (props: {
           {stepText}
         </Text>
       </Group>
-      {showVotes && <VotesLine votes={votes} readonly={true}></VotesLine>}
+      {showVotes && <VotesLine votes={votes} readOnly={true}></VotesLine>}
     </Container>
   );
 };

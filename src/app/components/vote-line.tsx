@@ -3,17 +3,17 @@ import styled from "@emotion/styled";
 import { IconMinus, IconPlus } from "@tabler/icons";
 
 type VotesLineProps = {
-  readonly?: boolean;
+  readOnly?: boolean;
   votes?: number;
   onAddVoteClicked?: () => void;
   onRemoveVoteClicked?: () => void;
 } & DefaultProps;
 
 export const VotesLine = (props: VotesLineProps) => {
-  const { votes, readonly, onAddVoteClicked, onRemoveVoteClicked } = props;
+  const { votes, readOnly, onAddVoteClicked, onRemoveVoteClicked } = props;
   return (
     <Group position={"left"} spacing={0} {...props}>
-      {!readonly && (
+      {!readOnly && (
         <AddVoteButton
           onClick={(_) => (onAddVoteClicked ? onAddVoteClicked() : {})}>
           <Center className="icon-container">
@@ -25,7 +25,7 @@ export const VotesLine = (props: VotesLineProps) => {
         <Vote
           key={i}
           onClick={(_) => (onRemoveVoteClicked ? onRemoveVoteClicked() : {})}>
-          {!readonly && (
+          {!readOnly && (
             <Center className="icon-container">
               <IconMinus style={{ marginTop: 1 }} color="white" size={13} />
             </Center>

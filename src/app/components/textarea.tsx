@@ -1,35 +1,6 @@
-import { FunctionComponent, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styled from "@emotion/styled";
-
-const StyledTextArea = styled.textarea`
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-  border: none;
-  background: transparent;
-  width: 100%;
-  outline: none;
-  resize: none;
-  ${(props) =>
-    props.readOnly
-      ? `
-    cursor: default;
-    user-select: none;
-    &::selection {
-      background-color: transparent;
-    }
-  `
-      : ``}
-
-  font-size: 0.8em;
-
-  @media only screen and (min-width: 734px) {
-    font-size: 0.9em;
-  }
-
-  appearance: none;
-  box-shadow: none;
-`;
+import { DefaultProps } from "@mantine/core";
 
 type onTextChangeHandler = (_: string) => void;
 
@@ -37,13 +8,12 @@ type TextAreaProps = {
   text?: string;
   reduceTextChangeUpdates?: boolean;
   readOnly?: boolean;
-  className?: string;
   placeholder?: string;
   hidden?: boolean;
   onTextChange?: onTextChangeHandler;
-};
+} & DefaultProps;
 
-export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
+export const TextArea = (props: TextAreaProps) => {
   const { className, readOnly, placeholder, hidden } = props;
   const { text, onTextChange, reduceTextChangeUpdates } = props;
   const textInput = useRef<HTMLTextAreaElement>(null);
@@ -109,18 +79,27 @@ export const TextArea: FunctionComponent<TextAreaProps> = (props) => {
   );
 };
 
-TextArea.defaultProps = {
-  text: "",
-  onTextChange: undefined,
-  className: undefined,
-  readOnly: false,
-};
+const StyledTextArea = styled.textarea`
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  width: 100%;
+  outline: none;
+  resize: none;
+  font-size: 0.9em;
+  appearance: none;
+  box-shadow: none;
 
-export const Title = styled(TextArea)`
-  font-size: 1.5em;
-  text-align: center;
-
-  @media only screen and (min-width: 734px) {
-    font-size: 2em;
-  }
+  ${(props) =>
+    props.readOnly
+      ? `
+    cursor: default;
+    user-select: none;
+    &::selection {
+      background-color: transparent;
+    }
+  `
+      : ``}
 `;

@@ -1,8 +1,14 @@
-import { TextArea, Title } from "./textarea";
-import { useDrag, useDrop } from "react-dnd";
+import { TextArea } from "./textarea";
+import { useDrag } from "react-dnd";
 import { Id } from "../state";
-import { CloseButton, Group, Paper } from "@mantine/core";
-import styled from "@emotion/styled";
+import {
+  CloseButton,
+  createStyles,
+  DefaultProps,
+  Group,
+  Paper,
+  Text,
+} from "@mantine/core";
 
 type CardContainerProps = {
   className?: string;
@@ -20,50 +26,12 @@ type CardProps = {
   text: string;
   cardType?: string;
   color?: string;
-};
+} & DefaultProps;
 
-type CardGroupProps = {
-  title?: string;
-  readOnlyTitle?: boolean;
-  cards: CardProps[];
-  onTitleChange?: (_: string) => void;
-};
-
-export const CardGroup = (props: CardGroupProps & CardContainerProps) => {
-  const cards = props.cards.map((c) => ({ ...props, ...c }));
-  const [_, drop] = useDrop(() => ({
-    accept: "card",
-    drop: (item: { id: Id }, _) => {
-      props?.onDrop ? props.onDrop(item.id) : {};
-    },
-    collect: (monitor) => ({
-      item: monitor.getItem(),
-    }),
-  }));
-  return (
-    <CardGroupContainer
-      ref={drop}
-      className={`${props.className} vertical-fade-in`}>
-      <CardGroupTitle
-        hidden={cards.length == 1}
-        text={props.title}
-        placeholder="Group title"
-        readOnly={props.readOnlyTitle}
-        onTextChange={(text) =>
-          props.onTitleChange ? props.onTitleChange(text) : {}
-        }
-      />
-      {cards.map((p) => (
-        <SingleCard {...p} key={p.id}></SingleCard>
-      ))}
-      {props.children}
-    </CardGroupContainer>
-  );
-};
-
-const SingleCard = (props: CardProps & CardContainerProps) => {
+export const Card = (props: CardProps & CardContainerProps) => {
   const { text, readOnly, blur, color, onCloseClicked, onTextChange } = props;
   const { cardType, canDrag } = props;
+  const { classes, cx } = useStyles({ color });
   const [{ dragging }, drag] = useDrag(
     () => ({
       canDrag: () => canDrag ?? false,
@@ -76,18 +44,19 @@ const SingleCard = (props: CardProps & CardContainerProps) => {
     [canDrag ?? false, text]
   );
   return (
-    <SingleCardContainer
+    <Paper
       ref={drag}
-      style={{ opacity: dragging ? 0.5 : 1 }}
-      color={color}
-      draggable={canDrag}
-      blur={blur ?? false}
-      show-card-type={cardType != null}
+      className={cx(
+        classes.container,
+        blur && classes.blur,
+        canDrag && classes.drag,
+        dragging && classes.dragging
+      )}
       shadow="sm"
       radius="xs"
       p="md">
       <Group position={"right"} mb={-5} style={{ minHeight: "12px" }}>
-        <CardTypeText hidden={!cardType}>{cardType}</CardTypeText>
+        {cardType && <Text size={"xs"}>{cardType}</Text>}
         <CloseButton
           size={12}
           hidden={text.length > 0 || readOnly || blur}
@@ -116,96 +85,30 @@ const SingleCard = (props: CardProps & CardContainerProps) => {
         reduceTextChangeUpdates={true}
         onTextChange={(newText) => (onTextChange ? onTextChange(newText) : {})}
       />
-    </SingleCardContainer>
+    </Paper>
   );
 };
 
-const CardGroupContainer = styled.div<{ canDrag?: boolean }>`
-  margin: 0.5em;
-  margin-bottom: 0.8em;
-  position: relative;
-  font-size: 1rem;
-
-  &.vertical-fade-in {
-    @keyframes vertical-fade-in {
-      from {
-        height: 0;
-        opacity: 0;
-      }
-
-      to {
-        height: 2.6rem;
-        opacity: 1;
-      }
-    }
-
-    animation: vertical-fade-in 0.1s linear;
-  }
-
-  &.vertical-fade-out {
-    @keyframes vertical-fade-out {
-      from {
-        height: 2.6rem;
-        opacity: 1;
-      }
-
-      to {
-        height: 0;
-        opacity: 0;
-      }
-    }
-
-    height: 0;
-    opacity: 0;
-    animation: vertical-fade-out 0.1s linear;
-  }
-`;
-
-const SingleCardContainer = styled(Paper)<{
-  blur: boolean;
-  ["show-card-type"]: boolean;
-  draggable?: boolean;
-  color?: string;
-}>`
-  padding: 8px;
-  min-height: 60px;
-  position: relative;
-  ${({ ["show-card-type"]: showCardType }) =>
-    showCardType && `padding-top: 1.2em;`}
-  ${({ blur }) => (blur ? `filter: blur(5px);` : `filter: none;`)}
-  ${({ color }) => `background-color: ${color};`}
-
-  ${({ draggable }) => {
-    if (draggable) {
-      return `
-        cursor: move;
-        textarea{
-          cursor: move !important;
-        }
-      `;
-    } else {
-      return "cursor: default;";
-    }
-  }}
-`;
-
-const CardTypeText = styled.p`
-text - align: right;
-position: absolute;
-top: 2px;
-right: 5px;
-width: 200px;
-font - size: 0.7em;
-font - style: italic;
-margin: 0;
-white - space: nowrap;
-overflow: hidden;
-`;
-
-const CardGroupTitle = styled(Title)`
-font - size: 1em;
-
-@media only screen and(min - width: 734px) {
-  font - size: 1.3em;
-}
-`;
+const useStyles = createStyles<string, { color?: string }>(
+  (theme, params, _) => ({
+    container: {
+      padding: "8px",
+      minHeight: "60px",
+      position: "relative",
+      cursor: "default",
+      backgroundColor: params.color ?? "white",
+    },
+    blur: {
+      filter: "blur(5px)",
+    },
+    drag: {
+      cursor: "move",
+      textarea: {
+        cursor: "move !important",
+      },
+    },
+    dragging: {
+      opacity: 0.5,
+    },
+  })
+);

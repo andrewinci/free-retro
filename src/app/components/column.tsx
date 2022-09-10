@@ -3,7 +3,7 @@ import { CSSProperties } from "react";
 import { useDrop } from "react-dnd";
 import styled from "@emotion/styled";
 import { Id } from "../state";
-import { Title } from "./textarea";
+import { TextArea } from "./textarea";
 import { IconPlus } from "@tabler/icons";
 
 type ColumnProps = {
@@ -51,7 +51,7 @@ export const Column = (props: ColumnProps) => {
           onClick={(e) => closeButtonClick(e)}
         />
       </Group>
-      <Title
+      <ColumnTitle
         placeholder="Title"
         readOnly={readOnly}
         text={title}
@@ -109,5 +109,14 @@ const ColumnContainer = styled(Container)`
 
     opacity: 0;
     animation: horizontal-fade-out 0.1s linear;
+  }
+`;
+
+const ColumnTitle = styled(TextArea)`
+  font-size: 1.5em;
+  text-align: center;
+
+  @media only screen and (min-width: 734px) {
+    font-size: 2em;
   }
 `;
