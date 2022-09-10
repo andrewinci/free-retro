@@ -116,7 +116,8 @@ export const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <MantineProvider withGlobalStyles withNormalizeCSS>
-        <AppShell
+        <AutoWidthAppShell
+          style={{ width: "auto" }}
           padding="md"
           header={<AppHeader retroName={retroName ?? ""} stage={stage} />}
           styles={(theme) => ({
@@ -134,7 +135,7 @@ export const App = () => {
             stage={stage}
             actions={actions ?? {}}
           />
-        </AppShell>
+        </AutoWidthAppShell>
       </MantineProvider>
     </DndProvider>
   );
@@ -144,4 +145,10 @@ const UnstyledLink = styled.a`
   padding-top: 4px;
   color: inherit;
   text-decoration: inherit;
+`;
+
+const AutoWidthAppShell = styled(AppShell)`
+  main {
+    width: auto;
+  }
 `;
