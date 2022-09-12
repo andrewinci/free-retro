@@ -167,7 +167,7 @@
     "esbuild-sass-plugin": "^2.3.2",
     "esbuild-serve": "^1.0.1",
     "eslint": "^8.23.0",
-    "eslint-plugin-react": "^7.31.6",
+    "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.1",
     "ip": "^1.1.8",
