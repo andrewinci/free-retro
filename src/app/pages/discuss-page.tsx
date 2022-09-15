@@ -1,16 +1,10 @@
 import styled from "@emotion/styled";
-import {
-  CloseButton,
-  LeftArrowButton,
-  RightArrowButton,
-  CardGroup,
-  VotesLine,
-  ActionColumn,
-  Card,
-} from "../components";
+import { CardGroup, VotesLine, ActionColumn, Card } from "../components";
 
 import { ActionState, CardGroupState, Id } from "../state";
 import * as State from "../state";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import { ActionIcon } from "@mantine/core";
 
 type DiscussViewProps = {
   cards: CardGroupState[];
@@ -21,21 +15,9 @@ type DiscussViewProps = {
 export const DiscussPage = (props: DiscussViewProps) => {
   const { cards, cardIndex, actions } = props;
 
-  const closeRetro = async () => {
-    const res = confirm(`This action will close the retro session.
-Click ok to go ahead.`);
-    if (res) {
-      await State.changeStage("next");
-    }
-  };
-
   if (cards.length == 0) {
     console.log("No cards -> nothing to discuss");
-    return (
-      <>
-        <CloseRetro onClick={async () => await closeRetro()} />
-      </>
-    );
+    return <></>;
   }
 
   const totalVotes = (c: CardGroupState) =>
@@ -54,12 +36,15 @@ Click ok to go ahead.`);
 
   return (
     <>
-      <CloseRetro onClick={async () => await closeRetro()} />
       <Container>
         <CardDiscussContainer>
-          <Prev
+          <ActionIcon
+            title="previous card"
             onClick={async () => await State.changeDiscussCard("decrement")}
-            disabled={cardIndex <= 0}></Prev>
+            disabled={cardIndex <= 0}
+            size="xl">
+            <IconArrowLeft size={100} />
+          </ActionIcon>
           <CardGroupContainer>
             <CardGroup title={card.title} readOnlyTitle={true}>
               {Object.entries(card.cards).map(
@@ -77,24 +62,19 @@ Click ok to go ahead.`);
               <VotesLine mt={3} readOnly={true} votes={votes}></VotesLine>
             </CardGroup>
           </CardGroupContainer>
-          <Next
+          <ActionIcon
+            title="next card"
             onClick={async () => await State.changeDiscussCard("increment")}
-            disabled={cardIndex >= sortedCards.length - 1}></Next>
+            disabled={cardIndex >= sortedCards.length - 1}
+            size="xl">
+            <IconArrowRight size={100} />
+          </ActionIcon>
         </CardDiscussContainer>
-        <ActionColumn style={{ maxWidth: "25em" }} actions={actions} />
+        <ActionColumn actions={actions} />
       </Container>
     </>
   );
 };
-
-const CloseRetro = styled(CloseButton)`
-  position: fixed;
-  right: 1em;
-  top: 1em;
-  height: 5em;
-  width: 5em;
-  z-index: 2;
-`;
 
 const CardDiscussContainer = styled.div`
   flex: 1;
@@ -110,28 +90,6 @@ const CardDiscussContainer = styled.div`
 
   @media only screen and (min-width: 734px) {
     margin-bottom: 10em;
-  }
-`;
-
-const Prev = styled(LeftArrowButton)`
-  flex: 1;
-  flex-grow: 0;
-  height: 3em;
-  width: 3em;
-
-  &:disabled {
-    fill: #eaeaea;
-  }
-`;
-
-const Next = styled(RightArrowButton)`
-  flex: 1;
-  flex-grow: 0;
-  height: 3em;
-  width: 3em;
-
-  &:disabled {
-    fill: #eaeaea;
   }
 `;
 
