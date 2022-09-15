@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { ColumnState, Stage, ActionState, Id } from "./state";
 import { getAppState, onStateChange } from "./state/automerge-state";
 import { BoardPage, DiscussPage } from "./pages";
-import { CreateRetroPage, JoinRetroPage, EndRetroPage } from "./pagesv2";
+import { CreateRetroPage, JoinRetroPage, EndRetroPage } from "./pages";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import * as State from "./state";
