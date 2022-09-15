@@ -55,7 +55,7 @@ export const Card = (props: CardProps & CardContainerProps) => {
       shadow="sm"
       radius="xs"
       p="md">
-      <Group position={"right"} mb={-5} style={{ minHeight: "12px" }}>
+      <Group position={"right"} mt={-10} mr={-10} style={{ minHeight: "12px" }}>
         {cardType && <Text size={"xs"}>{cardType}</Text>}
         <CloseButton
           size={12}
