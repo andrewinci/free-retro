@@ -29,7 +29,7 @@ export const CardGroup = (props: CardGroupProps) => {
       className={`${props.className} vertical-fade-in`}>
       <CardGroupTitle
         hidden={props.hiddenTitle}
-        text={props.title}
+        text={props.title ?? ""}
         placeholder="Group title"
         readOnly={props.readOnlyTitle}
         onTextChange={(text) =>
