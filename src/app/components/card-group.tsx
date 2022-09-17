@@ -28,8 +28,8 @@ export const CardGroup = (props: CardGroupProps) => {
       ref={drop}
       className={`${props.className} vertical-fade-in`}>
       <CardGroupTitle
-        hidden={props.hiddenTitle}
-        text={props.title ?? ""}
+        hidden={props.hiddenTitle || !props.title}
+        text={props.title}
         placeholder="Group title"
         readOnly={props.readOnlyTitle}
         onTextChange={(text) =>
@@ -82,7 +82,9 @@ const CardGroupContainer = styled.div<{ canDrag?: boolean }>`
   }
 `;
 
-const CardGroupTitle = styled(TextArea)({
-  fontSize: "1.2em",
-  textAlign: "center",
-});
+const CardGroupTitle = styled(TextArea)`
+  font-size: 1.2em;
+  text-align: center;
+  color: ${({ theme }) =>
+    theme.colorScheme === "dark" ? theme.white : theme.black};
+`;
