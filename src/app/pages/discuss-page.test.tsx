@@ -11,7 +11,6 @@ describe("Test discuss view", () => {
         <DiscussPage
           cards={[{ cards: {}, votes: { a: new Counter(1) } }]}
           cardIndex={0}
-          actions={{}}
         />
       </DndProvider>
     );

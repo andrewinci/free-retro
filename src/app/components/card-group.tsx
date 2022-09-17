@@ -85,6 +85,6 @@ const CardGroupContainer = styled.div<{ canDrag?: boolean }>`
 const CardGroupTitle = styled(TextArea)`
   font-size: 1.2em;
   text-align: center;
-  color: ${({ theme }) =>
-    theme.colorScheme === "dark" ? theme.white : theme.black};
+  ${({ theme }) =>
+    `color: ${theme.colorScheme === "dark" ? theme.white : theme.black}`}
 `;

@@ -71,20 +71,21 @@ function BoardColumn(props: {
     <Column
       title={column.title}
       canClose={stage == Stage.AddTickets}
-      reverse={true}
       onDrop={async (src) => await State.moveCardToColumn(src, columnId)}
       onTitleChange={async (t) => await State.setColumnTitle(columnId, t)}
       onAddClick={async () => await State.addEmptyCard(columnId)}
       onCloseClick={async () => await State.deleteColumn(columnId)}
       readOnly={readOnly}>
-      {Object.entries(column.groups ?? {}).map(([groupId, group]) => (
-        <BoardCardGroup
-          key={groupId}
-          cardGroupId={groupId}
-          cardGroup={group}
-          stage={stage}
-          readOnly={readOnly}></BoardCardGroup>
-      ))}
+      {Object.entries(column.groups ?? {})
+        .reverse()
+        .map(([groupId, group]) => (
+          <BoardCardGroup
+            key={groupId}
+            cardGroupId={groupId}
+            cardGroup={group}
+            stage={stage}
+            readOnly={readOnly}></BoardCardGroup>
+        ))}
     </Column>
   );
 }

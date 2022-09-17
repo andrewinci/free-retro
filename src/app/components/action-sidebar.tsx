@@ -64,7 +64,9 @@ export const ActionSidebar = (
 
 const StyledContainer = styled(Container)`
   border-left: 1px solid #e9ecef;
-  border-left-color: ${({ theme }) =>
-    theme.colorScheme === "dark" ? "#2C2E33" : "#e9ecef"};
+  ${({ theme }) =>
+    `border-left-color: ${
+      theme.colorScheme === "dark" ? "#2c2e33" : "#e9ecef"
+    }`}
   min-width: 23em;
 `;

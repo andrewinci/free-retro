@@ -121,6 +121,6 @@ const ColumnContainer = styled(Container)`
 const ColumnTitle = styled(TextArea)`
   font-size: 1.5em;
   text-align: center;
-  color: ${({ theme }) =>
-    theme.colorScheme === "dark" ? theme.white : theme.black};
+  ${({ theme }) =>
+    `color: ${theme.colorScheme === "dark" ? theme.white : theme.black}`}
 `;
