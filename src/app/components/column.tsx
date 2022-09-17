@@ -65,7 +65,14 @@ export const Column = (props: ColumnProps) => {
           <IconPlus />
         </ActionIcon>
       )}
-      {reverse ? children?.reverse() : children}
+      <div
+        style={{
+          overflowY: "auto",
+          height: "calc(100vh - 205px)",
+          padding: "0 8px",
+        }}>
+        {reverse ? children?.reverse() : children}
+      </div>
     </ColumnContainer>
   );
 };
@@ -77,7 +84,6 @@ const ColumnContainer = styled(Container)`
   margin: 4px;
   height: calc(100vh - 125px);
   padding: 2px;
-  overflow-y: auto;
 
   &.horizontal-fade-in {
     @keyframes horizontal-fade-in {
