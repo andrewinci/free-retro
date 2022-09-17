@@ -18,7 +18,6 @@ export const ActionCard = (props: ActionCardProps) => {
   const canClose = useMemo(() => text.length == 0, [text]);
   return (
     <CardContainer
-      id={"-"}
       cardType={date}
       color="#e1efff"
       onCloseClicked={onCloseClicked}
