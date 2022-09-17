@@ -28,7 +28,7 @@ export const CardGroup = (props: CardGroupProps) => {
       ref={drop}
       className={`${props.className} vertical-fade-in`}>
       <CardGroupTitle
-        hidden={props.hiddenTitle || !props.title}
+        hidden={props.hiddenTitle}
         text={props.title}
         placeholder="Group title"
         readOnly={props.readOnlyTitle}
