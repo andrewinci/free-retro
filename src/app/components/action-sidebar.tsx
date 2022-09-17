@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import {
   ActionIcon,
   Center,
@@ -19,10 +20,7 @@ export const ActionSidebar = (
 ) => {
   const { actions, hidden } = props;
   return (
-    <Container
-      {...props}
-      hidden={hidden}
-      style={{ borderLeft: "1px solid #e9ecef", minWidth: "23em" }}>
+    <StyledContainer {...props} hidden={hidden}>
       <Stack mt={90} spacing={10}>
         <Center>
           <Title order={2}>🛠️ Actions</Title>
@@ -53,6 +51,13 @@ export const ActionSidebar = (
             ))}
         </Stack>
       </Stack>
-    </Container>
+    </StyledContainer>
   );
 };
+
+const StyledContainer = styled(Container)`
+  border-left: 1px solid #e9ecef;
+  border-left-color: ${({ theme }) =>
+    theme.colorScheme === "dark" ? "#2C2E33" : "#e9ecef"};
+  min-width: 23em;
+`;
