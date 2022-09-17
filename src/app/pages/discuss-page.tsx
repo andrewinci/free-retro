@@ -45,7 +45,10 @@ export const DiscussPage = (props: DiscussViewProps) => {
             <IconArrowLeft size={100} />
           </ActionIcon>
           <CardGroupContainer>
-            <CardGroup title={card.title} readOnlyTitle={true}>
+            <CardGroup
+              title={card.title}
+              readOnlyTitle={true}
+              hiddenTitle={!card.title}>
               {Object.entries(card.cards).map(
                 ([id, { text, color, originColumn }]) => (
                   <Card
