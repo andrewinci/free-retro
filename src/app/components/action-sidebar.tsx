@@ -31,25 +31,32 @@ export const ActionSidebar = (
           onClick={async () => await State.addAction()}>
           <IconPlus />
         </ActionIcon>
-        <Stack spacing={5}>
-          {Object.entries(actions ?? {})
-            .reverse()
-            .map(([id, { text, done, date }]) => (
-              <ActionCard
-                key={id}
-                text={text}
-                done={done}
-                date={date}
-                onCloseClicked={async () => await State.removeAction(id)}
-                onDoneChange={async (done) =>
-                  await State.setActionDone(id, done)
-                }
-                onTextChange={async (text) =>
-                  await State.setActionText(id, text)
-                }
-              />
-            ))}
-        </Stack>
+        <div
+          style={{
+            overflowY: "auto",
+            height: "calc(100vh - 180px)",
+            padding: "0 8px",
+          }}>
+          <Stack spacing={5}>
+            {Object.entries(actions ?? {})
+              .reverse()
+              .map(([id, { text, done, date }]) => (
+                <ActionCard
+                  key={id}
+                  text={text}
+                  done={done}
+                  date={date}
+                  onCloseClicked={async () => await State.removeAction(id)}
+                  onDoneChange={async (done) =>
+                    await State.setActionDone(id, done)
+                  }
+                  onTextChange={async (text) =>
+                    await State.setActionText(id, text)
+                  }
+                />
+              ))}
+          </Stack>
+        </div>
       </Stack>
     </StyledContainer>
   );
