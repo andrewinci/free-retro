@@ -77,6 +77,7 @@ const ColumnContainer = styled(Container)`
   margin: 4px;
   height: calc(100vh - 125px);
   padding: 2px;
+  overflow-y: auto;
 
   &.horizontal-fade-in {
     @keyframes horizontal-fade-in {
@@ -115,8 +116,6 @@ const ColumnContainer = styled(Container)`
 const ColumnTitle = styled(TextArea)`
   font-size: 1.5em;
   text-align: center;
-
-  @media only screen and (min-width: 734px) {
-    font-size: 2em;
-  }
+  color: ${({ theme }) =>
+    theme.colorScheme === "dark" ? theme.white : theme.black};
 `;
