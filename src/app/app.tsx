@@ -10,8 +10,6 @@ import {
   ActionIcon,
   AppShell,
   Button,
-  Center,
-  Container,
   Grid,
   Group,
   Header,
@@ -20,7 +18,7 @@ import {
   Title,
 } from "@mantine/core";
 import styled from "@emotion/styled";
-import { ActionItem, StageText } from "./components";
+import { ActionSidebar, StageText } from "./components";
 import { IconArrowRight } from "@tabler/icons";
 
 const CurrentView = (props: {
@@ -53,7 +51,6 @@ const CurrentView = (props: {
         <DiscussPage
           cards={State.getAllGroups()}
           cardIndex={discussCardIndex}
-          actions={actions}
         />
       );
     case Stage.End:
@@ -118,41 +115,15 @@ const AppHeader = ({
   );
 };
 
-const SideBar = ({
-  actions,
-  hidden,
-}: {
-  actions?: Record<Id, ActionState>;
-  hidden: boolean;
-}) => (
-  <Container
-    hidden={hidden}
-    style={{ borderLeft: "1px solid #e9ecef", minWidth: "23em" }}>
-    <Stack mt={90}>
-      <Center>
-        <Title>🛠️ Actions</Title>
-      </Center>
-      {Object.entries(actions ?? {}).map(([id, { text, done, date }]) => (
-        <ActionItem
-          key={id}
-          text={text}
-          done={done}
-          date={date}
-          onCloseClicked={async () => await State.removeAction(id)}
-          onDoneChange={async (done) => await State.setActionDone(id, done)}
-          onTextChange={async (text) => await State.setActionText(id, text)}
-        />
-      ))}
-    </Stack>
-  </Container>
-);
-
 export const App = () => {
   const [appState, setState] = useState(getAppState());
   const [sidebarHidden, setSidebarHidden] = useState(true);
   useMemo(() => onStateChange((newState) => setState(newState)), []);
   const { stage, retroName, sessionId, columns, discussCardIndex, actions } =
     appState;
+  useMemo(() => {
+    if (appState.stage == Stage.Discuss) setSidebarHidden(false);
+  }, [appState.stage]);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -167,7 +138,9 @@ export const App = () => {
               stage={stage}
             />
           }
-          aside={<SideBar hidden={sidebarHidden} actions={appState.actions} />}
+          aside={
+            <ActionSidebar hidden={sidebarHidden} actions={appState.actions} />
+          }
           styles={(theme) => ({
             main: {
               backgroundColor:

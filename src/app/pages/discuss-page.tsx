@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { CardGroup, VotesLine, ActionColumn, Card } from "../components";
+import { CardGroup, VotesLine, Card } from "../components";
 
-import { ActionState, CardGroupState, Id } from "../state";
+import { CardGroupState } from "../state";
 import * as State from "../state";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
 import { ActionIcon } from "@mantine/core";
@@ -9,11 +9,10 @@ import { ActionIcon } from "@mantine/core";
 type DiscussViewProps = {
   cards: CardGroupState[];
   cardIndex: number;
-  actions?: Record<Id, ActionState>;
 };
 
 export const DiscussPage = (props: DiscussViewProps) => {
-  const { cards, cardIndex, actions } = props;
+  const { cards, cardIndex } = props;
 
   if (cards.length == 0) {
     console.log("No cards -> nothing to discuss");
@@ -70,7 +69,6 @@ export const DiscussPage = (props: DiscussViewProps) => {
             <IconArrowRight size={100} />
           </ActionIcon>
         </CardDiscussContainer>
-        <ActionColumn actions={actions} />
       </Container>
     </>
   );

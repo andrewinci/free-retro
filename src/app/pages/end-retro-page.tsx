@@ -1,5 +1,4 @@
 import { Button, Text, Stack } from "@mantine/core";
-import { ActionColumn } from "../components";
 import * as State from "../state";
 import { ActionState, Id, Stage } from "../state";
 
@@ -21,12 +20,8 @@ export const EndRetroPage = (props: {
         🚀 Start a new retro
       </Button>
       <Text>✅ Review the actions before starting a new one</Text>
-      <ActionColumn
-        style={{ width: "100%", maxWidth: "500px", marginBottom: "2em" }}
-        actions={actions ?? {}}
-      />
-      <Text mt={-30} style={{ textAlign: "center" }}>
-        <strong>💾 Note:</strong> these actions will be still available in
+      <Text style={{ textAlign: "center" }}>
+        <strong>💾 Note:</strong> actions will be still available in
         <br /> the new retro as long as the same retro id is used.
       </Text>
     </Stack>

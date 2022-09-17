@@ -3,6 +3,56 @@ import styled from "@emotion/styled";
 import { TextArea } from "./textarea";
 import { TopCloseButton } from "./buttons";
 
+export type ActionItemProps = {
+  text: string;
+  done?: boolean;
+  date?: string;
+  onTextChange?: (_: string) => void;
+  onDoneChange?: (_: boolean) => void;
+  onCloseClicked?: () => void;
+};
+
+export const ActionCard = (props: ActionItemProps) => {
+  const { text, done, date, onTextChange, onDoneChange, onCloseClicked } =
+    props;
+  const id = useId();
+  return (
+    <ActionItemContainer className={"action-vertical-fade-in"}>
+      <ActionItemTime>{date}</ActionItemTime>
+      <TopCloseButton
+        hidden={text.length > 0}
+        onClick={(e) => {
+          if (onCloseClicked) {
+            const parent = e.currentTarget.parentElement;
+            if (!parent) throw new Error("Invalid parent");
+            parent.addEventListener("animationend", () => onCloseClicked());
+            parent.classList.remove("action-vertical-fade-in");
+            parent.classList.add("action-vertical-fade-out");
+          }
+        }}
+      />
+      <ActionItemText
+        placeholder="Todo item...."
+        text={text}
+        onTextChange={onTextChange}
+      />
+      <div>
+        <input
+          id={id}
+          type="checkbox"
+          className="checkbox-input"
+          checked={done}
+          onChange={(e) =>
+            onDoneChange ? onDoneChange(e.target.checked) : {}
+          }></input>
+        <label htmlFor={id}>
+          <span className="checkbox"></span>
+        </label>
+      </div>
+    </ActionItemContainer>
+  );
+};
+
 const ActionItemContainer = styled.div`
   border: 1px solid #d4d4d4;
   padding: 1.8em 0.6em 0.6em;
@@ -81,64 +131,14 @@ const ActionItemContainer = styled.div`
   }
 `;
 
-export type ActionItemProps = {
-  text: string;
-  done?: boolean;
-  date?: string;
-  onTextChange?: (_: string) => void;
-  onDoneChange?: (_: boolean) => void;
-  onCloseClicked?: () => void;
-};
-
 const ActionItemText = styled(TextArea)`
-  font-size: 1.2em;
+  font-size: 1em;
 `;
 
 const ActionItemTime = styled.p`
-  font-size: 1em;
+  font-size: 0.8em;
   position: absolute;
   font-style: italic;
   left: 10px;
   top: -10px;
 `;
-
-export const ActionItem = (props: ActionItemProps) => {
-  const { text, done, date, onTextChange, onDoneChange, onCloseClicked } =
-    props;
-  const id = useId();
-  return (
-    <ActionItemContainer className={"action-vertical-fade-in"}>
-      <ActionItemTime>{date}</ActionItemTime>
-      <TopCloseButton
-        hidden={text.length > 0}
-        onClick={(e) => {
-          if (onCloseClicked) {
-            const parent = e.currentTarget.parentElement;
-            if (!parent) throw new Error("Invalid parent");
-            parent.addEventListener("animationend", () => onCloseClicked());
-            parent.classList.remove("action-vertical-fade-in");
-            parent.classList.add("action-vertical-fade-out");
-          }
-        }}
-      />
-      <ActionItemText
-        placeholder="Todo item...."
-        text={text}
-        onTextChange={onTextChange}
-      />
-      <div>
-        <input
-          id={id}
-          type="checkbox"
-          className="checkbox-input"
-          checked={done}
-          onChange={(e) =>
-            onDoneChange ? onDoneChange(e.target.checked) : {}
-          }></input>
-        <label htmlFor={id}>
-          <span className="checkbox"></span>
-        </label>
-      </div>
-    </ActionItemContainer>
-  );
-};
