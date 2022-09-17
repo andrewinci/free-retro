@@ -100,6 +100,7 @@ export const BoardPage = (props: {
     <Group
       noWrap={true}
       position={"center"}
+      mr={20}
       style={{
         display: "inline-flex",
       }}>

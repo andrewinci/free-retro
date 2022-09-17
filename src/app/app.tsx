@@ -9,6 +9,9 @@ import * as State from "./state";
 import {
   ActionIcon,
   AppShell,
+  Button,
+  Center,
+  Container,
   Grid,
   Group,
   Header,
@@ -17,7 +20,7 @@ import {
   Title,
 } from "@mantine/core";
 import styled from "@emotion/styled";
-import { StageText } from "./components";
+import { ActionItem, StageText } from "./components";
 import { IconArrowRight } from "@tabler/icons";
 
 const CurrentView = (props: {
@@ -61,9 +64,11 @@ const CurrentView = (props: {
 const AppHeader = ({
   stage,
   retroName,
+  onShowActionClick,
 }: {
   stage: Stage;
   retroName: string;
+  onShowActionClick: () => void;
 }) => {
   // view selector depending on the app stage
   const changeStage = async (change: "next" | "back") => {
@@ -74,8 +79,9 @@ const AppHeader = ({
       await State.changeStage(change);
     }
   };
-  const showNextButton =
-    stage != Stage.End && stage != Stage.Join && stage != Stage.Create;
+  const showActionButton = stage != Stage.Join && stage != Stage.Create;
+  const showNextButton = showActionButton && stage != Stage.End;
+
   return (
     <Header height={80}>
       <Grid m={0} style={{ height: "100%" }} align={"center"}>
@@ -87,28 +93,63 @@ const AppHeader = ({
             <UnstyledLink href="/">
               <Title order={2}>⚡️ Free retro 🗣️</Title>
             </UnstyledLink>
-            {retroName && <Title order={4}>{`"${retroName}"`}</Title>}
+            {retroName && <Title italic order={5}>{`"${retroName}"`}</Title>}
           </Stack>
         </Grid.Col>
         <Grid.Col span={4}>
-          {showNextButton && (
-            <Group mr={8} position="right">
+          <Group mr={8} position="right" noWrap>
+            <Button
+              hidden={!showActionButton}
+              onClick={() => onShowActionClick()}>
+              Actions
+            </Button>
+            {showNextButton && (
               <ActionIcon
                 title="next step"
                 onClick={async () => await changeStage("next")}
                 size="xl">
                 <IconArrowRight size={100} />
               </ActionIcon>
-            </Group>
-          )}
+            )}
+          </Group>
         </Grid.Col>
       </Grid>
     </Header>
   );
 };
 
+const SideBar = ({
+  actions,
+  hidden,
+}: {
+  actions?: Record<Id, ActionState>;
+  hidden: boolean;
+}) => (
+  <Container
+    hidden={hidden}
+    style={{ borderLeft: "1px solid #e9ecef", minWidth: "23em" }}>
+    <Stack mt={90}>
+      <Center>
+        <Title>🛠️ Actions</Title>
+      </Center>
+      {Object.entries(actions ?? {}).map(([id, { text, done, date }]) => (
+        <ActionItem
+          key={id}
+          text={text}
+          done={done}
+          date={date}
+          onCloseClicked={async () => await State.removeAction(id)}
+          onDoneChange={async (done) => await State.setActionDone(id, done)}
+          onTextChange={async (text) => await State.setActionText(id, text)}
+        />
+      ))}
+    </Stack>
+  </Container>
+);
+
 export const App = () => {
   const [appState, setState] = useState(getAppState());
+  const [sidebarHidden, setSidebarHidden] = useState(true);
   useMemo(() => onStateChange((newState) => setState(newState)), []);
   const { stage, retroName, sessionId, columns, discussCardIndex, actions } =
     appState;
@@ -119,7 +160,14 @@ export const App = () => {
         <AutoWidthAppShell
           style={{ width: "auto" }}
           padding="md"
-          header={<AppHeader retroName={retroName ?? ""} stage={stage} />}
+          header={
+            <AppHeader
+              onShowActionClick={() => setSidebarHidden(!sidebarHidden)}
+              retroName={retroName ?? ""}
+              stage={stage}
+            />
+          }
+          aside={<SideBar hidden={sidebarHidden} actions={appState.actions} />}
           styles={(theme) => ({
             main: {
               backgroundColor:
@@ -149,6 +197,7 @@ const UnstyledLink = styled.a`
 
 const AutoWidthAppShell = styled(AppShell)`
   main {
-    width: auto;
+    width: 100vw;
+    overflow-x: auto;
   }
 `;
