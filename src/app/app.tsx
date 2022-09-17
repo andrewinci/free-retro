@@ -123,6 +123,7 @@ export const App = () => {
     appState;
   useMemo(() => {
     if (appState.stage == Stage.Discuss) setSidebarHidden(false);
+    else if (appState.stage == Stage.Create) setSidebarHidden(true);
   }, [appState.stage]);
 
   return (
@@ -140,15 +141,7 @@ export const App = () => {
           }
           aside={
             <ActionSidebar hidden={sidebarHidden} actions={appState.actions} />
-          }
-          styles={(theme) => ({
-            main: {
-              backgroundColor:
-                theme.colorScheme === "dark"
-                  ? theme.colors.dark[8]
-                  : theme.colors.gray[0],
-            },
-          })}>
+          }>
           <CurrentView
             sessionId={sessionId}
             columnsData={columns ?? {}}
