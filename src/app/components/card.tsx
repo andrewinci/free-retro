@@ -9,6 +9,7 @@ import {
   Paper,
   Text,
 } from "@mantine/core";
+import { useMemo } from "react";
 
 type CardContainerProps = {
   id: Id;
@@ -17,6 +18,7 @@ type CardContainerProps = {
   color?: string;
   children?: React.ReactNode;
   canDrag?: boolean;
+  canClose?: boolean;
   cardType?: string;
   onCloseClicked?: () => void;
   onDrop?: (id: Id) => void;
@@ -29,8 +31,9 @@ type CardProps = {
 
 export const Card = (props: CardProps & CardContainerProps) => {
   const { text, readOnly, blur, onTextChange } = props;
+  const canClose = useMemo(() => text.length == 0, [text]);
   return (
-    <CardContainer {...props}>
+    <CardContainer {...props} canClose={canClose}>
       <TextArea
         // must be readonly if blurred
         readOnly={readOnly || blur}
@@ -46,7 +49,7 @@ export const Card = (props: CardProps & CardContainerProps) => {
 
 export const CardContainer = (props: CardContainerProps) => {
   const { readOnly, blur, color, onCloseClicked } = props;
-  const { cardType, canDrag, children } = props;
+  const { cardType, canDrag, children, canClose } = props;
   const { classes, cx } = useStyles({ color });
   const [{ dragging }, drag] = useDrag(
     () => ({
@@ -75,7 +78,7 @@ export const CardContainer = (props: CardContainerProps) => {
         {cardType && <Text size={"xs"}>{cardType}</Text>}
         <CloseButton
           size={12}
-          hidden={readOnly || blur}
+          hidden={!canClose || readOnly || blur}
           onClick={(_) => {
             if (onCloseClicked) onCloseClicked();
           }}

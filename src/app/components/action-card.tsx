@@ -1,6 +1,7 @@
 import { TextArea } from "./textarea";
 import { CardContainer } from "./card";
 import { Checkbox, Grid } from "@mantine/core";
+import { useMemo } from "react";
 
 export type ActionCardProps = {
   text: string;
@@ -14,12 +15,14 @@ export type ActionCardProps = {
 export const ActionCard = (props: ActionCardProps) => {
   const { text, done, date, onTextChange, onDoneChange, onCloseClicked } =
     props;
+  const canClose = useMemo(() => text.length == 0, [text]);
   return (
     <CardContainer
       id={"-"}
       cardType={date}
       color="#e1efff"
-      onCloseClicked={onCloseClicked}>
+      onCloseClicked={onCloseClicked}
+      canClose={canClose}>
       <Grid>
         <Grid.Col span={11}>
           <TextArea
