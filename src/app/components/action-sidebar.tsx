@@ -33,7 +33,7 @@ export const ActionSidebar = (
           onClick={async () => await State.addAction()}>
           <IconPlus />
         </ActionIcon>
-        <Stack spacing={1}>
+        <Stack spacing={5}>
           {Object.entries(actions ?? {})
             .reverse()
             .map(([id, { text, done, date }]) => (

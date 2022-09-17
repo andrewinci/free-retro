@@ -11,26 +11,42 @@ import {
 } from "@mantine/core";
 
 type CardContainerProps = {
-  className?: string;
+  id: Id;
   readOnly?: boolean;
   blur?: boolean;
+  color?: string;
   children?: React.ReactNode;
   canDrag?: boolean;
+  cardType?: string;
   onCloseClicked?: () => void;
-  onTextChange?: (_: string) => void;
   onDrop?: (id: Id) => void;
-};
+} & DefaultProps;
 
 type CardProps = {
-  id: Id;
   text: string;
-  cardType?: string;
-  color?: string;
+  onTextChange?: (_: string) => void;
 } & DefaultProps;
 
 export const Card = (props: CardProps & CardContainerProps) => {
-  const { text, readOnly, blur, color, onCloseClicked, onTextChange } = props;
-  const { cardType, canDrag } = props;
+  const { text, readOnly, blur, onTextChange } = props;
+  return (
+    <CardContainer {...props}>
+      <TextArea
+        // must be readonly if blurred
+        readOnly={readOnly || blur}
+        text={blur ? text.replace(/[^\s]/g, "*") : text}
+        // this setting will update the text word by word
+        // instead of char by char
+        reduceTextChangeUpdates={true}
+        onTextChange={(newText) => (onTextChange ? onTextChange(newText) : {})}
+      />
+    </CardContainer>
+  );
+};
+
+export const CardContainer = (props: CardContainerProps) => {
+  const { readOnly, blur, color, onCloseClicked } = props;
+  const { cardType, canDrag, children } = props;
   const { classes, cx } = useStyles({ color });
   const [{ dragging }, drag] = useDrag(
     () => ({
@@ -41,7 +57,7 @@ export const Card = (props: CardProps & CardContainerProps) => {
         dragging: monitor.isDragging(),
       }),
     }),
-    [canDrag ?? false, text]
+    [canDrag ?? false]
   );
   return (
     <Paper
@@ -59,32 +75,13 @@ export const Card = (props: CardProps & CardContainerProps) => {
         {cardType && <Text size={"xs"}>{cardType}</Text>}
         <CloseButton
           size={12}
-          hidden={text.length > 0 || readOnly || blur}
-          onClick={(e) => {
-            if (onCloseClicked) {
-              const cardGroup =
-                e.currentTarget.parentElement?.parentElement?.parentElement;
-              if (!cardGroup) throw new Error("Invalid parent");
-              // wait for the animation to finish before calling
-              // the on close event handler
-              cardGroup.addEventListener("animationend", () =>
-                onCloseClicked()
-              );
-              cardGroup.classList.remove("vertical-fade-in");
-              cardGroup.classList.add("vertical-fade-out");
-            }
+          hidden={readOnly || blur}
+          onClick={(_) => {
+            if (onCloseClicked) onCloseClicked();
           }}
         />
       </Group>
-      <TextArea
-        // must be readonly if blurred
-        readOnly={readOnly || blur}
-        text={blur ? text.replace(/[^\s]/g, "*") : text}
-        // this setting will update the text word by word
-        // instead of char by char
-        reduceTextChangeUpdates={true}
-        onTextChange={(newText) => (onTextChange ? onTextChange(newText) : {})}
-      />
+      {children}
     </Paper>
   );
 };
