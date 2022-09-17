@@ -12,7 +12,7 @@ import {
 import { useMemo } from "react";
 
 type CardContainerProps = {
-  id: Id;
+  id?: Id;
   readOnly?: boolean;
   blur?: boolean;
   color?: string;
@@ -75,7 +75,11 @@ export const CardContainer = (props: CardContainerProps) => {
       radius="xs"
       p="md">
       <Group position={"right"} mt={-10} mr={-10} style={{ minHeight: "12px" }}>
-        {cardType && <Text size={"xs"}>{cardType}</Text>}
+        {cardType && (
+          <Text color={"black"} size={"xs"}>
+            {cardType}
+          </Text>
+        )}
         <CloseButton
           size={12}
           hidden={!canClose || readOnly || blur}
