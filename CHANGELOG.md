@@ -1,3 +1,21 @@
+# [2.3.0](https://github.com/andrewinci/free-retro/compare/v2.2.0...v2.3.0) (2022-09-22)
+
+
+### Bug Fixes
+
+* action bar size ([dc28d97](https://github.com/andrewinci/free-retro/commit/dc28d97c8ee46a2d0bc247e8905767e8a4b4a104))
+* card title ([70fbe15](https://github.com/andrewinci/free-retro/commit/70fbe1523d6b7c7084c1160ebad283d51fe466ef))
+* disable reverse ([31683e9](https://github.com/andrewinci/free-retro/commit/31683e9b2bf45366198ac648e0edd9e9b189173d))
+* only allow to delete empty cards ([e35c84d](https://github.com/andrewinci/free-retro/commit/e35c84dfe701e06da45f51cef2b79d26b0523a6a))
+* Scrollable action sidebar ([c2f4cda](https://github.com/andrewinci/free-retro/commit/c2f4cdae6cac4d49e3002e373c54cdb51cfca2b8))
+* Show title even if empty in edit mode ([82c6467](https://github.com/andrewinci/free-retro/commit/82c64671c24a0cbae367603d2973d610d7f3e3df))
+
+
+### Features
+
+* Hide empty group title in discuss view ([bfac95a](https://github.com/andrewinci/free-retro/commit/bfac95a76fcac0c12fc1926e8fd95530d2c1a9f1))
+* use card component instead of custom action item ([5d0e59f](https://github.com/andrewinci/free-retro/commit/5d0e59f470a3218c8e91bc8907d3007ab1a78cb6))
+
 # [2.2.0](https://github.com/andrewinci/free-retro/compare/v2.1.0...v2.2.0) (2022-09-06)
 
 
