@@ -1664,14 +1664,14 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@mantine/core@^5.4.2":
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.6.0.tgz#084cfadcb22c9ea20eccfce508da8227b8798fc4"
-  integrity sha512-sctx5GcfACKJ5Tj0pp2+GbBxQGxIT4NSxHiYSuSJF1TxxWF9r8o/fOk6ixpw1zke7gDfR3LRAHz67EnjIg8ESg==
+"@mantine/core@^5.6.1":
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.7.2.tgz#0f78f29ecbb8daebffbbe4a956ad6276caa7f6d3"
+  integrity sha512-cDDvlYhDCzREfIZ33CRLQpXlv+UXRb4VBZWbfYxWXTRPV6gKNGXwlVmXcdDUJCcjRWLh9Wc4erWT8gdTAbvzsQ==
   dependencies:
     "@floating-ui/react-dom-interactions" "^0.10.1"
-    "@mantine/styles" "5.6.0"
-    "@mantine/utils" "5.6.0"
+    "@mantine/styles" "5.7.2"
+    "@mantine/utils" "5.7.2"
     "@radix-ui/react-scroll-area" "1.0.0"
     react-textarea-autosize "8.3.4"
 
@@ -1680,18 +1680,18 @@
   resolved "https://registry.yarnpkg.com/@mantine/hooks/-/hooks-5.2.5.tgz#c9d032bde426919b75b7c36afbe6b1b7f9f7615a"
   integrity sha512-FLSITrq5bJ1oRAhYq8w8oDxC4FDpsiHEDJdnVD00WCmZ/Cc9vR5RSTYLhQqiB76Gw702X9WtEHy55yaHTng6Ug==
 
-"@mantine/styles@5.6.0":
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-5.6.0.tgz#2c7e66f9978e3c9cd75ae869c16e43b2bc67a679"
-  integrity sha512-dVhk9EFSk2XGgemT595iyIbLo4HBDmzkJtpN1OqxPdg+dHGBbx8BogA+JsheXgklhUpPGnrLLFzOYY9aRjWyaA==
+"@mantine/styles@5.7.2":
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-5.7.2.tgz#22b87c899997110fac682e0868c3d292f198359b"
+  integrity sha512-z5Mxf6Zp7lXzfIM77XkZ68Wp62lDSMJwEMoKm0Kz5tRGV4oMQwirbZf4ZJznZKK3HkaT7ct1ScxnCouEWzlKUg==
   dependencies:
     clsx "1.1.1"
     csstype "3.0.9"
 
-"@mantine/utils@5.6.0":
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.6.0.tgz#e0515e9071704c3f91509cb0629383dbc677c86c"
-  integrity sha512-HFe/B/Z6R9j7n0pcumaAl0yYeM+EbRPlZht0t5CP79nZcgz0ANUsnp3f3SGJA/Bc2spO0hd1Cr0daBb1liBMRg==
+"@mantine/utils@5.7.2":
+  version "5.7.2"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.7.2.tgz#ae2eb5fd73615aa3d92d41d595a953d5325809e9"
+  integrity sha512-LE/ckEX+d1f5GOP1ARNEldUYybOp3Tualx5IYgeV06oyBOaeJaXs9Tco2NTM6j+opZwUbNuYEUmtp4bkArhpOg==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
