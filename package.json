@@ -125,7 +125,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mantine/core": "^5.4.2",
-    "@mantine/hooks": "^5.2.5",
+    "@mantine/hooks": "^5.4.2",
     "@tabler/icons": "^1.102.0",
     "automerge": "^1.0.1-preview.7",
     "axios": "^0.27.2",
