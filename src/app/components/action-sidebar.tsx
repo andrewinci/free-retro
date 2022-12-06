@@ -40,6 +40,22 @@ export const ActionSidebar = (
           <Stack spacing={5}>
             {Object.entries(actions ?? {})
               .reverse()
+              .sort(
+                ([_, { done, date }], [__, { done: done2, date: date2 }]) => {
+                  if (done == done2) {
+                    if (Date.parse(date) < Date.parse(date2)) {
+                      return 1;
+                    } else {
+                      return -1;
+                    }
+                  }
+                  if (done) {
+                    return 1;
+                  } else {
+                    return -1;
+                  }
+                }
+              )
               .map(([id, { text, done, date }]) => (
                 <ActionCard
                   key={id}
