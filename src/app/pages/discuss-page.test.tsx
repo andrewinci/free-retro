@@ -1,4 +1,4 @@
-import { Counter } from "automerge";
+import { Counter } from "@automerge/automerge";
 import { DndProvider } from "react-dnd";
 import { TestBackend } from "react-dnd-test-backend";
 import renderer from "react-test-renderer";

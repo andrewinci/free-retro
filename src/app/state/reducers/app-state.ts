@@ -1,5 +1,5 @@
 import { changeState, getAppState } from "../automerge-state";
-import * as Automerge from "automerge";
+import * as Automerge from "@automerge/automerge";
 import { randomId } from "../helper/random";
 import { ColumnState, Stage } from "../model";
 import { getAllGroups } from "../state";
@@ -36,9 +36,13 @@ export const changeDiscussCard = (changeType: "increment" | "decrement") => {
 
     switch (changeType) {
       case "decrement":
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         state.discussCardIndex.decrement();
         break;
       case "increment":
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         state.discussCardIndex.increment();
         break;
     }

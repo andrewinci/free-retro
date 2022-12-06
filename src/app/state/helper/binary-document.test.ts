@@ -1,5 +1,5 @@
 import { toBase64, toBinaryDocument } from "./binary-document";
-import * as Automerge from "automerge";
+import * as Automerge from "@automerge/automerge";
 
 describe("base64 to binaryDocumnet converter", () => {
   test("round trip", () => {

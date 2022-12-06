@@ -3,6 +3,8 @@ import process, { exit } from "process";
 
 import { build, createServer } from "vite";
 import react from "@vitejs/plugin-react";
+import wasm from "vite-plugin-wasm";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 const esbuildRun = (options) =>
   esbuild
@@ -35,9 +37,7 @@ const buildApp = async () =>
     build: {
       outDir: "./dist/app",
     },
-    esbuild: {
-      jsxInject: `import * as React from 'react'`,
-    },
+    plugins: [topLevelAwait(), wasm(), react()],
   });
 
 const main = async () => {
@@ -63,9 +63,16 @@ const main = async () => {
     case "serve":
       {
         const server = await createServer({
-          plugins: [react()],
+          plugins: [topLevelAwait(), wasm(), react()],
           // eslint-disable-next-line no-undef
           root: __dirname,
+          optimizeDeps: {
+            // This is necessary because otherwise `vite dev` includes two separate
+            // versions of the JS wrapper. This causes problems because the JS
+            // wrapper has a module level variable to track JS side heap
+            // allocations, initializing this twice causes horrible breakage
+            exclude: ["@automerge/automerge-wasm"],
+          },
         });
         await server.listen();
         server.printUrls();

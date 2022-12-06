@@ -1,5 +1,5 @@
 import { arrToRecord, migrateState } from "./mapper";
-import * as Automerge from "automerge";
+import * as Automerge from "@automerge/automerge";
 import { AppStateV0 } from "./model-v0";
 import {
   randomId,

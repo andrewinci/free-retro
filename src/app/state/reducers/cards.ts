@@ -1,6 +1,6 @@
 import { changeState } from "../automerge-state";
 import { getUser } from "../user";
-import * as Automerge from "automerge";
+import * as Automerge from "@automerge/automerge";
 import { Id, ColumnState } from "../model";
 import { findCard, findGroup, randomId } from "../helper";
 import { getRemainingUserVotes } from "../votes";
@@ -46,9 +46,13 @@ export const updateGroupVotes = (
     }
     switch (changeType) {
       case "decrement":
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         group.votes[userId].decrement();
         break;
       case "increment":
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         if (getRemainingUserVotes() > 0) group.votes[userId].increment();
         break;
     }

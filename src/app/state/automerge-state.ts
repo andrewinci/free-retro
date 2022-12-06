@@ -1,10 +1,17 @@
-import * as Automerge from "automerge";
+import * as Automerge from "@automerge/automerge";
 import { toBinaryDocument } from "./helper";
 import { randomId } from "./helper/random";
 import { broadcast } from "../ws";
 import { ActionState, AppState, Id, Stage } from "./model";
 
-const observable = new Automerge.Observable();
+const patchCallbackHandlers: Automerge.PatchCallback<AppState>[] = [];
+const patchCallback: Automerge.PatchCallback<AppState> = (
+  patch,
+  before,
+  after
+) => {
+  patchCallbackHandlers.forEach((h) => h(patch, before, after));
+};
 let appState: AppState;
 
 export const getAppState = () => {
@@ -18,7 +25,7 @@ export const initAppState = (
   actions: Record<Id, ActionState> | undefined = undefined
 ) => {
   appState = Automerge.change(
-    Automerge.init<AppState>({ observable }),
+    Automerge.init<AppState>({ patchCallback }),
     (state) => {
       // set initial values
       state.sessionId = sessionId ?? randomId();
@@ -34,8 +41,8 @@ export const initAppState = (
 };
 
 export function onStateChange(f: (newState: AppState) => void) {
-  observable.observe(appState, (a, b, newState) => {
-    f(newState);
+  patchCallbackHandlers.push((_patch, _before, after: AppState) => {
+    f(after);
   });
 }
 

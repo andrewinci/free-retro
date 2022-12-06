@@ -18,7 +18,7 @@ import {
   CardStateV0,
   ColumnStateV0,
 } from "./model-v0";
-import * as Automerge from "automerge";
+import * as Automerge from "@automerge/automerge";
 
 export function arrToRecord<T>(
   arr: [Id, T][] | undefined

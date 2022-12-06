@@ -1,7 +1,7 @@
 import * as AutomergeState from "../automerge-state";
 import { AppState, Stage } from "../model";
 import { changeDiscussCard, changeStage } from ".";
-import * as Automerge from "automerge";
+import * as Automerge from "@automerge/automerge";
 
 describe("reducers", () => {
   let mockAppState = Automerge.init<AppState>();
