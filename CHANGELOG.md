@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/andrewinci/free-retro/compare/v2.3.0...v2.4.0) (2022-12-06)
+
+
+### Features
+
+* sort actions ([399cccb](https://github.com/andrewinci/free-retro/commit/399cccb2680e89c97136dd1c18c3f72960a20b2c))
+
 # [2.3.0](https://github.com/andrewinci/free-retro/compare/v2.2.0...v2.3.0) (2022-09-22)
 
 
