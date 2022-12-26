@@ -122,7 +122,7 @@
     "@emotion/styled": "^11.10.5",
     "@mantine/core": "^5.9.2",
     "@mantine/hooks": "^5.9.2",
-    "@tabler/icons": "^1.115.0",
+    "@tabler/icons": "^1.118.0",
     "axios": "^1.2.1",
     "buffer": "^6.0.3",
     "dayjs": "^1.11.6",
