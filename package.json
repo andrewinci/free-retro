@@ -138,7 +138,7 @@
     "@aws-cdk/aws-apigatewayv2-alpha": "^2.53.0-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.53.0-alpha.0",
     "@aws-sdk/client-apigatewaymanagementapi": "^3.231.0",
-    "@aws-sdk/client-dynamodb": "^3.226.0",
+    "@aws-sdk/client-dynamodb": "^3.238.0",
     "@aws-sdk/util-dynamodb": "^3.231.0",
     "@semantic-release/changelog": "^6.0.2",
     "@semantic-release/commit-analyzer": "^9.0.2",
