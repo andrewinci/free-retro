@@ -120,7 +120,7 @@
     "@automerge/automerge": "^2.0.1-alpha.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mantine/core": "^5.9.2",
+    "@mantine/core": "^5.9.3",
     "@mantine/hooks": "^5.9.2",
     "@tabler/icons": "^1.115.0",
     "axios": "^1.2.1",
