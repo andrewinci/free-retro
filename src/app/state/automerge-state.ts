@@ -50,7 +50,7 @@ export async function changeState(
   f: (mutableState: AppState) => void,
   recreateState = false
 ) {
-  appState = Automerge.change(appState, (s) => f(s));
+  appState = Automerge.change(appState, (s) => f(s as AppState));
   // broadcast to all clients
   await broadcast(appState.sessionId, appState, recreateState);
 }
