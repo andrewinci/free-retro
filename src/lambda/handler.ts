@@ -11,6 +11,7 @@ export const lambdaHandler = async (
   event: APIGatewayProxyEvent,
   _: Context
 ): Promise<APIGatewayProxyResult> => {
+  console.log("Event", event);
   const { routeKey, domainName, connectionId } = event.requestContext;
   const body = parseBody(event.body);
   if (routeKey == "$default" && body && connectionId) {

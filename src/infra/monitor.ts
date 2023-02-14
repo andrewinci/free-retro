@@ -142,7 +142,7 @@ export class Monitoring extends Construct {
       // monitor dynamodb throttled
       new cw.Alarm(this, `dynamo-throttled-alarm`, {
         alarmName: `${name} dynamo throttled`,
-        metric: table.metricThrottledRequestsForOperations(),
+        metric: table.metricThrottledRequests(),
         threshold: 2,
         evaluationPeriods: 1,
         treatMissingData: TreatMissingData.NOT_BREACHING,
