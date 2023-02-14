@@ -9,7 +9,7 @@ describe("reducers", () => {
     .spyOn(AutomergeState, "getAppState")
     .mockImplementation(() => mockAppState);
   jest.spyOn(AutomergeState, "changeState").mockImplementation(async (f) => {
-    mockAppState = Automerge.change(mockAppState, (s) => f(s));
+    mockAppState = Automerge.change(mockAppState, (s) => f(s as AppState));
   });
 
   beforeEach(() => {
