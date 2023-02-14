@@ -70,7 +70,7 @@ const AppHeader = ({
   // view selector depending on the app stage
   const changeStage = async (change: "next" | "back") => {
     const res = confirm(
-      `Before moving to the next stage, make sure that everyone is ready to go ahead.\nClick ok to go to the next stage`
+      `Before moving to another stage of the retro, make sure that everyone is ready.\n\nClick ok to navigate`
     );
     if (res) {
       await State.changeStage(change);
@@ -78,7 +78,7 @@ const AppHeader = ({
   };
   const showActionButton = stage != Stage.Join && stage != Stage.Create;
   const showNextButton = showActionButton && stage != Stage.End;
-  const showPreviousButton = showActionButton && stage != Stage.AddTickets;
+  const showPreviousButton = showNextButton && stage != Stage.AddTickets;
 
   return (
     <Header height={80}>
@@ -103,7 +103,7 @@ const AppHeader = ({
             </Button>
             {showPreviousButton && (
               <ActionIcon
-                title="previous step"
+                title="Previous step"
                 onClick={async () => await changeStage("back")}
                 size="xl">
                 <IconArrowLeft size={100} />
@@ -111,7 +111,7 @@ const AppHeader = ({
             )}
             {showNextButton && (
               <ActionIcon
-                title="next step"
+                title="Next step"
                 onClick={async () => await changeStage("next")}
                 size="xl">
                 <IconArrowRight size={100} />
