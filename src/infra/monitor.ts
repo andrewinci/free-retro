@@ -142,7 +142,7 @@ export class Monitoring extends Construct {
       // monitor dynamodb throttled
       new cw.Alarm(this, `dynamo-throttled-alarm`, {
         alarmName: `${name} dynamo throttled`,
-        metric: table.metricThrottledRequests(),
+        metric: table.metricThrottledRequestsForOperations(),
         threshold: 2,
         evaluationPeriods: 1,
         treatMissingData: TreatMissingData.NOT_BREACHING,
@@ -152,7 +152,7 @@ export class Monitoring extends Construct {
       new cw.Alarm(this, `dynamo-read-capacity-alarm`, {
         alarmName: `${name} dynamo read capacity`,
         metric: new cw.MathExpression({
-          period: Duration.minutes(1),
+          period: Duration.minutes(5),
           expression: "m1/PERIOD(m1)",
           usingMetrics: {
             m1: table.metricConsumedReadCapacityUnits(),
@@ -167,7 +167,7 @@ export class Monitoring extends Construct {
       new cw.Alarm(this, `dynamo-write-capacity-alarm`, {
         alarmName: `${name} dynamo write capacity`,
         metric: new cw.MathExpression({
-          period: Duration.minutes(1),
+          period: Duration.minutes(5),
           expression: "m1/PERIOD(m1)",
           usingMetrics: {
             m1: table.metricConsumedWriteCapacityUnits(),
