@@ -14,12 +14,14 @@ import {
   Group,
   Header,
   MantineProvider,
+  Menu,
   Stack,
+  Text,
   Title,
 } from "@mantine/core";
 import styled from "@emotion/styled";
 import { ActionSidebar, StageText } from "./components";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import { IconArrowLeft, IconArrowRight, IconClock } from "@tabler/icons";
 
 const CurrentView = (props: {
   stage: Stage;
@@ -56,6 +58,38 @@ const CurrentView = (props: {
     case Stage.End:
       return <EndRetroPage sessionId={sessionId} actions={actions} />;
   }
+};
+
+const Timer = () => {
+  const isTicking = false;
+  return (
+    <Menu shadow="md" width={200}>
+      <Menu.Target>
+        <Button variant="subtle">
+          <Group spacing={2}>
+            {isTicking && (
+              <Text weight={"bold"} color="red">
+                10:09
+              </Text>
+            )}
+            <IconClock color={isTicking ? "red" : undefined} size={25} />
+          </Group>
+        </Button>
+      </Menu.Target>
+      {isTicking && (
+        <Menu.Dropdown>
+          <Menu.Item color={"red"}>Reset</Menu.Item>
+        </Menu.Dropdown>
+      )}
+      {!isTicking && (
+        <Menu.Dropdown>
+          <Menu.Item>2 minutes</Menu.Item>
+          <Menu.Item>5 minutes</Menu.Item>
+          <Menu.Item>10 minutes</Menu.Item>
+        </Menu.Dropdown>
+      )}
+    </Menu>
+  );
 };
 
 const AppHeader = ({
@@ -96,27 +130,28 @@ const AppHeader = ({
         </Grid.Col>
         <Grid.Col span={4}>
           <Group mr={8} position="right" noWrap>
+            {stage == Stage.AddTickets && <Timer />}
             <Button
               hidden={!showActionButton}
               onClick={() => onShowActionClick()}>
               Actions
             </Button>
-            {showPreviousButton && (
-              <ActionIcon
-                title="Previous step"
-                onClick={async () => await changeStage("back")}
-                size="xl">
-                <IconArrowLeft size={100} />
-              </ActionIcon>
-            )}
-            {showNextButton && (
-              <ActionIcon
-                title="Next step"
-                onClick={async () => await changeStage("next")}
-                size="xl">
-                <IconArrowRight size={100} />
-              </ActionIcon>
-            )}
+
+            <ActionIcon
+              disabled={!showPreviousButton}
+              title="Previous step"
+              onClick={async () => await changeStage("back")}
+              size="xl">
+              <IconArrowLeft size={100} />
+            </ActionIcon>
+
+            <ActionIcon
+              disabled={!showNextButton}
+              title="Next step"
+              onClick={async () => await changeStage("next")}
+              size="xl">
+              <IconArrowRight size={100} />
+            </ActionIcon>
           </Group>
         </Grid.Col>
       </Grid>
