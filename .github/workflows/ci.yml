@@ -15,14 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v3
+      - uses: volta-cli/action@v3
+
+      - name: Use node cache
+        uses: actions/cache@v3
         with:
-          node-version: 14.x
-          cache: "yarn"
-      - run: npm install -g yarn
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
         run: yarn install
+
       - name: Lint
         run: yarn lint
 
@@ -31,6 +34,7 @@ jobs:
         run: yarn coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
       - name: Test
         if: ${{ github.actor == 'dependabot[bot]' }}
         run: yarn test

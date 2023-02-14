@@ -53,7 +53,7 @@ export class WSBackend extends Construct {
     // lambda to deal with the requests
     this.lambdaFunction = new lambda.Function(this, `${name}-lambda`, {
       functionName: `${name}-lambda`,
-      runtime: lambda.Runtime.NODEJS_14_X,
+      runtime: lambda.Runtime.NODEJS_16_X,
       code: lambda.Code.fromAsset("dist/lambda"),
       handler: "dist/lambda/handler.lambdaHandler",
       timeout: Duration.seconds(lambdaTimeout),
