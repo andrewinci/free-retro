@@ -19,7 +19,7 @@ import {
 } from "@mantine/core";
 import styled from "@emotion/styled";
 import { ActionSidebar, StageText } from "./components";
-import { IconArrowRight } from "@tabler/icons";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
 
 const CurrentView = (props: {
   stage: Stage;
@@ -78,6 +78,7 @@ const AppHeader = ({
   };
   const showActionButton = stage != Stage.Join && stage != Stage.Create;
   const showNextButton = showActionButton && stage != Stage.End;
+  const showPreviousButton = showActionButton && stage != Stage.AddTickets;
 
   return (
     <Header height={80}>
@@ -100,6 +101,14 @@ const AppHeader = ({
               onClick={() => onShowActionClick()}>
               Actions
             </Button>
+            {showPreviousButton && (
+              <ActionIcon
+                title="previous step"
+                onClick={async () => await changeStage("back")}
+                size="xl">
+                <IconArrowLeft size={100} />
+              </ActionIcon>
+            )}
             {showNextButton && (
               <ActionIcon
                 title="next step"

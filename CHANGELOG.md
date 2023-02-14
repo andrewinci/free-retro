@@ -1,3 +1,15 @@
+# [2.5.0](https://github.com/andrewinci/free-retro/compare/v2.4.0...v2.5.0) (2023-02-14)
+
+
+### Bug Fixes
+
+* lint ([2755106](https://github.com/andrewinci/free-retro/commit/275510615c69cb765c0b54f09d23ef1400774f9f))
+
+
+### Features
+
+* add previous button ([b19ca8a](https://github.com/andrewinci/free-retro/commit/b19ca8a52adc4b958bfa380a6ccbebd965bbaf1a))
+
 # [2.4.0](https://github.com/andrewinci/free-retro/compare/v2.3.0...v2.4.0) (2022-12-06)
 
 
