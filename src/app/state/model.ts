@@ -42,7 +42,7 @@ export type ActionState = {
 };
 
 export type AppState = {
-  timer?: { start: number; duration: number };
+  timer: { start: number; duration: number } | null;
   sessionId: string;
   retroName?: string;
   stage: Stage;
