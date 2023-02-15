@@ -20,6 +20,7 @@ import {
 import styled from "@emotion/styled";
 import { ActionSidebar, StageText } from "./components";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import { Timer } from "./components/timer";
 
 const CurrentView = (props: {
   stage: Stage;
@@ -70,7 +71,7 @@ const AppHeader = ({
   // view selector depending on the app stage
   const changeStage = async (change: "next" | "back") => {
     const res = confirm(
-      `Before moving to the next stage, make sure that everyone is ready to go ahead.\nClick ok to go to the next stage`
+      `Before moving to another stage of the retro, make sure that everyone is ready.\n\nClick ok to navigate`
     );
     if (res) {
       await State.changeStage(change);
@@ -78,7 +79,7 @@ const AppHeader = ({
   };
   const showActionButton = stage != Stage.Join && stage != Stage.Create;
   const showNextButton = showActionButton && stage != Stage.End;
-  const showPreviousButton = showActionButton && stage != Stage.AddTickets;
+  const showPreviousButton = showNextButton && stage != Stage.AddTickets;
 
   return (
     <Header height={80}>
@@ -96,27 +97,28 @@ const AppHeader = ({
         </Grid.Col>
         <Grid.Col span={4}>
           <Group mr={8} position="right" noWrap>
+            {stage == Stage.AddTickets && <Timer />}
             <Button
               hidden={!showActionButton}
               onClick={() => onShowActionClick()}>
               Actions
             </Button>
-            {showPreviousButton && (
-              <ActionIcon
-                title="previous step"
-                onClick={async () => await changeStage("back")}
-                size="xl">
-                <IconArrowLeft size={100} />
-              </ActionIcon>
-            )}
-            {showNextButton && (
-              <ActionIcon
-                title="next step"
-                onClick={async () => await changeStage("next")}
-                size="xl">
-                <IconArrowRight size={100} />
-              </ActionIcon>
-            )}
+
+            <ActionIcon
+              disabled={!showPreviousButton}
+              title="Previous step"
+              onClick={async () => await changeStage("back")}
+              size="xl">
+              <IconArrowLeft size={100} />
+            </ActionIcon>
+
+            <ActionIcon
+              disabled={!showNextButton}
+              title="Next step"
+              onClick={async () => await changeStage("next")}
+              size="xl">
+              <IconArrowRight size={100} />
+            </ActionIcon>
           </Group>
         </Grid.Col>
       </Grid>

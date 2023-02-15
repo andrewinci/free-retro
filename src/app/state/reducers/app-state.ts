@@ -4,6 +4,23 @@ import { randomId } from "../helper/random";
 import { ColumnState, Stage } from "../model";
 import { getAllGroups } from "../state";
 
+export const startTimer = (seconds: number) => {
+  changeState((state) => {
+    state.timer = {
+      // utc unix timestamp
+      start: new Date().getTime(),
+      // seconds
+      duration: seconds,
+    };
+  });
+};
+
+export const resetTimer = () => {
+  changeState((state) => {
+    state.timer = null;
+  });
+};
+
 export const createRetro = (retroName: string, initialColumns: string[]) =>
   changeState((state) => {
     state.retroName = retroName;
