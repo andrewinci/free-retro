@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/andrewinci/free-retro/compare/v2.5.0...v2.6.0) (2023-02-15)
+
+
+### Features
+
+* Add timer ([#175](https://github.com/andrewinci/free-retro/issues/175)) ([94c6b40](https://github.com/andrewinci/free-retro/commit/94c6b4044cb7caf0677b60b2d7ffc3418e46278e))
+
 # [2.5.0](https://github.com/andrewinci/free-retro/compare/v2.4.0...v2.5.0) (2023-02-14)
 
 
