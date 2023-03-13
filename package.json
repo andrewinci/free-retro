@@ -163,7 +163,7 @@
     "constructs": "^10.1.250",
     "coveralls": "^3.1.1",
     "esbuild": "^0.17.11",
-    "esbuild-sass-plugin": "^2.4.3",
+    "esbuild-sass-plugin": "^2.4.5",
     "esbuild-serve": "^1.0.1",
     "eslint": "^8.29.0",
     "eslint-plugin-react": "^7.32.2",
