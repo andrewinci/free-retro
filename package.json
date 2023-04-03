@@ -180,7 +180,7 @@
     "prettier": "^2.8.5",
     "react-dnd-test-backend": "^16.0.1",
     "react-test-renderer": "^18.2.0",
-    "semantic-release": "^19.0.5",
+    "semantic-release": "^21.0.1",
     "stylelint": "^14.16.1",
     "stylelint-config-standard": "^29.0.0",
     "ts-jest": "^29.0.5",
