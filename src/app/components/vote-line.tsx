@@ -1,6 +1,6 @@
 import { Center, DefaultProps, Group } from "@mantine/core";
 import styled from "@emotion/styled";
-import { IconMinus, IconPlus } from "@tabler/icons";
+import { IconMinus, IconPlus } from "@tabler/icons-react";
 
 type VotesLineProps = {
   readOnly?: boolean;

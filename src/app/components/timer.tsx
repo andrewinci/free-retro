@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as State from "../state";
 import { Button, Group, Menu, Text } from "@mantine/core";
-import { IconBellRinging, IconClock } from "@tabler/icons";
+import { IconBellRinging, IconClock } from "@tabler/icons-react";
 
 export const Timer = () => {
   const onTimerSet = (seconds: number) => State.startTimer(seconds);

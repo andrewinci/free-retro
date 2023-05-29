@@ -3,7 +3,7 @@ import { CardGroup, VotesLine, Card } from "../components";
 
 import { CardGroupState } from "../state";
 import * as State from "../state";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { ActionIcon } from "@mantine/core";
 
 type DiscussViewProps = {
