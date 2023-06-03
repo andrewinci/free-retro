@@ -33,7 +33,7 @@ describe("dynamo helper", () => {
         devMode: false,
       });
       // assert
-      await expect(res).resolves;
+      expect(res).resolves;
       expect(ddbMock.send.callCount).toBe(1);
     });
 
@@ -48,7 +48,7 @@ describe("dynamo helper", () => {
         devMode: true,
       });
       // assert
-      await expect(res).resolves;
+      expect(res).resolves;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(
         parseInt((ddbMock.send.args[0][0].input as any).Item.stateVersion.N)
@@ -65,7 +65,7 @@ describe("dynamo helper", () => {
         devMode: false,
       });
       // assert
-      await expect(res).resolves;
+      expect(res).resolves;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(
         parseInt((ddbMock.send.args[0][0].input as any).Item.expires.N)
@@ -75,7 +75,7 @@ describe("dynamo helper", () => {
   describe("get app state", () => {
     it("returns only the last state", async () => {
       // arrange
-      const ddbMock = await mockClient(DynamoDBClient);
+      const ddbMock = mockClient(DynamoDBClient);
       const exampleItem = (n: number) => ({
         sessionId: { S: `session_${n}` },
         connectionId: { S: `connection_${n}` },
@@ -98,7 +98,7 @@ describe("dynamo helper", () => {
     });
     it("returns null if the sessionId is not in the DB", async () => {
       // arrange
-      const ddbMock = await mockClient(DynamoDBClient);
+      const ddbMock = mockClient(DynamoDBClient);
       const mockResponse = { Items: [] } as unknown as QueryCommandOutput;
       ddbMock.send.resolves(mockResponse);
       // act

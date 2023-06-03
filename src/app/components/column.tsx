@@ -4,7 +4,7 @@ import { useDrop } from "react-dnd";
 import styled from "@emotion/styled";
 import { Id } from "../state";
 import { TextArea } from "./textarea";
-import { IconPlus } from "@tabler/icons";
+import { IconPlus } from "@tabler/icons-react";
 
 type ColumnProps = {
   title: string;

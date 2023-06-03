@@ -2,7 +2,8 @@ import { Column, CardGroup, VotesLine, Card } from "../components";
 import { Stage, ColumnState, CardGroupState, Id, getUser } from "../state";
 import * as State from "../state";
 import { ActionIcon, Group } from "@mantine/core";
-import { IconPlus } from "@tabler/icons";
+import { IconPlus } from "@tabler/icons-react";
+import { isNotKudosOnlyGroup } from "../state/helper";
 
 function BoardCardGroup(props: {
   cardGroup: CardGroupState;
@@ -25,6 +26,7 @@ function BoardCardGroup(props: {
   const removeVotes = async () =>
     await State.updateGroupVotes(cardGroupId, "decrement");
   const { id: userId } = State.getUser() ?? State.setUserName();
+
   return (
     <CardGroup
       title={cardGroup.title}
@@ -48,14 +50,16 @@ function BoardCardGroup(props: {
           readOnly={readOnly}
         />
       ))}
-      {stage != Stage.AddTickets && stage != Stage.Group && (
-        <VotesLine
-          mt={3}
-          readOnly={false}
-          votes={cardGroup.votes[userId]?.value ?? 0}
-          onAddVoteClicked={addVotes}
-          onRemoveVoteClicked={removeVotes}></VotesLine>
-      )}
+      {stage != Stage.AddTickets &&
+        stage != Stage.Group &&
+        isNotKudosOnlyGroup(cardGroup) && (
+          <VotesLine
+            mt={3}
+            readOnly={false}
+            votes={cardGroup.votes[userId]?.value ?? 0}
+            onAddVoteClicked={addVotes}
+            onRemoveVoteClicked={removeVotes}></VotesLine>
+        )}
     </CardGroup>
   );
 }

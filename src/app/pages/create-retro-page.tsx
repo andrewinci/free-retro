@@ -1,11 +1,19 @@
-import { Button, Container, Stack, TextInput } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Checkbox,
+  Container,
+  Stack,
+  TextInput,
+} from "@mantine/core";
 import { useState } from "react";
-import * as State from "../state";
 import { TemplateSelector } from "../components";
+import * as State from "../state";
 
 export const CreateRetroPage = () => {
   const [state, setState] = useState({
     retroName: "Let's chat",
+    withKudos: true,
     selectedIndex: 0,
   });
   return (
@@ -22,14 +30,23 @@ export const CreateRetroPage = () => {
           onSelectedIndexChanged={(selectedIndex) =>
             setState({ ...state, selectedIndex })
           }></TemplateSelector>
+        <Center>
+          <Checkbox
+            labelPosition="left"
+            label="👏 Include a Kudos column"
+            defaultChecked
+            onChange={() => setState({ ...state, withKudos: !state.withKudos })}
+          />
+        </Center>
         <Button
           fullWidth={true}
-          onClick={async () =>
-            await State.createRetro(
-              state.retroName,
-              templates[state.selectedIndex].columns
-            )
-          }>
+          onClick={async () => {
+            const columns = [
+              ...templates[state.selectedIndex].columns,
+              ...(state.withKudos ? ["Kudos"] : []),
+            ];
+            await State.createRetro(state.retroName, columns);
+          }}>
           🚀 Create retro
         </Button>
       </Stack>
@@ -39,10 +56,13 @@ export const CreateRetroPage = () => {
 
 const templates = [
   {
+    titleLines: ["Mad", "Sad", "Glad"],
+    columns: ["Mad", "Sad", "Glad"],
+  },
+  {
     titleLines: ["Start", "Stop", "Continue"],
     columns: ["Start", "Stop", "Continue"],
   },
-  { titleLines: ["Mad", "Sad", "Glad"], columns: ["Mad", "Sad", "Glad"] },
   {
     titleLines: ["Happy", "Confused", "Sad"],
     columns: ["Happy", "Confused", "Sad"],
