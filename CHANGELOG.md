@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/andrewinci/free-retro/compare/v2.6.0...v2.7.0) (2023-06-03)
+
+
+### Features
+
+* Option to include a kudos column ([#243](https://github.com/andrewinci/free-retro/issues/243)) ([e85d9b7](https://github.com/andrewinci/free-retro/commit/e85d9b7e56b984d51883e959413629f02fb8c272))
+
 # [2.6.0](https://github.com/andrewinci/free-retro/compare/v2.5.0...v2.6.0) (2023-02-15)
 
 
