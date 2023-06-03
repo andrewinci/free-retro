@@ -1,8 +1,14 @@
+import { isNotKudosOnlyGroup } from "./helper";
 import { getAllGroups } from "./state";
 import { getUser, setUserName } from "./user";
 
 const getTotalVotesPerUser = () => {
-  return Math.ceil(Math.min(Math.max(3, getAllGroups().length * 0.4), 6));
+  return Math.ceil(
+    Math.min(
+      Math.max(3, getAllGroups().filter(isNotKudosOnlyGroup).length * 0.4),
+      6
+    )
+  );
 };
 
 export const getRemainingUserVotes = () => {

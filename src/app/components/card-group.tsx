@@ -32,9 +32,7 @@ export const CardGroup = (props: CardGroupProps) => {
         text={props.title}
         placeholder="Group title"
         readOnly={props.readOnlyTitle}
-        onTextChange={(text) =>
-          props.onTitleChange ? props.onTitleChange(text) : {}
-        }
+        onTextChange={(text) => props?.onTitleChange?.(text)}
       />
       {props.children}
     </CardGroupContainer>

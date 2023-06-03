@@ -7,7 +7,7 @@ import {
   Stack,
   Title,
 } from "@mantine/core";
-import { IconPlus } from "@tabler/icons";
+import { IconPlus } from "@tabler/icons-react";
 import * as State from "../state";
 import { ActionState, Id } from "../state";
 import { ActionCard } from "./action-card";

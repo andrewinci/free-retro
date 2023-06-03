@@ -19,7 +19,7 @@ import {
 } from "@mantine/core";
 import styled from "@emotion/styled";
 import { ActionSidebar, StageText } from "./components";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons";
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { Timer } from "./components/timer";
 
 const CurrentView = (props: {
