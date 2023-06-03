@@ -2,7 +2,7 @@ import { Column, CardGroup, VotesLine, Card } from "../components";
 import { Stage, ColumnState, CardGroupState, Id, getUser } from "../state";
 import * as State from "../state";
 import { ActionIcon, Group } from "@mantine/core";
-import { IconPlus } from "@tabler/icons";
+import { IconPlus } from "@tabler/icons-react";
 
 function BoardCardGroup(props: {
   cardGroup: CardGroupState;
