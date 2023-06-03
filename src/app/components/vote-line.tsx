@@ -14,17 +14,14 @@ export const VotesLine = (props: VotesLineProps) => {
   return (
     <Group position={"left"} spacing={0} {...props}>
       {!readOnly && (
-        <AddVoteButton
-          onClick={(_) => (onAddVoteClicked ? onAddVoteClicked() : {})}>
+        <AddVoteButton onClick={(_) => onAddVoteClicked?.()}>
           <Center className="icon-container">
             <IconPlus style={{ marginTop: 1 }} size={13} />
           </Center>
         </AddVoteButton>
       )}
       {[...Array(votes)].map((e, i) => (
-        <Vote
-          key={i}
-          onClick={(_) => (onRemoveVoteClicked ? onRemoveVoteClicked() : {})}>
+        <Vote key={i} onClick={(_) => onRemoveVoteClicked?.()}>
           {!readOnly && (
             <Center className="icon-container">
               <IconMinus style={{ marginTop: 1 }} color="white" size={13} />

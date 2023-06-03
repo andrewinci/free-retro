@@ -33,9 +33,7 @@ export const ActionCard = (props: ActionCardProps) => {
         <Grid.Col span={1}>
           <Checkbox
             checked={done}
-            onChange={(e) =>
-              onDoneChange ? onDoneChange(e.target.checked) : {}
-            }></Checkbox>
+            onChange={(e) => onDoneChange?.(e.target.checked)}></Checkbox>
         </Grid.Col>
       </Grid>
     </CardContainer>

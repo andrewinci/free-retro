@@ -41,7 +41,7 @@ export const Card = (props: CardProps & CardContainerProps) => {
         // this setting will update the text word by word
         // instead of char by char
         reduceTextChangeUpdates={true}
-        onTextChange={(newText) => (onTextChange ? onTextChange(newText) : {})}
+        onTextChange={(newText) => onTextChange?.(newText)}
       />
     </CardContainer>
   );

@@ -54,13 +54,10 @@ export const Column = (props: ColumnProps) => {
         placeholder="Title"
         readOnly={readOnly}
         text={title}
-        onTextChange={(t) => (onTitleChange ? onTitleChange(t) : {})}
+        onTextChange={(t) => onTitleChange?.(t)}
       />
       {!readOnly && (
-        <ActionIcon
-          ml={8}
-          size={20}
-          onClick={() => (onAddClick ? onAddClick() : {})}>
+        <ActionIcon ml={8} size={20} onClick={() => onAddClick?.()}>
           <IconPlus />
         </ActionIcon>
       )}
