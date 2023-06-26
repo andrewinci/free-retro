@@ -114,7 +114,7 @@
   },
   "dependencies": {
     "@automerge/automerge": "^2.0.3",
-    "@emotion/react": "^11.10.6",
+    "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mantine/core": "^5.10.5",
     "@mantine/hooks": "^5.10.5",
