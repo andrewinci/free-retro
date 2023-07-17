@@ -154,7 +154,7 @@
     "@vitejs/plugin-react": "^3.0.1",
     "aws-cdk": "^2.87.0",
     "aws-cdk-lib": "^2.85.0",
-    "aws-sdk-client-mock": "^2.1.1",
+    "aws-sdk-client-mock": "^3.0.0",
     "constructs": "^10.1.250",
     "coveralls": "^3.1.1",
     "esbuild": "^0.18.13",
