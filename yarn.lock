@@ -5060,13 +5060,13 @@ esbuild-openbsd-64@0.15.18:
   resolved "https://registry.yarnpkg.com/esbuild-openbsd-64/-/esbuild-openbsd-64-0.15.18.tgz#79591a90aa3b03e4863f93beec0d2bab2853d0a8"
   integrity sha512-yK5NCcH31Uae076AyQAXeJzt/vxIo9+omZRKj1pauhk3ITuADzuOx5N2fdHrAKPxN+zH3w96uFKlY7yIn490xQ==
 
-esbuild-sass-plugin@^2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/esbuild-sass-plugin/-/esbuild-sass-plugin-2.10.0.tgz#002950a4d2d5840143218f8ba65d7f7bf1119ecc"
-  integrity sha512-STv849QGT8g77RRFmroSt4VBVKjv+dypKcO4aWz8IP4G5JbRH0KC0+B8ODuzlUNu9R5MbkGcev/62RDP/JcZ2Q==
+esbuild-sass-plugin@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/esbuild-sass-plugin/-/esbuild-sass-plugin-2.11.0.tgz#dba43e478cdf3cf6ef10ce147615ee3d0a794959"
+  integrity sha512-hGgm8Zav3KgkgQtiaOCgCKKLNYM3yPeTwF+dvbCATn7XxOmMxgyaQeyt+PRqiB/qxESLxxU02V6mXwMBii1mPQ==
   dependencies:
     resolve "^1.22.2"
-    sass "^1.63.0"
+    sass "^1.65.1"
 
 esbuild-serve@^1.0.1:
   version "1.0.1"
@@ -9141,10 +9141,10 @@ safe-regex-test@^1.0.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.63.0:
-  version "1.63.6"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.63.6.tgz#481610e612902e0c31c46b46cf2dad66943283ea"
-  integrity sha512-MJuxGMHzaOW7ipp+1KdELtqKbfAWbH7OLIdoSMnVe3EXPMTmxTmlaZDCTsgIpPCs3w99lLo9/zDKkOrJuT5byw==
+sass@^1.65.1:
+  version "1.66.1"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.66.1.tgz#04b51c4671e4650aa393740e66a4e58b44d055b1"
+  integrity sha512-50c+zTsZOJVgFfTgwwEzkjA3/QACgdNsKueWPyAR0mRINIvLAStVQBbPg14iuqEQ74NPDbXzJARJ/O4SI1zftA==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
