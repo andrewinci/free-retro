@@ -155,7 +155,7 @@
     "aws-cdk": "^2.87.0",
     "aws-cdk-lib": "^2.85.0",
     "aws-sdk-client-mock": "^2.1.1",
-    "constructs": "^10.1.250",
+    "constructs": "^10.2.70",
     "coveralls": "^3.1.1",
     "esbuild": "^0.18.13",
     "esbuild-sass-plugin": "^2.10.0",
