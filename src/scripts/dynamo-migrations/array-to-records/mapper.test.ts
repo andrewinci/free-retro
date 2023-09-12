@@ -232,7 +232,7 @@ describe("migrate state", () => {
     const rawState = toBase64(Automerge.save(state));
     // act
     const newState = Automerge.load<AppState>(
-      toBinaryDocument(migrateState(rawState))
+      toBinaryDocument(migrateState(rawState)),
     );
     expect(newState).toStrictEqual({
       stage: 1,

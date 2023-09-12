@@ -50,14 +50,14 @@ const main = async () => {
     case "lambda":
       esbuildRun(buildLambdaOptions("src/lambda/handler.ts", "dist/lambda"));
       esbuildRun(
-        buildLambdaOptions("src/tg-forwarder/handler.ts", "dist/tg-forwarder")
+        buildLambdaOptions("src/tg-forwarder/handler.ts", "dist/tg-forwarder"),
       );
       break;
     case "all":
       await buildApp();
       esbuildRun(buildLambdaOptions("src/lambda/handler.ts", "dist/lambda"));
       esbuildRun(
-        buildLambdaOptions("src/tg-forwarder/handler.ts", "dist/tg-forwarder")
+        buildLambdaOptions("src/tg-forwarder/handler.ts", "dist/tg-forwarder"),
       );
       break;
     case "serve":

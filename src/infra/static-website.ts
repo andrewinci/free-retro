@@ -73,7 +73,7 @@ export class StaticWebsite extends Construct {
         httpVersion: cloudfront.HttpVersion.HTTP2,
         defaultRootObject: "index.html",
         enableIpv6: true,
-      }
+      },
     );
 
     // upload static content

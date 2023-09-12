@@ -77,19 +77,19 @@ export class WSBackend extends Construct {
       connectRouteOptions: {
         integration: new WebSocketLambdaIntegration(
           "handle-connect",
-          this.lambdaFunction
+          this.lambdaFunction,
         ),
       },
       disconnectRouteOptions: {
         integration: new WebSocketLambdaIntegration(
           "handle-disconnect",
-          this.lambdaFunction
+          this.lambdaFunction,
         ),
       },
       defaultRouteOptions: {
         integration: new WebSocketLambdaIntegration(
           "handle-default",
-          this.lambdaFunction
+          this.lambdaFunction,
         ),
       },
     });
@@ -119,7 +119,7 @@ export class WSBackend extends Construct {
       {
         api: this.api,
         stageName: cfnStage.stageName,
-      }
+      },
     );
 
     // link custom domain to the api gw
@@ -141,7 +141,7 @@ export class WSBackend extends Construct {
 
     // Attach custom policy to Lambda function
     this.lambdaFunction.addToRolePolicy(
-      allowConnectionManagementOnApiGatewayPolicy
+      allowConnectionManagementOnApiGatewayPolicy,
     );
   }
 }

@@ -7,7 +7,7 @@ import { WSServerMessage } from "./model";
 export async function sendToClient(
   message: WSServerMessage,
   endpoint: string,
-  connectionId: string
+  connectionId: string,
 ): Promise<boolean> {
   console.log("Send message to client", message, endpoint, connectionId);
   if (!endpoint || endpoint.length == 0) {
@@ -17,7 +17,7 @@ export async function sendToClient(
   if (!connectionId || connectionId.length == 0) {
     console.error("Invalid WebSocket connectionId");
     throw new Error(
-      "Invalid connectionId. Unable to send a message to the client"
+      "Invalid connectionId. Unable to send a message to the client",
     );
   }
   const enc = new TextEncoder();

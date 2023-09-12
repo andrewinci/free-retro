@@ -20,8 +20,8 @@ describe("textArea", () => {
     const mockFunction = jest.fn();
     act(() =>
       root.render(
-        <TextArea text={""} onTextChange={(t) => mockFunction(t)}></TextArea>
-      )
+        <TextArea text={""} onTextChange={(t) => mockFunction(t)}></TextArea>,
+      ),
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
@@ -46,8 +46,8 @@ describe("textArea", () => {
         <TextArea
           reduceTextChangeUpdates={true}
           text={"sample"}
-          onTextChange={(t) => mockFunction(t)}></TextArea>
-      )
+          onTextChange={(t) => mockFunction(t)}></TextArea>,
+      ),
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
@@ -75,8 +75,8 @@ describe("textArea", () => {
           reduceTextChangeUpdates={true}
           text={"sample"}
           onTextChange={(t) => mockFunction(t)}
-          readOnly={true}></TextArea>
-      )
+          readOnly={true}></TextArea>,
+      ),
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
@@ -94,8 +94,8 @@ describe("textArea", () => {
         <TextArea
           text={"sample"}
           onTextChange={(t) => mockFunction(t)}
-          readOnly={true}></TextArea>
-      )
+          readOnly={true}></TextArea>,
+      ),
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
@@ -112,14 +112,14 @@ describe("textArea", () => {
       root.render(
         <TextArea
           text={"sample"}
-          onTextChange={(t) => mockFunction(t)}></TextArea>
-      )
+          onTextChange={(t) => mockFunction(t)}></TextArea>,
+      ),
     );
 
     const input = div.children[0] as HTMLTextAreaElement;
     act(() => {
       input.dispatchEvent(
-        new KeyboardEvent("keyup", { bubbles: true, key: "s" })
+        new KeyboardEvent("keyup", { bubbles: true, key: "s" }),
       );
     });
     for (let i = 0; i < 10; i++) {

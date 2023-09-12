@@ -6,8 +6,8 @@ const getTotalVotesPerUser = () => {
   return Math.ceil(
     Math.min(
       Math.max(3, getAllGroups().filter(isNotKudosOnlyGroup).length * 0.4),
-      6
-    )
+      6,
+    ),
   );
 };
 

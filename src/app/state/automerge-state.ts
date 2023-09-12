@@ -3,14 +3,14 @@ import { toBinaryDocument } from "./helper";
 import { randomId } from "./helper/random";
 import { broadcast } from "../ws";
 import { ActionState, AppState, Id, Stage } from "./model";
+import { Patch, PatchInfo } from "@automerge/automerge-wasm";
 
 const patchCallbackHandlers: Automerge.PatchCallback<AppState>[] = [];
 const patchCallback: Automerge.PatchCallback<AppState> = (
-  patch,
-  before,
-  after
+  a: Array<Patch>,
+  b: PatchInfo<AppState>,
 ) => {
-  patchCallbackHandlers.forEach((h) => h(patch, before, after));
+  patchCallbackHandlers.forEach((h) => h(a, b));
 };
 let appState: AppState;
 
@@ -22,7 +22,7 @@ export const getAppState = () => {
 export const initAppState = (
   sessionId: string | null,
   stage: Stage,
-  actions: Record<Id, ActionState> | undefined = undefined
+  actions: Record<Id, ActionState> | undefined = undefined,
 ) => {
   appState = Automerge.change(
     Automerge.init<AppState>({ patchCallback }),
@@ -35,20 +35,20 @@ export const initAppState = (
           .map(([id, { text, done, date }]) => ({ id, text, done, date }))
           .reduce((prev, current) => ({ ...prev, [current.id]: current }), {});
       }
-    }
+    },
   );
   return appState;
 };
 
 export function onStateChange(f: (newState: AppState) => void) {
-  patchCallbackHandlers.push((_patch, _before, after: AppState) => {
-    f(after);
+  patchCallbackHandlers.push((_patch, info) => {
+    f(info.after);
   });
 }
 
 export async function changeState(
   f: (mutableState: AppState) => void,
-  recreateState = false
+  recreateState = false,
 ) {
   appState = Automerge.change(appState, (s) => f(s as AppState));
   // broadcast to all clients
@@ -57,14 +57,15 @@ export async function changeState(
 
 export function loadNewState(remoteRawState: string, recreateState: boolean) {
   const remoteState = Automerge.load<AppState>(
-    toBinaryDocument(remoteRawState)
+    toBinaryDocument(remoteRawState),
   );
   // check if a new state need to be created
   if (recreateState) {
     initAppState(remoteState.sessionId, remoteState.stage, remoteState.actions);
   }
+
   appState = Automerge.merge(
     Automerge.init<AppState>({ patchCallback }),
-    remoteState
+    remoteState,
   );
 }

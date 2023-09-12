@@ -10,7 +10,7 @@ export const Timer = () => {
     const timeLeft = Math.floor(
       ((settings()?.duration ?? 0) * 1000 -
         (new Date().getTime() - (settings()?.start ?? 0))) /
-        1000
+        1000,
     );
     if (settings() === null) {
       return undefined;

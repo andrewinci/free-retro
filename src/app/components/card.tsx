@@ -60,7 +60,7 @@ export const CardContainer = (props: CardContainerProps) => {
         dragging: monitor.isDragging(),
       }),
     }),
-    [canDrag ?? false]
+    [canDrag ?? false],
   );
   return (
     <Paper
@@ -69,7 +69,7 @@ export const CardContainer = (props: CardContainerProps) => {
         classes.container,
         blur && classes.blur,
         canDrag && classes.drag,
-        dragging && classes.dragging
+        dragging && classes.dragging,
       )}
       shadow="sm"
       radius="xs"
@@ -114,5 +114,5 @@ const useStyles = createStyles<string, { color?: string }>(
     dragging: {
       opacity: 0.5,
     },
-  })
+  }),
 );

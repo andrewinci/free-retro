@@ -8,7 +8,7 @@ describe("Test column components", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
         <Column title="column title"></Column>
-      </DndProvider>
+      </DndProvider>,
     );
     expect(component).toBeDefined();
   });

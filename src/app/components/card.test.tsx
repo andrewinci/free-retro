@@ -8,7 +8,7 @@ describe("Test card component", () => {
     const component = renderer.create(
       <DndProvider backend={TestBackend}>
         <CardGroup></CardGroup>
-      </DndProvider>
+      </DndProvider>,
     );
     expect(component).toBeDefined();
   });
@@ -20,7 +20,7 @@ describe("Test card component", () => {
           <Card id="1" text="test 1" />
           <Card id="2" text="test 2" />
         </CardGroup>
-      </DndProvider>
+      </DndProvider>,
     );
     expect(component).toBeDefined();
   });

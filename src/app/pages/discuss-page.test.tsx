@@ -12,7 +12,7 @@ describe("Test discuss view", () => {
           cards={[{ cards: {}, votes: { a: new Counter(1) } }]}
           cardIndex={0}
         />
-      </DndProvider>
+      </DndProvider>,
     );
     expect(component).toBeDefined();
   });

@@ -101,7 +101,7 @@ export class Monitoring extends Construct {
           dimensionsMap: {
             ApiId: apiId,
           },
-        })
+        }),
     );
 
     return [

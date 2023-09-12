@@ -21,12 +21,12 @@ import {
 import * as Automerge from "@automerge/automerge";
 
 export function arrToRecord<T>(
-  arr: [Id, T][] | undefined
+  arr: [Id, T][] | undefined,
 ): Record<Id, T> | undefined {
   if (!arr) return undefined;
   return arr.reduce(
     (prev, [id, content]) => ({ ...prev, [id ?? randomId()]: content }),
-    {}
+    {},
   );
 }
 

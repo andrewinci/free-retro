@@ -5,6 +5,6 @@ export function getAllGroups(): CardGroupState[] {
   const state = getAppState();
   if (!state.columns) return [];
   return Object.values(state.columns).flatMap((c) =>
-    Object.values(c.groups ?? {})
+    Object.values(c.groups ?? {}),
   );
 }

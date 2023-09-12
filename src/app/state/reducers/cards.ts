@@ -33,7 +33,7 @@ export const updateFirstCardText = (groupId: Id, newText: string) =>
 
 export const updateGroupVotes = (
   groupId: Id,
-  changeType: "increment" | "decrement"
+  changeType: "increment" | "decrement",
 ) =>
   changeState((state) => {
     if (!state.columns) return;
@@ -105,7 +105,7 @@ export const moveCardToColumn = (srcCardId: Id, columnId: Id) =>
     let dstColumn: ColumnState | undefined = state.columns[columnId];
     if (srcCard.originColumn != dstColumn?.title) {
       dstColumn = Object.values(state.columns).find(
-        (c) => c.title == srcCard.originColumn
+        (c) => c.title == srcCard.originColumn,
       );
     }
 

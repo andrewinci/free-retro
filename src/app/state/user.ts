@@ -18,7 +18,7 @@ export function initUserId() {
   if (user) return;
   localStorage.setItem(
     USER_KEY,
-    JSON.stringify({ id: randomId(), username: DEFAULT_USERNAME })
+    JSON.stringify({ id: randomId(), username: DEFAULT_USERNAME }),
   );
 }
 

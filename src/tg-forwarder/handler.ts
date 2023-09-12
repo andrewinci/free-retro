@@ -17,7 +17,7 @@ type Alarm = {
 
 export const lambdaHandler = async (
   event: SNSEvent,
-  _: Context
+  _: Context,
 ): Promise<APIGatewayProxyResult> => {
   if (!TELEGRAM_BOT_TOKEN)
     throw new Error("Missing TELEGRAM_BOT_TOKEN env variable");
@@ -39,8 +39,8 @@ export const lambdaHandler = async (
         },
         {
           headers: { "Content-Type": "application/json" },
-        }
-      )
+        },
+      ),
     );
 
   await Promise.all(forwardMessagePromises);

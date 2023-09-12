@@ -14,7 +14,7 @@ const client = new DynamoDBClient({ region: AWS_REGION });
 let total = 0;
 
 export async function updateDynamoAppState(
-  startKey?: Record<string, AttributeValue> | undefined
+  startKey?: Record<string, AttributeValue> | undefined,
 ) {
   const scan = new ScanCommand({
     TableName: TABLE_NAME,
@@ -25,7 +25,7 @@ export async function updateDynamoAppState(
   if (!scanResult || !scanResult.Items || scanResult.Items.length == 0)
     return null;
   const items = scanResult.Items.map(
-    (i) => unmarshall(i) as DynamoRecord & { lastUpdate: number }
+    (i) => unmarshall(i) as DynamoRecord & { lastUpdate: number },
   );
 
   const ttl = (timestamp: number) => ({
@@ -45,14 +45,17 @@ export async function updateDynamoAppState(
           ExpressionAttributeValues: {
             ":t": ttl(Math.ceil(item.lastUpdate / 1000)),
           },
-        })
+        }),
     )
     .map(async (updateCommand) => await client.send(updateCommand))
     .map(() => (total += 1));
 
   await Promise.all(commands);
   console.log(
-    items.map((i) => ({ sessionId: i.sessionId, connectionId: i.connectionId }))
+    items.map((i) => ({
+      sessionId: i.sessionId,
+      connectionId: i.connectionId,
+    })),
   );
   console.log("TOTAL", total);
   console.log("LastEvaluatedKey", scanResult.LastEvaluatedKey);

@@ -9,7 +9,7 @@ import { sendToClient } from "./ws";
 
 export const lambdaHandler = async (
   event: APIGatewayProxyEvent,
-  _: Context
+  _: Context,
 ): Promise<APIGatewayProxyResult> => {
   console.log("Event", event);
   const { routeKey, domainName, connectionId } = event.requestContext;
@@ -96,7 +96,7 @@ export async function handleJoin(request: WSRequest) {
     await sendToClient(
       { action: "error", message, errorType: "session-not-found" },
       request.endpoint,
-      request.connectionId
+      request.connectionId,
     );
     return;
   }

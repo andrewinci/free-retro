@@ -43,7 +43,7 @@ export const deleteDynamoItems = async (
   connections: {
     sessionId: string;
     connectionId: string;
-  }[]
+  }[],
 ) => {
   if (!connections || connections.length == 0) {
     // nothing to do
@@ -66,11 +66,11 @@ export const deleteDynamoItems = async (
             },
           })),
         },
-      })
+      }),
   );
 
   await Promise.all(
-    commandChunks.map(async (command) => await client.send(command))
+    commandChunks.map(async (command) => await client.send(command)),
   );
 };
 
@@ -93,7 +93,7 @@ export const storeToDynamo = async (record: DynamoRecord) => {
 };
 
 export async function getDynamoAppState(
-  sessionId: string
+  sessionId: string,
 ): Promise<DynamoAppState | null> {
   const command = new QueryCommand({
     TableName: TABLE_NAME,
@@ -105,13 +105,13 @@ export async function getDynamoAppState(
   const response = await client.send(command);
   if (!response || !response.Items || response.Items.length == 0) return null;
   const items = response.Items.map(
-    (i) => unmarshall(i) as DynamoRecord & { lastUpdate: number }
+    (i) => unmarshall(i) as DynamoRecord & { lastUpdate: number },
   );
   return {
     sessionId: sessionId,
     connections: items.map((i) => i.connectionId),
     lastState: items.reduce((prev, current) =>
-      current.lastUpdate > prev.lastUpdate ? current : prev
+      current.lastUpdate > prev.lastUpdate ? current : prev,
     ).appState,
   };
 }

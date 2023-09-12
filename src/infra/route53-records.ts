@@ -36,14 +36,14 @@ export class Route53Records extends Construct {
       `${id}-hosted-zone`,
       {
         domainName: hostedZoneName,
-      }
+      },
     );
 
     new route53.ARecord(this, `${name}-app-record`, {
       recordName: appDomainName,
       zone: hostedZone,
       target: route53.RecordTarget.fromAlias(
-        new route53targets.CloudFrontTarget(distribution)
+        new route53targets.CloudFrontTarget(distribution),
       ),
     });
 
@@ -54,8 +54,8 @@ export class Route53Records extends Construct {
       target: route53.RecordTarget.fromAlias(
         new route53targets.ApiGatewayv2DomainProperties(
           domain.regionalDomainName,
-          domain.regionalHostedZoneId
-        )
+          domain.regionalHostedZoneId,
+        ),
       ),
     });
   }

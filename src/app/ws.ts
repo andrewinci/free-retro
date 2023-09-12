@@ -75,7 +75,7 @@ export function joinSession(sessionId: string) {
 export async function broadcast<T extends Automerge.Doc<unknown>>(
   sessionId: string,
   state: T,
-  recreateState: boolean
+  recreateState: boolean,
 ) {
   lastSessionId = sessionId;
   const rawState = Automerge.save(state);

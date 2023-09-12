@@ -30,7 +30,7 @@ export class Certificates extends Construct {
       `${id}-hosted-zone`,
       {
         domainName: baseDomainName,
-      }
+      },
     );
 
     // create a certificate for the api
@@ -40,7 +40,7 @@ export class Certificates extends Construct {
       {
         domainName: apiDomainName,
         hostedZone,
-      }
+      },
     );
 
     // create a certificate for cloudfront
@@ -51,7 +51,7 @@ export class Certificates extends Construct {
         domainName: appDomainName,
         hostedZone,
         region: "us-east-1",
-      }
+      },
     );
   }
 }

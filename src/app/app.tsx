@@ -71,7 +71,7 @@ const AppHeader = ({
   // view selector depending on the app stage
   const changeStage = async (change: "next" | "back") => {
     const res = confirm(
-      `Before moving to another stage of the retro, make sure that everyone is ready.\n\nClick ok to navigate`
+      `Before moving to another stage of the retro, make sure that everyone is ready.\n\nClick ok to navigate`,
     );
     if (res) {
       await State.changeStage(change);

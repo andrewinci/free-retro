@@ -33,7 +33,7 @@ export const createRetro = (retroName: string, initialColumns: string[]) =>
           groups: {},
         } as ColumnState,
       }),
-      {}
+      {},
     );
   }, true);
 

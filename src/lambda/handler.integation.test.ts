@@ -125,7 +125,7 @@ describe("lambda integration tests", () => {
       await expect(res).resolves.not.toThrow();
       expect(getDynamoAppState.mock.calls.length).toBe(1);
       expect(sendToClient.mock.calls.map((params) => params[2])).toEqual(
-        connections
+        connections,
       );
       expect(storeToDynamo.mock.calls.length).toBe(1);
     });
@@ -149,7 +149,7 @@ describe("lambda integration tests", () => {
       await expect(res).resolves.not.toThrow();
       expect(getDynamoAppState.mock.calls.length).toBe(1);
       expect(sendToClient.mock.calls.map((params) => params[2])).toEqual(
-        connections
+        connections,
       );
       expect(storeToDynamo.mock.calls.length).toBe(1);
       expect(deleteDynamoItems.mock.calls.length).toBe(1);

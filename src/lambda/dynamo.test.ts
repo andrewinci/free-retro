@@ -51,7 +51,7 @@ describe("dynamo helper", () => {
       expect(res).resolves;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(
-        parseInt((ddbMock.send.args[0][0].input as any).Item.stateVersion.N)
+        parseInt((ddbMock.send.args[0][0].input as any).Item.stateVersion.N),
       ).toBe(0);
     });
     it("set ttl to 3 months after now", async () => {
@@ -68,7 +68,7 @@ describe("dynamo helper", () => {
       expect(res).resolves;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(
-        parseInt((ddbMock.send.args[0][0].input as any).Item.expires.N)
+        parseInt((ddbMock.send.args[0][0].input as any).Item.expires.N),
       ).toBeGreaterThan(dayjs().add(3, "months").add(-1, "day").unix());
     });
   });

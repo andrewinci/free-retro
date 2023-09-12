@@ -14,7 +14,7 @@ const client = new DynamoDBClient({ region: AWS_REGION });
 let total = 0;
 
 export async function migrateDynamoAppState(
-  startKey?: Record<string, AttributeValue> | undefined
+  startKey?: Record<string, AttributeValue> | undefined,
 ) {
   const scan = new ScanCommand({
     TableName: TABLE_NAME,
@@ -29,7 +29,7 @@ export async function migrateDynamoAppState(
       unmarshall(i) as DynamoRecord & {
         lastUpdate: number;
         stateVersion: number | undefined;
-      }
+      },
   );
 
   const commands = items
@@ -65,7 +65,10 @@ export async function migrateDynamoAppState(
 
   await Promise.all(commands);
   console.log(
-    items.map((i) => ({ sessionId: i.sessionId, connectionId: i.connectionId }))
+    items.map((i) => ({
+      sessionId: i.sessionId,
+      connectionId: i.connectionId,
+    })),
   );
   console.log("TOTAL", total);
   console.log("LastEvaluatedKey", scanResult.LastEvaluatedKey);

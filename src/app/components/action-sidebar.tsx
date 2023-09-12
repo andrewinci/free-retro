@@ -16,7 +16,7 @@ export const ActionSidebar = (
   props: {
     actions?: Record<Id, ActionState>;
     hidden?: boolean;
-  } & DefaultProps
+  } & DefaultProps,
 ) => {
   const { actions, hidden } = props;
   return (
@@ -54,7 +54,7 @@ export const ActionSidebar = (
                   } else {
                     return -1;
                   }
-                }
+                },
               )
               .map(([id, { text, done, date }]) => (
                 <ActionCard

@@ -59,7 +59,7 @@ export const DiscussPage = (props: DiscussViewProps) => {
                     readOnly={true}
                     color={color}
                   />
-                )
+                ),
               )}
               <VotesLine mt={3} readOnly={true} votes={votes}></VotesLine>
             </CardGroup>
