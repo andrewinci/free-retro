@@ -63,5 +63,8 @@ export function loadNewState(remoteRawState: string, recreateState: boolean) {
   if (recreateState) {
     initAppState(remoteState.sessionId, remoteState.stage, remoteState.actions);
   }
-  appState = Automerge.merge(appState, remoteState);
+  appState = Automerge.merge(
+    Automerge.init<AppState>({ patchCallback }),
+    remoteState
+  );
 }
