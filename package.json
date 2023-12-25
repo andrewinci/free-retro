@@ -118,7 +118,7 @@
     "@emotion/styled": "^11.11.0",
     "@mantine/core": "^5.10.5",
     "@mantine/hooks": "^5.10.5",
-    "@tabler/icons-react": "^2.21.0",
+    "@tabler/icons-react": "^2.44.0",
     "axios": "^1.6.0",
     "buffer": "^6.0.3",
     "dayjs": "^1.11.8",
