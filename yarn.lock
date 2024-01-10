@@ -10,17 +10,17 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@automerge/automerge-wasm@^0.1.26":
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/@automerge/automerge-wasm/-/automerge-wasm-0.1.26.tgz#825848beab15a759de273fa4f99e9344c3850a26"
-  integrity sha512-NLH7KpErTuy2O1VIA0uE+48e0u69o0qL8/9RZYjLd2uEZeWBzIWbhyDJGfUPDMIYXtkcy8z2H7h6YcwusG0BXA==
+"@automerge/automerge-wasm@0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@automerge/automerge-wasm/-/automerge-wasm-0.9.0.tgz#1b0e1ea595feeb47ea0f4b685bf2ffb7fa61f97c"
+  integrity sha512-wTPcW3wVk20D1x0DOko/RsfZV1mlc8HJynqgTRhVocOxFIU/RCilnYRfJmSb8LwCG2uZzfqg0DLsEBqQZ53KBQ==
 
-"@automerge/automerge@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@automerge/automerge/-/automerge-2.0.3.tgz#ff040d9dbc3f203bf9fea7c58d815c0a94e5ea14"
-  integrity sha512-ihfyW/pt+bmHNmPzf4nyH9OzfowAlOaK+1XD8wbtbsJeaGL/8Kap88xMO0lU3wgrddsrZtX5uTbrB/6kMl1PEA==
+"@automerge/automerge@^2.1.10":
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/@automerge/automerge/-/automerge-2.1.10.tgz#257f9f94c37db088008548cca7e57e853d1ed354"
+  integrity sha512-xj8R3fQHZmDYnrYW5WrBqWm/r5sLV9Z7mu89pJ10wGLVS2V+iAB2os85DoOGI2etzjmQsoHyrd97GBmszjH4zQ==
   dependencies:
-    "@automerge/automerge-wasm" "^0.1.26"
+    "@automerge/automerge-wasm" "0.9.0"
     uuid "^9.0.0"
 
 "@aws-cdk/asset-awscli-v1@^2.2.177":
