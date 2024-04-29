@@ -113,7 +113,7 @@
     "yarn": "1.22.19"
   },
   "dependencies": {
-    "@automerge/automerge": "^2.0.3",
+    "@automerge/automerge": "^2.2.1",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mantine/core": "^5.10.5",
