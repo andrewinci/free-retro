@@ -68,6 +68,7 @@ export const changeDiscussCard = (changeType: "increment" | "decrement") => {
 
 export const changeStage = (change: "next" | "back") => {
   const currentStage = getAppState().stage ?? 0;
+  console.log("YAHA, currentStage:", currentStage);
   if (currentStage <= 0 && change == "back") return;
   if (currentStage >= Stage.End && change == "next") return;
   return changeState((mutableState) => {
