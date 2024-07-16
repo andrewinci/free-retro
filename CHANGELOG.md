@@ -1,3 +1,11 @@
+## [2.7.1](https://github.com/andrewinci/free-retro/compare/v2.7.0...v2.7.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* Add temp debug logs for VinciLoop ([#326](https://github.com/andrewinci/free-retro/issues/326)) ([93980f0](https://github.com/andrewinci/free-retro/commit/93980f01808b1a5610e525cb9d1740820fc515cd))
+* init the state on load new state ([14eaea2](https://github.com/andrewinci/free-retro/commit/14eaea27e7532502e78b80c824940145c46340ee))
+
 # [2.7.0](https://github.com/andrewinci/free-retro/compare/v2.6.0...v2.7.0) (2023-06-03)
 
 
