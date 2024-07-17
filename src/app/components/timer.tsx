@@ -1,20 +1,34 @@
-import { useEffect, useState } from "react";
-import * as State from "../state";
 import { Button, Group, Menu, Text } from "@mantine/core";
-import { IconBellRinging, IconClock } from "@tabler/icons-react";
+import { IconBellRinging, IconClock } from "@tabler/icons";
+import { useEffect, useState } from "react";
+import sound from "../../assets/cuckoo-clock.mp3";
+import * as State from "../state";
+
+const audio = new Audio(sound);
 
 export const Timer = () => {
   const onTimerSet = (seconds: number) => State.startTimer(seconds);
   const settings = () => State.getAppState().timer;
+
+  const reset = () => {
+    State.resetTimer();
+    setTimeLeft(undefined);
+  };
+
   const calculateTimeLeft = () => {
     const timeLeft = Math.floor(
       ((settings()?.duration ?? 0) * 1000 -
         (new Date().getTime() - (settings()?.start ?? 0))) /
         1000,
     );
-    if (settings() === null) {
+    if (settings() === null || settings() === undefined) {
       return undefined;
     } else if (timeLeft <= 0) {
+      if (timeLeft >= -1 && timeLeft <= 0) {
+        audio.play();
+        setTimeout(() => audio.pause(), 6000);
+      }
+      reset();
       return 0;
     } else {
       return timeLeft;
@@ -32,11 +46,6 @@ export const Timer = () => {
     startInterval();
     return () => clearInterval(interval);
   });
-
-  const reset = () => {
-    State.resetTimer();
-    setTimeLeft(undefined);
-  };
 
   return (
     <Menu shadow="md" width={200}>
@@ -68,6 +77,7 @@ export const Timer = () => {
       )}
       {(timeLeft === 0 || timeLeft === undefined) && (
         <Menu.Dropdown>
+          <Menu.Item onClick={() => onTimerSet?.(10)}>10 seconds</Menu.Item>
           <Menu.Item onClick={() => onTimerSet?.(120)}>2 minutes</Menu.Item>
           <Menu.Item onClick={() => onTimerSet?.(5 * 60)}>5 minutes</Menu.Item>
           <Menu.Item onClick={() => onTimerSet?.(10 * 60)}>
