@@ -1,7 +1,7 @@
 import { Button, Group, Menu, Text } from "@mantine/core";
 import { IconBellRinging, IconClock } from "@tabler/icons";
 import { useEffect, useState } from "react";
-import sound from "../assets/cuckoo-clock.mp3";
+import sound from "../../assets/cuckoo-clock.mp3";
 import * as State from "../state";
 
 const audio = new Audio(sound);
