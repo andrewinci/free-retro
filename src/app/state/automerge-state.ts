@@ -37,7 +37,6 @@ export const initAppState = (
       }
     },
   );
-  console.log("initAppState", appState);
   return appState;
 };
 
@@ -52,7 +51,6 @@ export async function changeState(
   recreateState = false,
 ) {
   appState = Automerge.change(appState, (s) => f(s as AppState));
-  console.log("changeState", appState);
   // broadcast to all clients
   await broadcast(appState.sessionId, appState, recreateState);
 }
@@ -70,5 +68,4 @@ export function loadNewState(remoteRawState: string, recreateState: boolean) {
     Automerge.init<AppState>({ patchCallback }),
     remoteState,
   );
-  console.log("loadNewState", appState);
 }
