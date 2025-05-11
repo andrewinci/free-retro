@@ -116,7 +116,7 @@
     "@automerge/automerge": "^2.0.3",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mantine/core": "^5.10.5",
+    "@mantine/core": "^7.0.0",
     "@mantine/hooks": "^5.10.5",
     "@tabler/icons-react": "^2.44.0",
     "axios": "^1.6.0",
